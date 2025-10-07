@@ -119,6 +119,16 @@
     (macro writeinherited_tracefile_files ((type ARG1))
            (allow ARG1 tracefile writeinherited_file)))
 
+  (block silenced
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (dontaudit typeattr tracefile.typeattr (dir (not execmod)))
+    (dontaudit typeattr tracefile.typeattr (file (not (entrypoint execmod)))))
+
   (block template
 
     (blockabstract template)
@@ -136,6 +146,10 @@
     (allow typeattr tracefile.typeattr (dir (not (audit_access execmod))))
     (allow typeattr tracefile.typeattr
            (file (not (audit_access entrypoint execmod))))))
+
+(in sys.silenced
+
+    (call .tracefile.silenced.type (typeattr)))
 
 (in sys.unconfined
 

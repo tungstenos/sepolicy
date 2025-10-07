@@ -7,6 +7,10 @@
 (macro managesubnet_invalid_endports ((type ARG1))
        (allow ARG1 invalid (infiniband_endport (manage_subnet))))
 
+(in invalid.silenced
+
+    (dontaudit typeattr .invalid (infiniband_endport (all))))
+
 (in invalid.unconfined
 
     (allow typeattr .invalid (infiniband_endport (all))))
@@ -55,6 +59,16 @@
         (macro managesubnet_endports ((type ARG1))
                (allow ARG1 endport (infiniband_endport (manage_subnet)))))
 
+      (block silenced
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (typeattribute typeattr)
+
+        (dontaudit typeattr endport.typeattr
+                   (infiniband_endport (all))))
+
       (block template
 
         (blockabstract template)
@@ -70,6 +84,10 @@
         (typeattribute typeattr)
 
         (allow typeattr endport.typeattr (infiniband_endport (all))))))
+
+(in net.ib.silenced
+
+    (call .net.ib.endport.silenced.type (typeattr)))
 
 (in net.ib.unconfined
 

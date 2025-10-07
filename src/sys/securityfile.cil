@@ -155,6 +155,20 @@
     (macro write_securityfile_lnk_files ((type ARG1))
            (allow ARG1 securityfile write_lnk_file)))
 
+  (block silenced
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (dontaudit typeattr securityfile.typeattr
+               (dir (not (execmod relabelfrom relabelto))))
+    (dontaudit typeattr securityfile.typeattr
+               (file (not (entrypoint execmod relabelfrom relabelto))))
+    (dontaudit typeattr securityfile.typeattr
+               (lnk_file (not (execmod map mounton relabelfrom relabelto)))))
+
   (block template
 
     (blockabstract template)
@@ -176,6 +190,10 @@
     (allow typeattr securityfile.typeattr
            (lnk_file (not (audit_access execmod map mounton relabelfrom
                                         relabelto))))))
+
+(in sys.silenced
+
+    (call .securityfile.silenced.type (typeattr)))
 
 (in sys.unconfined
 

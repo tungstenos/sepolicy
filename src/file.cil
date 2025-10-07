@@ -816,6 +816,21 @@
     (macro writeinherited_file_sock_files ((type ARG1))
            (allow ARG1 file writeinherited_sock_file)))
 
+  (block silenced
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (dontaudit typeattr file.typeattr (blk_file (not (execmod map mounton ))))
+    (dontaudit typeattr file.typeattr (chr_file (not (execmod mounton))))
+    (dontaudit typeattr file.typeattr (dir (not execmod)))
+    (dontaudit typeattr file.typeattr (fifo_file (not (execmod map))))
+    (dontaudit typeattr file.typeattr (file (not (entrypoint execmod))))
+    (dontaudit typeattr file.typeattr (lnk_file (not (execmod map mounton))))
+    (dontaudit typeattr file.typeattr (sock_file (not (execmod map)))))
+
   (block template
 
     (blockabstract template)
@@ -845,6 +860,10 @@
            (lnk_file (not (audit_access execmod map mounton))))
     (allow typeattr file.typeattr
            (sock_file (not (audit_access execmod map mounton))))))
+
+(in silenced
+
+    (call .file.silenced.type (typeattr)))
 
 (in unconfined
 

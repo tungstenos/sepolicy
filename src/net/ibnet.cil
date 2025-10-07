@@ -3,9 +3,17 @@
 
 (in net
 
+    (call ib.silenced.type (silenced.typeattr))
     (call ib.unconfined.type (unconfined.typeattr))
 
     (block ib
+
+      (block silenced
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (typeattribute typeattr))
 
       (block unconfined
 

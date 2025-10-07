@@ -117,6 +117,19 @@
     (macro writeinherited_sysctlfile_files ((type ARG1))
            (allow ARG1 sysctlfile writeinherited_file)))
 
+  (block silenced
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (dontaudit typeattr sysctlfile.typeattr
+               (dir (not (audit_access execmod relabelfrom relabelto))))
+    (dontaudit typeattr sysctlfile.typeattr
+               (file (not (audit_access entrypoint execmod relabelfrom
+                                      relabelto)))))
+
   (block template
 
     (blockabstract template)
@@ -136,6 +149,10 @@
     (allow typeattr sysctlfile.typeattr
            (file (not (audit_access entrypoint execmod relabelfrom
                                     relabelto))))))
+
+(in procfile.silenced
+
+    (call .sysctlfile.silenced.type (typeattr)))
 
 (in procfile.unconfined
 

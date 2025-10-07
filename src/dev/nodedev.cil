@@ -99,6 +99,15 @@
     (macro writeinherited_nodedev_chr_files ((type ARG1))
            (allow ARG1 nodedev writeinherited_chr_file)))
 
+  (block silenced
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (dontaudit typeattr nodedev.typeattr (chr_file (not (execmod)))))
+
   (block template
 
     (blockabstract template)
@@ -114,6 +123,10 @@
     (typeattribute typeattr)
 
     (allow typeattr nodedev.typeattr (chr_file (not (audit_access execmod))))))
+
+(in dev.silenced
+
+    (call .nodedev.silenced.type (typeattr)))
 
 (in dev.unconfined
 

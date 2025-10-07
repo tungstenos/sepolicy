@@ -7,6 +7,10 @@
 (macro access_invalid_pkeys ((type ARG1))
        (allow ARG1 invalid (infiniband_pkey (access))))
 
+(in invalid.silenced
+
+    (dontaudit typeattr .invalid (infiniband_pkey (all))))
+
 (in invalid.unconfined
 
     (allow typeattr .invalid (infiniband_pkey (all))))
@@ -55,6 +59,15 @@
         (macro access_pkeys ((type ARG1))
                (allow ARG1 pkey (infiniband_pkey (access)))))
 
+      (block silenced
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (typeattribute typeattr)
+
+        (dontaudit typeattr pkey.typeattr (infiniband_pkey (all))))
+
       (block template
 
         (blockabstract template)
@@ -70,6 +83,10 @@
         (typeattribute typeattr)
 
         (allow typeattr pkey.typeattr (infiniband_pkey (all))))))
+
+(in net.ib.silenced
+
+    (call .net.ib.pkey.silenced.type (typeattr)))
 
 (in net.ib.unconfined
 

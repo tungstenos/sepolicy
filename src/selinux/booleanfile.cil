@@ -70,6 +70,17 @@
     (macro writeinherited_booleanfile_files ((type ARG1))
            (allow ARG1 booleanfile writeinherited_file)))
 
+  (block silenced
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (dontaudit typeattr booleanfile.typeattr
+               (file (not (audit_access entrypoint execmod relabelfrom
+                                        relabelto)))))
+
   (block template
 
     (blockabstract template)
@@ -87,6 +98,10 @@
     (allow typeattr booleanfile.typeattr
            (file (not (audit_access entrypoint execmod relabelfrom
                                     relabelto))))))
+
+(in selinux.silenced
+
+    (call .booleanfile.silenced.type (typeattr)))
 
 (in selinux.unconfined
 

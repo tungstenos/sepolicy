@@ -84,6 +84,15 @@
            (allowx ARG1 ptytermdev IOCTLTTY_NOT_TIOCSTI)
            (allowx ARG1 ptytermdev IOCTLVT)))
 
+  (block silenced
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (dontaudit typeattr ptytermdev.typeattr (chr_file (not execmod))))
+
   (block template
 
     (blockabstract template)
@@ -99,6 +108,10 @@
     (typeattribute typeattr)
 
     (allow typeattr ptytermdev.typeattr (chr_file (not (audit_access execmod))))))
+
+(in termdev.silenced
+
+    (call .ptytermdev.silenced.type (typeattr)))
 
 (in termdev.unconfined
 

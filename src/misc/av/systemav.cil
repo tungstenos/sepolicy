@@ -35,6 +35,19 @@
 
       (neverallow not_typeattr self (system (module_load))))
 
+    (block silenced
+
+      (macro type ((type ARG1))
+             (typeattributeset typeattr ARG1))
+
+      (typeattribute typeattr)
+
+      (dontaudit typeattr self (system (module_load)))
+      (dontaudit typeattr subj
+                 (system (ipc_info module_request reboot reload start
+                                   status stop syslog_console syslog_mod
+                                   syslog_read))))
+
     (block unconfined
 
       (macro type ((type ARG1))
@@ -54,6 +67,10 @@
       (allow typeattr .unlabeled (system (firmware_load module_load)))
 
       (call moduleload.type (typeattr))))
+
+(in silenced
+
+    (call .sys.silenced.type (typeattr)))
 
 (in unconfined
 

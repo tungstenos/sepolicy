@@ -20,6 +20,10 @@
 
             (call net.netnode.recvfromsendto_all_nodes (invalid))))
 
+(in invalid.silenced
+
+    (dontaudit typeattr .invalid (node (all))))
+
 (in invalid.unconfined
 
     (allow typeattr .invalid (node (all))))
@@ -118,6 +122,21 @@
         (macro sendto_nodes ((type ARG1))
                (allow ARG1 netnode (node (sendto)))))
 
+      (block silenced
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (typeattribute typeattr)
+
+        (dontaudit typeattr netnode.typeattr (dccp_socket (node_bind)))
+        (dontaudit typeattr netnode.typeattr (icmp_socket (node_bind)))
+        (dontaudit typeattr netnode.typeattr (node (all)))
+        (dontaudit typeattr netnode.typeattr (rawip_socket (node_bind)))
+        (dontaudit typeattr netnode.typeattr (sctp_socket (node_bind)))
+        (dontaudit typeattr netnode.typeattr (tcp_socket (node_bind)))
+        (dontaudit typeattr netnode.typeattr (udp_socket (node_bind))))
+
       (block template
 
         (blockabstract template)
@@ -139,6 +158,10 @@
         (allow typeattr netnode.typeattr (sctp_socket (node_bind)))
         (allow typeattr netnode.typeattr (tcp_socket (node_bind)))
         (allow typeattr netnode.typeattr (udp_socket (node_bind))))))
+
+(in net.silenced
+
+    (call .net.netnode.silenced.type (typeattr)))
 
 (in net.unconfined
 

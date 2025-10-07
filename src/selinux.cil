@@ -89,6 +89,15 @@
 
     (neverallow not_typeattr .selinux (security (setsecparam))))
 
+  (block silenced
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (dontaudit typeattr .selinux (security (all))))
+
   (block unconfined
 
     (macro type ((type ARG1))
@@ -101,6 +110,10 @@
     (call loadpolicy.type (typeattr))
     (call setenforce.type (typeattr))
     (call setsecparam.type (typeattr))))
+
+(in silenced
+
+    (call .selinux.silenced.type (typeattr)))
 
 (in unconfined
 

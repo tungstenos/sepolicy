@@ -89,6 +89,22 @@
         (macro nameconnect_port_tcp_sockets ((type ARG1))
                (allow ARG1 port (tcp_socket (name_connect)))))
 
+      (block silenced
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (typeattribute typeattr)
+
+        (dontaudit typeattr port.typeattr
+                   (dccp_socket (name_bind name_connect)))
+        (dontaudit typeattr port.typeattr (icmp_socket (name_bind)))
+        (dontaudit typeattr port.typeattr (rawip_socket (name_bind)))
+        (dontaudit typeattr port.typeattr
+                   (sctp_socket (name_bind name_connect)))
+        (dontaudit typeattr port.typeattr (tcp_socket (name_bind name_connect)))
+        (dontaudit typeattr port.typeattr (udp_socket (name_bind))))
+
       (block template
 
         (blockabstract template)
@@ -109,6 +125,10 @@
         (allow typeattr port.typeattr (sctp_socket (name_bind name_connect)))
         (allow typeattr port.typeattr (tcp_socket (name_bind name_connect)))
         (allow typeattr port.typeattr (udp_socket (name_bind))))))
+
+(in net.silenced
+
+    (call .net.port.silenced.type (typeattr)))
 
 (in net.unconfined
 

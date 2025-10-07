@@ -83,6 +83,15 @@
            (allowx ARG1 serialtermdev IOCTLTTY_NOT_TIOCSTI)
            (allowx ARG1 serialtermdev IOCTLVT)))
 
+  (block silenced
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (dontaudit typeattr serialtermdev.typeattr (chr_file (not execmod))))
+
   (block template
 
     (blockabstract template)
@@ -98,6 +107,10 @@
     (typeattribute typeattr)
 
     (allow typeattr serialtermdev.typeattr (chr_file (not (audit_access execmod))))))
+
+(in termdev.silenced
+
+    (call .serialtermdev.silenced.type (typeattr)))
 
 (in termdev.unconfined
 

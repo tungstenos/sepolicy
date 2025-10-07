@@ -568,6 +568,22 @@
     (blockinherit .fs.base_template)
     (blockinherit .fs.macro_template_fs))
 
+  (block silenced
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (dontaudit typeattr fs.typeattr (blk_file (not (execmod map mounton))))
+    (dontaudit typeattr fs.typeattr (chr_file (not (execmod mounton))))
+    (dontaudit typeattr fs.typeattr (dir (not execmod)))
+    (dontaudit typeattr fs.typeattr (fifo_file (not (execmod map))))
+    (dontaudit typeattr fs.typeattr (file (not (entrypoint execmod))))
+    (dontaudit typeattr fs.typeattr (filesystem (not associate)))
+    (dontaudit typeattr fs.typeattr (lnk_file (not (execmod map mounton))))
+    (dontaudit typeattr fs.typeattr (sock_file (not (execmod map)))))
+
   (block unconfined
 
     (macro type ((type ARG1))
@@ -588,9 +604,17 @@
     (allow typeattr fs.typeattr
            (sock_file (not (audit_access execmod map mounton))))))
 
+(in invalid.silenced
+
+    (dontaudit typeattr .invalid (filesystem (not (associate relabelto)))))
+
 (in invalid.unconfined
 
     (allow typeattr .invalid (filesystem (not (associate relabelto)))))
+
+(in silenced
+
+    (call .fs.silenced.type (typeattr)))
 
 (in unconfined
 

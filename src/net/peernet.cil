@@ -16,6 +16,10 @@
                   (invalidpeers.except.typeattr))
             (call recv_invalid_peers (invalidpeers.except.typeattr))))
 
+(in invalid.silenced
+
+    (dontaudit typeattr .invalid (peer (all))))
+
 (in invalid.unconfined
 
     (allow typeattr .invalid (peer (all))))
@@ -74,6 +78,16 @@
         (macro association_peer_sctp_sockets ((type ARG1))
                (allow ARG1 peer (sctp_socket (association)))))
 
+      (block silenced
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (typeattribute typeattr)
+
+        (dontaudit typeattr peer.typeattr (peer (all)))
+        (dontaudit typeattr peer.typeattr (sctp_socket (association))))
+
       (block template
 
         (blockabstract template)
@@ -91,6 +105,10 @@
         (allow typeattr peer.typeattr (peer (all)))
         (allow typeattr peer.typeattr (sctp_socket (association))))))
 
+(in net.silenced
+
+    (call .net.peer.silenced.type (typeattr)))
+
 (in net.unconfined
 
     (call .net.peer.unconfined.type (typeattr)))
@@ -104,6 +122,10 @@
 
     (macro recv_subj_peers ((type ARG1))
            (allow ARG1 subj (peer (recv)))))
+
+(in subj.silenced
+
+    (dontaudit typeattr .subj.typeattr (peer (recv))))
 
 (in subj.unconfined
 

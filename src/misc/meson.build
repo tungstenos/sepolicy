@@ -23,6 +23,7 @@ cil_files = [
     'modular.cil',
     'obj.cil',
     'perm.cil',
+    'silenced.cil',
     'unconfined.cil',
 ]
 

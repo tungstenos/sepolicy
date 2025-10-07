@@ -1,0 +1,9 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(block silenced
+
+  (macro type ((type ARG1))
+         (typeattributeset typeattr ARG1))
+
+  (typeattribute typeattr))

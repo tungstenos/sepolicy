@@ -46,6 +46,10 @@
                        (eq t1 objchange.typeattr))
                    (eq t1 exempt.typeattr))))
 
+(in invalid.silenced
+
+    (dontaudit typeattr .invalid (packet (not (relabelto)))))
+
 (in invalid.unconfined
 
     (allow typeattr .invalid (packet (not relabelto))))
@@ -147,6 +151,15 @@
         (macro send_packets ((type ARG1))
                (allow ARG1 packet (packet (send)))))
 
+      (block silenced
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (typeattribute typeattr)
+
+        (dontaudit typeattr packet.typeattr (packet (all))))
+
       (block template
 
         (blockabstract template)
@@ -162,6 +175,10 @@
         (typeattribute typeattr)
 
         (allow typeattr packet.typeattr (packet (all))))))
+
+(in net.silenced
+
+    (call .net.packet.silenced.type (typeattr)))
 
 (in net.unconfined
 

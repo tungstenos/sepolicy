@@ -356,6 +356,23 @@
 
 (block unlabeled
 
+  (block silenced
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (dontaudit typeattr .unlabeled
+               (blk_file (not (execmod map mounton relabelto))))
+    (dontaudit typeattr .unlabeled (chr_file (not (execmod mounton relabelto))))
+    (dontaudit typeattr .unlabeled (dir (not (execmod relabelto))))
+    (dontaudit typeattr .unlabeled (fifo_file (not (execmod map relabelto))))
+    (dontaudit typeattr .unlabeled (file (not (entrypoint execmod relabelto))))
+    (dontaudit typeattr .unlabeled
+               (lnk_file (not (execmod map mounton relabelto))))
+    (dontaudit typeattr .unlabeled (sock_file (not (execmod map relabelto)))))
+
   (block unconfined
 
     (macro type ((type ARG1))
@@ -376,6 +393,10 @@
            (lnk_file (not (audit_access execmod map mounton relabelto))))
     (allow typeattr .unlabeled
            (sock_file (not (audit_access execmod map mounton relabelto))))))
+
+(in silenced
+
+    (call .unlabeled.silenced.type (typeattr)))
 
 (in unconfined
 

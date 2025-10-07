@@ -145,6 +145,18 @@
     (macro write_sysfile_lnk_files ((type ARG1))
            (allow ARG1 sysfile write_lnk_file)))
 
+  (block silenced
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (dontaudit typeattr sysfile.typeattr (dir (not execmod)))
+    (dontaudit typeattr sysfile.typeattr (file (not (entrypoint execmod))))
+    (dontaudit typeattr sysfile.typeattr
+               (lnk_file (not (execmod map mounton)))))
+
   (block template
 
     (blockabstract template)
@@ -166,6 +178,10 @@
            (file (not (audit_access entrypoint execmod))))
     (allow typeattr sysfile.typeattr
            (lnk_file (not (audit_access execmod map mounton))))))
+
+(in sys.silenced
+
+    (call .sysfile.silenced.type (typeattr)))
 
 (in sys.unconfined
 

@@ -119,6 +119,16 @@
     (macro writeinherited_pstorefile_files ((type ARG1))
            (allow ARG1 pstorefile writeinherited_file)))
 
+  (block silenced
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (dontaudit typeattr pstorefile.typeattr (dir (not execmod)))
+    (dontaudit typeattr pstorefile.typeattr (file (not (entrypoint execmod)))))
+
   (block template
 
     (blockabstract template)
@@ -135,6 +145,10 @@
 
     (allow typeattr pstorefile.typeattr (dir (not execmod)))
     (allow typeattr pstorefile.typeattr (file (not (entrypoint execmod))))))
+
+(in sys.silenced
+
+    (call .pstorefile.silenced.type (typeattr)))
 
 (in sys.unconfined
 

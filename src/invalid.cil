@@ -410,6 +410,29 @@
 
 (block invalid
 
+  (block silenced
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (dontaudit typeattr .invalid
+               (process (not (dyntransition execheap execstack
+                                            transition))))
+    (dontaudit typeattr .invalid
+               (process2 (not (nnp_transition nosuid_transition))))
+
+    (dontaudit typeattr .invalid
+               (blk_file (not (execmod map mounton relabelto))))
+    (dontaudit typeattr .invalid (chr_file (not (execmod mounton relabelto))))
+    (dontaudit typeattr .invalid (dir (not (execmod relabelto))))
+    (dontaudit typeattr .invalid (fifo_file (not (execmod map relabelto))))
+    (dontaudit typeattr .invalid (file (not (entrypoint execmod relabelto))))
+    (dontaudit typeattr .invalid
+               (lnk_file (not (execmod map mounton relabelto))))
+    (dontaudit typeattr .invalid (sock_file (not (execmod map relabelto)))))
+
   (block unconfined
 
     (macro type ((type ARG1))
@@ -435,6 +458,10 @@
            (lnk_file (not (audit_access execmod map mounton relabelto))))
     (allow typeattr .invalid
            (sock_file (not (audit_access execmod map mounton relabelto))))))
+
+(in silenced
+
+    (call .invalid.silenced.type (typeattr)))
 
 (in unconfined
 

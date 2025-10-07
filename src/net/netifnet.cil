@@ -20,6 +20,10 @@
 
             (call net.netif.egressingress_all_netifs (invalid))))
 
+(in invalid.silenced
+
+    (dontaudit typeattr .invalid (netif (all))))
+
 (in invalid.unconfined
 
     (allow typeattr .invalid (netif (all))))
@@ -80,6 +84,15 @@
         (macro ingress_netifs ((type ARG1))
                (allow ARG1 netif (netif (ingress)))))
 
+      (block silenced
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (typeattribute typeattr)
+
+        (dontaudit typeattr netif.typeattr (netif (all))))
+
       (block template
 
         (blockabstract template)
@@ -95,6 +108,10 @@
         (typeattribute typeattr)
 
         (allow typeattr netif.typeattr (netif (all))))))
+
+(in net.silenced
+
+    (call .net.netif.silenced.type (typeattr)))
 
 (in net.unconfined
 

@@ -3,12 +3,23 @@
 
 (block net
 
+  (block silenced
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr))
+
   (block unconfined
 
     (macro type ((type ARG1))
            (typeattributeset typeattr ARG1))
 
     (typeattribute typeattr)))
+
+(in silenced
+
+    (call .net.silenced.type (typeattr)))
 
 (in unconfined
 

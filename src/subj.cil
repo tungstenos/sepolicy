@@ -202,6 +202,25 @@
     (macro writeinherited_subj_fifo_files ((type ARG1))
            (allow ARG1 subj writeinherited_fifo_file)))
 
+  (block silenced
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (dontaudit typeattr subj.entry.typeattr (file (entrypoint)))
+
+    (dontaudit typeattr subj.typeattr (process (all)))
+    (dontaudit typeattr subj.typeattr
+               (process2 (not nosuid_transition)))
+
+    (dontaudit typeattr subj.typeattr
+               (fifo_file (not (execmod map mounton))))
+    (dontaudit typeattr subj.typeattr list_dir)
+    (dontaudit typeattr subj.typeattr read_lnk_file)
+    (dontaudit typeattr subj.typeattr readwrite_file))
+
   (block template
 
     (blockabstract template)
@@ -234,6 +253,10 @@
 
     (call execheap.type (typeattr))
     (call execstack.type (typeattr))))
+
+(in silenced
+
+    (call .subj.silenced.type (typeattr)))
 
 (in unconfined
 

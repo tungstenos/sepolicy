@@ -30,6 +30,10 @@
             (call recvfromsendto_invalid_associations
                   (invalidassociations.except.typeattr))))
 
+(in invalid.silenced
+
+    (dontaudit typeattr .invalid (association (not (setcontext)))))
+
 (in invalid.unconfined
 
     (allow typeattr .invalid (association (not (setcontext)))))
@@ -92,6 +96,15 @@
         (macro setcontext_spd_associations ((type ARG1))
                (allow ARG1 spd (association (setcontext)))))
 
+      (block silenced
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (typeattribute typeattr)
+
+        (dontaudit typeattr spd.typeattr (association (polmatch setcontext))))
+
       (block template
 
         (blockabstract template)
@@ -107,6 +120,10 @@
         (typeattribute typeattr)
 
         (allow typeattr spd.typeattr (association (polmatch setcontext))))))
+
+(in net.silenced
+
+    (call .net.spd.silenced.type (typeattr)))
 
 (in net.unconfined
 
@@ -133,6 +150,10 @@
 
     (macro sendto_subj_associations ((type ARG1))
            (allow ARG1 subj (association (sendto)))))
+
+(in subj.silenced
+
+    (dontaudit typeattr .subj.typeattr (association (recvfrom sendto))))
 
 (in subj.unconfined
 

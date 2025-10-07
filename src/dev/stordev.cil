@@ -157,6 +157,16 @@
     (call read.type (typeattr))
     (call write.type (typeattr)))
 
+  (block silenced
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (dontaudit typeattr stordev.typeattr (blk_file (not (execmod map))))
+    (dontaudit typeattr stordev.typeattr (chr_file (not execmod))))
+
   (block unconfined
 
     (macro type ((type ARG1))
@@ -182,6 +192,10 @@
 
     (neverallow not_typeattr stordev.typeattr (blk_file (append write)))
     (neverallow not_typeattr stordev.typeattr (chr_file (append write)))))
+
+(in dev.silenced
+
+    (call .stordev.silenced.type (typeattr)))
 
 (in dev.unconfined
 

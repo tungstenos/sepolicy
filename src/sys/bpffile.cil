@@ -119,6 +119,18 @@
     (macro writeinherited_bpffile_files ((type ARG1))
            (allow ARG1 bpffile writeinherited_file)))
 
+  (block silenced
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (dontaudit typeattr bpffile.typeattr
+               (dir (not (execmod relabelfrom relabelto))))
+    (dontaudit typeattr bpffile.typeattr
+               (file (not (entrypoint execmod relabelfrom relabelto)))))
+
   (block template
 
     (blockabstract template)
@@ -138,6 +150,10 @@
     (allow typeattr bpffile.typeattr
            (file (not (audit_access entrypoint execmod relabelfrom
                                     relabelto))))))
+
+(in sys.silenced
+
+    (call .bpffile.silenced.type (typeattr)))
 
 (in sys.unconfined
 

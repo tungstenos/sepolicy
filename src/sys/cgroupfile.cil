@@ -119,6 +119,16 @@
     (macro writeinherited_cgroupfile_files ((type ARG1))
            (allow ARG1 cgroupfile writeinherited_file)))
 
+  (block silenced
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (dontaudit typeattr cgroupfile.typeattr (dir (not execmod)))
+    (dontaudit typeattr cgroupfile.typeattr (file (not (entrypoint execmod)))))
+
   (block template
 
     (blockabstract template)
@@ -136,6 +146,10 @@
     (allow typeattr cgroupfile.typeattr (dir (not (audit_access execmod))))
     (allow typeattr cgroupfile.typeattr
            (file (not (audit_access entrypoint execmod))))))
+
+(in sys.silenced
+
+    (call .cgroupfile.silenced.type (typeattr)))
 
 (in sys.unconfined
 

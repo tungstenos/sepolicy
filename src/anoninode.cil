@@ -217,6 +217,16 @@
     (macro write_anon_inode_anon_inodes ((type ARG1))
            (allow ARG1 anon_inode write_anon_inode)))
 
+  (block silenced
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (dontaudit typeattr anon_inode.typeattr
+               (anon_inode (not (execmod mounton)))))
+
   (block template
 
     (blockabstract template)
@@ -234,10 +244,24 @@
     (allow typeattr anon_inode.typeattr
            (anon_inode (not (audit_access execmod mounton))))))
 
+(in invalid.silenced
+
+    (dontaudit typeattr .invalid (anon_inode (not (create execmod mounton)))))
+
 (in invalid.unconfined
 
     (allow typeattr .invalid
            (anon_inode (not (audit_access create execmod mounton)))))
+
+(in subj.silenced
+
+    (dontaudit typeattr self (anon_inode (create)))
+    (dontaudit typeattr subj.typeattr
+               (anon_inode (not (create execmod mounton)))))
+
+(in silenced
+
+    (call .anon_inode.silenced.type (typeattr)))
 
 (in subj.unconfined
 
