@@ -134,7 +134,7 @@
 
     (call .tmp.associate_fs (file))
 
-    (call .xattr.associate_fs (file)))
+    (call .xattr.associate_fs_pattern.type (file)))
 
 (in devpts
 
@@ -161,7 +161,7 @@
            (call .root.file_type_transition
                  (ARG1 fs dir "efi")))
 
-    (call .xattr.associate_fs (fs)))
+    (call .xattr.associate_fs_pattern.type (fs)))
 
 (in efivar
 
@@ -189,11 +189,11 @@
 
 (in file.run
 
-    (call .xattr.associate_fs (typeattr)))
+    (call .xattr.associate_fs_pattern.type (typeattr)))
 
 (in file.tmp
 
-    (call .xattr.associate_fs (typeattr)))
+    (call .xattr.associate_fs_pattern.type (typeattr)))
 
 (in file.unconfined
 
@@ -479,7 +479,7 @@
            (call .root.file_type_transition
                  (ARG1 fs dir "proc")))
 
-    (call .xattr.associate_fs (fs)))
+    (call .xattr.associate_fs_pattern.type (fs)))
 
 (in pstore
 
@@ -605,7 +605,7 @@
 
     (call .tmp.sys_tmp_file_type_transition_file (subj))
 
-    (call .xattr.associate_fs (fs)))
+    (call .xattr.associate_fs_pattern.type (fs)))
 
 (in sys.home
 

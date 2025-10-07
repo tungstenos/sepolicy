@@ -33,4 +33,25 @@
   (fsuse xattr "yaffs2" fs_context)
   (fsuse xattr "zfs" fs_context)
 
-  (blockinherit .seclabelfs.template))
+  (blockinherit .seclabelfs.template)
+
+  ;; Allow association with tmp.fs too for when / may be a tmp.fs instead of a
+  ;; xattr.fs. systemd-volatile-root makes use of this when passed overlay via
+  ;; e.g. the kernel cmdline to boot the system in a fully stateless mode.
+  (block associate_fs_pattern
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (allow typeattr fs (filesystem (associate))))
+
+  (block getattr_fs_pattern
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (allow typeattr fs (filesystem (getattr)))))

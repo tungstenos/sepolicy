@@ -5,6 +5,7 @@ cil_files = [
     'invalidassociationsbooleanfile.cil',
     'invalidpacketsbooleanfile.cil',
     'invalidpeersbooleanfile.cil',
+    'systemdvolatileoverlaybooleanfile.cil',
 ]
 
 foreach file : cil_files

@@ -406,7 +406,7 @@
 (type invalid)
 (roletype sys.role invalid)
 
-(call .xattr.associate_fs (invalid))
+(call .xattr.associate_fs_pattern.type (invalid))
 
 (block invalid
 

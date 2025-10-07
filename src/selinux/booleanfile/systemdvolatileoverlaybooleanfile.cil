@@ -1,0 +1,55 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+;; systemd-volatile-overlay supports booting the system in a stateless mode
+;; where / is not xattr.fs but tmp.fs. This requires systemd in the initrd,
+;; which ensures that the / of the volatile overlay is properly labeled:
+
+;; mkdir -p /usr/lib/dracut/modules.d/98relabel
+;;
+;; cat > /usr/lib/dracut/modules.d/98relabel/module-setup.sh <<'EOF'
+;; #!/bin/bash
+;;
+;; check() {
+;;     return 0
+;; }
+;;
+;; depends() {
+;;     return 0
+;; }
+;;
+;; install() {
+;;     inst_hook pre-pivot 50 "$moddir/selinux-relabel.sh"
+;; }
+;; EOF
+;;
+;; cat > /usr/lib/dracut/modules.d/98relabel/selinux-relabel.sh <<'EOF'
+;; #!/bin/sh
+;;
+;; getarg "systemd.volatile=overlay" > /dev/null || exit 0
+;;
+;; mkdir -p /run/systemd/system-generators
+;; cat > /run/systemd/system-generators/overlayroot.sh <<'FOO'
+;; #!/bin/sh
+;; echo 't / - - - - security.selinux="sys.id:sys.role:root.file:s0"' | systemd-tmpfiles --create -
+;; FOO
+;; chmod +x /run/systemd/system-generators/overlayroot.sh
+;; EOF
+;;
+;; chmod +x /usr/lib/dracut/modules.d/98relabel/module-setup.sh
+;; chmod +x /usr/lib/dracut/modules.d/98relabel/selinux-relabel.sh
+
+(boolean systemd_volatile_overlay false)
+
+(booleanif systemd_volatile_overlay
+           (true
+
+            (call tmp.associate_fs (xattr.associate_fs_pattern.typeattr))
+            (call tmp.getattr_fs (xattr.getattr_fs_pattern.typeattr))))
+
+(block systemd_volatile_overlay
+
+  (genfscon "selinuxfs" "/booleans/systemd_volatile_overlay"
+            booleanfile_context)
+
+  (blockinherit .booleanfile.template))
