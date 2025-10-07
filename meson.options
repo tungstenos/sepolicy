@@ -1,0 +1,18 @@
+# SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+# SPDX-License-Identifier: MIT
+
+option(
+    'mcs',
+    type: 'boolean',
+    value: true,
+    description: 'Enable Multi-Category Security (MCS) support',
+)
+
+option(
+    'polvers',
+    type: 'integer',
+    min: 33,
+    max: 34,
+    value: 34,
+    description: 'Policy version',
+)
