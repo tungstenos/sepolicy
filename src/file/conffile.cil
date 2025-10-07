@@ -3,11 +3,61 @@
 
 (block conf
 
-  (blockinherit .file.conf.template))
+  (filecon "/etc" dir file_context)
+  (filecon "/etc/.*" any file_context)
+
+  (macro data_file_type_transition_file ((type ARG1))
+         (call .data.file_type_transition
+               (ARG1 file dir "etc")))
+
+  (macro map_file_files ((type ARG1))
+         (allow ARG1 file (file (map))))
+
+  (macro root_file_type_transition_file ((type ARG1))
+         (call .root.file_type_transition
+               (ARG1 file dir "etc")))
+
+  (macro setattr_file_dirs ((type ARG1))
+         (allow ARG1 file (dir (setattr))))
+
+  (macro watch_file_dirs ((type ARG1))
+         (allow ARG1 file (dir (watch))))
+
+  (macro watch_file_lnk_files ((type ARG1))
+         (allow ARG1 file (lnk_file (watch))))
+
+  (blockinherit .file.conf.template)
+
+  (optional conffile_mount
+            (call .mount.mountpoint.type (file)))
+
+  (block search_file_pattern
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (call search_file_dirs (typeattr))
+
+    (call .data.search_file_pattern.type (typeattr)))
+
+  (block traverse_file_pattern
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (call read_file_lnk_files (typeattr))
+    (call search_file_pattern.type (typeattr))))
 
 (in file
 
     (block conf
+
+      (macro getattr_all_files ((type ARG1))
+             (allow ARG1 typeattr (file (getattr))))
 
       (macro type ((type ARG1))
              (typeattributeset typeattr ARG1))
@@ -38,3 +88,8 @@
         (blockinherit .file.macro_template_dirs)
         (blockinherit .file.macro_template_files)
         (blockinherit .file.macro_template_lnk_files))))
+
+(in file.unconfined
+
+    (call .conf.data_file_type_transition_file (typeattr))
+    (call .conf.root_file_type_transition_file (typeattr)))

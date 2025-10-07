@@ -5,7 +5,60 @@
 
     (block home
 
+      (filecon "/root" dir file_context)
+      (filecon "/root/.*" any file_context)
+
+      (macro dontaudit_list_file_dirs ((type ARG1))
+             (dontaudit ARG1 file list_dir))
+
+      (macro dontaudit_read_file_files ((type ARG1))
+             (dontaudit ARG1 file read_file))
+
+      (macro dontaudit_readwrite_file_dirs ((type ARG1))
+             (dontaudit ARG1 file readwrite_dir))
+
+      (macro getattr_file_dirs ((type ARG1))
+             (allow ARG1 file (dir (getattr))))
+
+      (macro map_file_files ((type ARG1))
+             (allow ARG1 file (file (map))))
+
+      (macro root_file_type_transition_file ((type ARG1))
+             (call .root.fs_type_transition
+                   (ARG1 file dir "root")))
+
+      (macro setattr_file_dirs ((type ARG1))
+             (allow ARG1 file (dir (setattr))))
+
+      (macro setattr_file_files ((type ARG1))
+             (allow ARG1 file (file (setattr))))
+
       (blockinherit .file.home.template)
       (blockinherit .file.macro_template_all_files)
       (blockinherit .file.macro_template_blk_files)
-      (blockinherit .file.macro_template_chr_files)))
+      (blockinherit .file.macro_template_chr_files)
+
+      (block search_file_pattern
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (typeattribute typeattr)
+
+        (call search_file_dirs (typeattr))
+
+        (call .root.search_file_pattern.type (typeattr)))
+
+      (block traverse_file_pattern
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (typeattribute typeattr)
+
+        (call read_file_lnk_files (typeattr))
+        (call search_file_pattern.type (typeattr)))))
+
+(in file.unconfined
+
+    (call .sys.home.root_file_type_transition_file (typeattr)))

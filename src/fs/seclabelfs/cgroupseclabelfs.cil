@@ -3,9 +3,57 @@
 
 (block cgroup
 
+  ;; explicitly associating a label with the root of the filesystem using
+  ;; setxattr enables transition functionality for any child directories.
+  ;; this is a cgroupfs specific "gotcha".
+
+  (filecon "/sys/fs/cgroup" dir fs_context)
+  (filecon "/sys/fs/cgroup/.*" any ())
+
   (genfscon "cgroup" "/" fs_context)
   (genfscon "cgroup2" "/" fs_context)
 
+  (macro dontaudit_setattr_fs_files ((type ARG1))
+         (dontaudit ARG1 fs (file (setattr))))
+
+  (macro dontaudit_writeinherited_fs_files ((type ARG1))
+         (dontaudit ARG1 fs writeinherited_file))
+
+  (macro dontaudit_write_fs_files ((type ARG1))
+         (dontaudit ARG1 fs write_file))
+
+  (macro getattr_fs_files ((type ARG1))
+         (allow ARG1 fs (file (getattr))))
+
+  (macro watch_fs_files ((type ARG1))
+         (allow ARG1 fs (file (watch))))
+
   (blockinherit .fs.macro_template_dirs)
   (blockinherit .fs.macro_template_files)
-  (blockinherit .seclabelfs.template))
+  (blockinherit .seclabelfs.template)
+
+  (allow fs self (filesystem (associate)))
+
+  (call .sys.associate_fs (fs))
+
+  (block getattr_fs_pattern
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (allow typeattr fs (filesystem (getattr)))
+
+    (call search_fs_pattern.type (typeattr)))
+
+  (block search_fs_pattern
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (call search_fs_dirs (typeattr))
+
+    (call .fs.search_sysfile_pattern.type (typeattr))))

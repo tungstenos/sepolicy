@@ -3,7 +3,22 @@
 
 (block security
 
+  (filecon "/sys/kernel/security" dir ())
+  (filecon "/sys/kernel/security/.*" any ())
+
   (genfscon "securityfs" "/" fs_context)
+
+  (macro dontaudit_setattr_fs_files ((type ARG1))
+         (dontaudit ARG1 fs (file (setattr))))
+
+  (macro getattr_fs_files ((type ARG1))
+         (allow ARG1 fs (file (getattr))))
+
+  (macro setattr_fs_files ((type ARG1))
+         (allow ARG1 fs (file (setattr))))
+
+  (macro setattr_fs_lnk_files ((type ARG1))
+         (allow ARG1 fs (lnk_file (setattr))))
 
   (blockinherit .fs.macro_template_lnk_files)
   (blockinherit .noseclabelfs.template))

@@ -3,14 +3,65 @@
 
 (block home
 
+  (filecon "HOME_ROOT" dir file_context)
+  (filecon "HOME_ROOT/[^/]+" block file_context)
+  (filecon "HOME_ROOT/[^/]+" char file_context)
+  (filecon "HOME_ROOT/[^/]+" file file_context)
+  (filecon "HOME_ROOT/[^/]+" pipe file_context)
+  (filecon "HOME_ROOT/[^/]+" socket file_context)
+  (filecon "HOME_ROOT/[^/]+" symlink file_context)
+
+  (macro dontaudit_search_file_dirs ((type ARG1))
+         (dontaudit ARG1 file search_dir))
+
+  (macro root_file_type_transition_file ((type ARG1))
+         (call .root.file_type_transition
+               (ARG1 file dir "home")))
+
+  (macro watch_file_dirs ((type ARG1))
+         (allow ARG1 file (dir (watch))))
+
   (blockinherit .file.home.template)
   (blockinherit .file.macro_template_all_files)
   (blockinherit .file.macro_template_blk_files)
-  (blockinherit .file.macro_template_chr_files))
+  (blockinherit .file.macro_template_chr_files)
+
+  (optional homefile_mount
+            (call .mount.mountpoint.type (file)))
+
+  (block search_file_pattern
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (call search_file_dirs (typeattr))
+
+    (call .var.search_file_pattern.type (typeattr)))
+
+  (block traverse_file_pattern
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (call read_file_lnk_files (typeattr))
+    (call search_file_pattern.type (typeattr))))
 
 (in file
 
     (block home
+
+      (macro dontaudit_manage_all_files ((type ARG1))
+             (dontaudit ARG1 typeattr manage_file))
+
+      (macro dontaudit_readwriteinherited_all_dirs ((type ARG1))
+             (dontaudit ARG1 typeattr readwriteinherited_dir))
+
+      (macro dontaudit_readwriteinherited_all_files ((type ARG1))
+             (dontaudit ARG1 typeattr readwriteinherited_file))
 
       (macro type ((type ARG1))
              (typeattributeset typeattr ARG1))
@@ -45,3 +96,7 @@
         (blockinherit .file.macro_template_files)
         (blockinherit .file.macro_template_lnk_files)
         (blockinherit .file.macro_template_sock_files))))
+
+(in file.unconfined
+
+    (call .home.root_file_type_transition_file (typeattr)))

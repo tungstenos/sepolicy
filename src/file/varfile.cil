@@ -3,7 +3,51 @@
 
 (block var
 
-  (blockinherit .file.var.template))
+  (filecon "/run" symlink file_context)
+  (filecon "/run/lock" symlink file_context)
+
+  (filecon "/srv" dir file_context)
+  (filecon "/srv/.*" any file_context)
+
+  (filecon "/var" dir file_context)
+  (filecon "/var/.*" any file_context)
+
+  (filecon "/var/spool/mail" symlink file_context)
+
+  (macro root_file_type_transition_file ((type ARG1))
+         (call .root.file_type_transition
+               (ARG1 file dir "srv"))
+         (call .root.file_type_transition
+               (ARG1 file dir "var")))
+
+  (macro watch_file_dirs ((type ARG1))
+         (allow ARG1 file (dir (watch))))
+
+  (blockinherit .file.var.template)
+
+  (optional varfile_mount
+            (call .mount.mountpoint.type (file)))
+
+  (block search_file_pattern
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (call search_file_dirs (typeattr))
+
+    (call .root.search_file_pattern.type (typeattr)))
+
+  (block traverse_file_pattern
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (call read_file_lnk_files (typeattr))
+    (call search_file_pattern.type (typeattr))))
 
 (in file
 
@@ -42,3 +86,7 @@
         (blockinherit .file.macro_template_lnk_files)
         (blockinherit .file.macro_template_sock_files)
         (blockinherit .file.var.base_template))))
+
+(in file.unconfined
+
+    (call .var.root_file_type_transition_file (typeattr)))

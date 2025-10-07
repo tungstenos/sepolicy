@@ -1,11 +1,58 @@
 ;; SPDX-FileCopyrightText: © 2025 Dominick Grift <dominick.grift@defensec.nl>
 ;; SPDX-License-Identifier: Unlicense
 
+(in fs.unconfined
+
+    (call .sys.root_file_type_transition_fs (typeattr)))
+
 (in sys
 
+    (filecon "/sys" dir fs_context)
+    (filecon "/sys/.*" any ())
+
     (genfscon "sysfs" "/" fs_context)
+
+    (macro auditwriteaccess_fs_dirs ((type ARG1))
+           (allow ARG1 fs (dir (getattr write))))
+
+    (macro dontaudit_auditaccess_fs_dirs ((type ARG1))
+           (dontaudit ARG1 fs (dir (audit_access))))
+
+    (macro dontaudit_getattr_fs_dirs ((type ARG1))
+           (dontaudit ARG1 fs (dir (getattr))))
+
+    (macro root_file_type_transition_fs ((type ARG1))
+           (call .root.file_type_transition
+                 (ARG1 fs dir "sys")))
+
+    (macro setattr_fs_dirs ((type ARG1))
+           (allow ARG1 fs (dir (setattr))))
 
     (blockinherit .fs.macro_template_dirs)
     (blockinherit .fs.macro_template_files)
     (blockinherit .fs.macro_template_lnk_files)
-    (blockinherit .seclabelfs.template))
+    (blockinherit .seclabelfs.template)
+
+    (allow fs self (filesystem (associate)))
+
+    (call .xattr.associate_fs_pattern.type (fs))
+
+    (block getattr_fs_pattern
+
+      (macro type ((type ARG1))
+             (typeattributeset typeattr ARG1))
+
+      (typeattribute typeattr)
+
+      (allow typeattr fs (filesystem (getattr))))
+
+    (block search_fs_pattern
+
+      (macro type ((type ARG1))
+             (typeattributeset typeattr ARG1))
+
+      (typeattribute typeattr)
+
+      (call search_fs_dirs (typeattr))
+
+      (call .root.search_file_pattern.type (typeattr))))

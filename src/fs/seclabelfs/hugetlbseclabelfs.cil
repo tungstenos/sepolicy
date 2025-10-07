@@ -3,8 +3,26 @@
 
 (block hugetlb
 
+  (filecon "/dev/hugepages" dir ())
+  (filecon "/dev/hugepages/.*" any ())
+
   (fsuse trans "hugetlbfs" fs_context)
 
   (blockinherit .fs.macro_template_dirs)
   (blockinherit .fs.macro_template_files)
-  (blockinherit .seclabelfs.template))
+  (blockinherit .seclabelfs.template)
+
+  (allow fs self (filesystem (associate)))
+
+  (call .rbacsep.exempt.obj.type (fs))
+
+  (block search_fs_pattern
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (call search_fs_dirs (typeattr))
+
+    (call .dev.search_file_pattern.type (typeattr))))

@@ -3,13 +3,74 @@
 
 (block exec
 
+  (filecon "/usr/bin" dir file_context)
+  (filecon "/usr/bin/.*" any file_context)
+
+  (macro auditexecuteaccess_file_files ((type ARG1))
+         (allow ARG1 file (file (execute getattr))))
+
+  (macro data_file_type_transition_file ((type ARG1))
+         (call .data.file_type_transition
+               (ARG1 file dir "bin"))
+         (call .data.file_type_transition
+               (ARG1 file dir "libexec"))
+         (call .data.file_type_transition
+               (ARG1 file dir "sbin")))
+
+  (macro dontaudit_readinherited_file_files ((type ARG1))
+         (dontaudit ARG1 file readinherited_file))
+
+  (macro dontaudit_execute_no_trans_file_files ((type ARG1))
+         (dontaudit ARG1 file (file (execute_no_trans))))
+
+  (macro root_file_type_transition_file ((type ARG1))
+         (call .root.file_type_transition
+               (ARG1 file dir "bin"))
+         (call .root.file_type_transition
+               (ARG1 file dir "sbin")))
+
+  (macro setattr_file_dirs ((type ARG1))
+         (allow ARG1 file (dir (setattr))))
+
+  (macro setattr_file_files ((type ARG1))
+         (allow ARG1 file (file (setattr))))
+
   (blockinherit .file.exec.template)
   (blockinherit .file.macro_template_dirs)
-  (blockinherit .file.macro_template_lnk_files))
+  (blockinherit .file.macro_template_lnk_files)
+
+  (block search_file_pattern
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (call search_file_dirs (typeattr))
+
+    (call .data.search_file_pattern.type (typeattr))
+
+    (call .root.traverse_file_pattern.type (typeattr)))
+
+  (block traverse_file_pattern
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (call read_file_lnk_files (typeattr))
+    (call search_file_pattern.type (typeattr))))
 
 (in file
 
     (block exec
+
+      (macro auditexecuteaccess_all_files ((type ARG1))
+             (allow ARG1 typeattr (file (execute getattr))))
+
+      (macro dontaudit_auditaccess_all_files ((type ARG1))
+             (dontaudit ARG1 typeattr (file (audit_access))))
 
       (macro entrypoint_all_files ((type ARG1))
              (allow ARG1 typeattr (file (entrypoint))))
@@ -72,3 +133,8 @@
 
         (blockinherit .file.exec.base_template)
         (blockinherit .file.macro_template_files))))
+
+(in file.unconfined
+
+    (call .exec.data_file_type_transition_file (typeattr))
+    (call .exec.root_file_type_transition_file (typeattr)))

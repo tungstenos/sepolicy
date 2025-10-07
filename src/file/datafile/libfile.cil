@@ -3,9 +3,76 @@
 
 (block lib
 
+  (filecon "/usr/lib" dir file_context)
+  (filecon "/usr/lib/.*" any file_context)
+
+  (macro data_file_type_transition_file ((type ARG1))
+         (call .data.file_type_transition
+               (ARG1 file dir "lib"))
+         (call .data.file_type_transition
+               (ARG1 file dir "lib32"))
+         (call .data.file_type_transition
+               (ARG1 file dir "lib64"))
+         (call .data.file_type_transition
+               (ARG1 file dir "libx32")))
+
+  (macro dontaudit_getattr_file_files ((type ARG1))
+         (dontaudit ARG1 file (file (getattr))))
+
+  (macro root_file_type_transition_file ((type ARG1))
+         (call .root.file_type_transition
+               (ARG1 file dir "lib"))
+         (call .root.file_type_transition
+               (ARG1 file dir "lib32"))
+         (call .root.file_type_transition
+               (ARG1 file dir "lib64"))
+         (call .root.file_type_transition
+               (ARG1 file dir "libx32")))
+
+  (macro setattr_file_files ((type ARG1))
+         (allow ARG1 file (file (setattr))))
+
   (blockinherit .file.lib.template)
   (blockinherit .file.macro_template_dirs)
-  (blockinherit .file.macro_template_lnk_files))
+  (blockinherit .file.macro_template_lnk_files)
+
+  (block read_file_pattern
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (call list_file_dirs (typeattr))
+    (call read_file_files (typeattr))
+    (call read_file_lnk_files (typeattr))
+
+    (call .data.search_file_pattern.type (typeattr))
+
+    (call .root.traverse_file_pattern.type (typeattr)))
+
+  (block search_file_pattern
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (call search_file_dirs (typeattr))
+
+    (call .data.search_file_pattern.type (typeattr))
+
+    (call .root.traverse_file_pattern.type (typeattr)))
+
+  (block traverse_file_pattern
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (call read_file_lnk_files (typeattr))
+    (call search_file_pattern.type (typeattr))))
 
 (block textrel
 
@@ -20,12 +87,19 @@
 
     (block lib
 
+      (macro getattr_all_dirs ((type ARG1))
+             (allow ARG1 typeattr (dir (getattr))))
+
+      (macro getattr_all_files ((type ARG1))
+             (allow ARG1 typeattr (file (getattr))))
+
       (macro map_all_files ((type ARG1))
              (allow ARG1 typeattr (file (map))))
 
       (macro type ((type ARG1))
              (typeattributeset typeattr ARG1))
 
+      (blockinherit file.all_macro_template_dirs)
       (blockinherit file.all_macro_template_files)
 
       (typeattribute typeattr)
@@ -49,3 +123,8 @@
 
         (blockinherit .file.lib.base_template)
         (blockinherit .file.macro_template_files))))
+
+(in file.unconfined
+
+    (call .lib.data_file_type_transition_file (typeattr))
+    (call .lib.root_file_type_transition_file (typeattr)))

@@ -3,14 +3,80 @@
 
 (block data
 
-  (blockinherit .file.data.template))
+  (filecon "/opt" dir file_context)
+  (filecon "/opt/.*" any file_context)
+
+  (filecon "/usr" dir file_context)
+  (filecon "/usr/.*" any file_context)
+
+  (macro map_file_files ((type ARG1))
+         (allow ARG1 file (file (map))))
+
+  (macro root_file_type_transition_file ((type ARG1))
+         (call .root.file_type_transition
+               (ARG1 file dir "opt"))
+         (call .root.file_type_transition
+               (ARG1 file dir "usr")))
+
+  (macro setattr_file_dirs ((type ARG1))
+         (allow ARG1 file (dir (setattr))))
+
+  (macro watch_file_dirs ((type ARG1))
+         (allow ARG1 file (dir (watch))))
+
+  (blockinherit .file.data.template)
+
+  (optional datafile_mount
+            (call .mount.mountpoint.type (file)))
+
+  (block search_file_pattern
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (call search_file_dirs (typeattr))
+
+    (call .root.search_file_pattern.type (typeattr)))
+
+  (block traverse_file_pattern
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (call read_file_lnk_files (typeattr))
+    (call search_file_pattern.type (typeattr))))
 
 (in file
 
     (block data
 
+      (macro dontaudit_mapexecute_all_files ((type ARG1))
+             (dontaudit ARG1 typeattr mapexecute_file))
+
+      (macro dontaudit_read_all_files ((type ARG1))
+             (dontaudit ARG1 typeattr read_file))
+
+      (macro dontaudit_search_all_dirs ((type ARG1))
+             (dontaudit ARG1 typeattr search_dir))
+
+      (macro getattr_all_files ((type ARG1))
+             (allow ARG1 typeattr (file (getattr))))
+
+      (macro map_all_files ((type ARG1))
+             (allow ARG1 typeattr (file (map))))
+
       (macro type ((type ARG1))
              (typeattributeset typeattr ARG1))
+
+      (macro watch_all_dirs ((type ARG1))
+             (allow ARG1 typeattr (dir (watch))))
+
+      (macro watch_all_files ((type ARG1))
+             (allow ARG1 typeattr (file (watch))))
 
       (blockinherit file.all_macro_template_dirs)
       (blockinherit file.all_macro_template_files)
@@ -38,3 +104,7 @@
         (blockinherit .file.macro_template_dirs)
         (blockinherit .file.macro_template_files)
         (blockinherit .file.macro_template_lnk_files))))
+
+(in file.unconfined
+
+    (call .data.root_file_type_transition_file (typeattr)))
