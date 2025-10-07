@@ -29,24 +29,24 @@
 (classpermission write_anon_inode)
 
 (classpermissionset append_anon_inode
-		    (anon_inode (append getattr ioctl lock open)))
+                    (anon_inode (append getattr ioctl lock open)))
 (classpermissionset create_anon_inode (anon_inode (create getattr)))
 (classpermissionset delete_anon_inode (anon_inode (getattr unlink)))
 (classpermissionset manage_anon_inode
-		    (anon_inode (append create getattr ioctl link lock open read
-					rename setattr unlink write)))
+                    (anon_inode (append create getattr ioctl link lock open read
+                                        rename setattr unlink write)))
 (classpermissionset mapexecute_anon_inode (anon_inode (execute map)))
 (classpermissionset mounton_anon_inode (anon_inode (getattr mounton)))
 (classpermissionset read_anon_inode (anon_inode (getattr ioctl lock open read)))
 (classpermissionset readwrite_anon_inode
-		    (anon_inode (append getattr ioctl lock open read write)))
+                    (anon_inode (append getattr ioctl lock open read write)))
 (classpermissionset relabel_anon_inode
-		    (anon_inode (getattr relabelfrom relabelto)))
+                    (anon_inode (getattr relabelfrom relabelto)))
 (classpermissionset relabelfrom_anon_inode (anon_inode (getattr relabelfrom)))
 (classpermissionset relabelto_anon_inode (anon_inode (getattr relabelto)))
 (classpermissionset rename_anon_inode (anon_inode (getattr rename)))
 (classpermissionset write_anon_inode
-		    (anon_inode (append getattr ioctl lock open write)))
+                    (anon_inode (append getattr ioctl lock open write)))
 
 (defaultrole anon_inode source)
 
@@ -92,7 +92,7 @@
 (block anon_inode
 
   (macro type ((type ARG1))
-	 (typeattributeset typeattr ARG1))
+         (typeattributeset typeattr ARG1))
 
   (typeattribute typeattr)
 
@@ -105,43 +105,43 @@
     (blockabstract all_macro_template_anon_inodes)
 
     (macro append_all_anon_inodes ((type ARG1))
-	   (allow ARG1 typeattr append_anon_inode))
+           (allow ARG1 typeattr append_anon_inode))
 
     (macro create_all_anon_inodes ((type ARG1))
-	   (allow ARG1 typeattr create_anon_inode))
+           (allow ARG1 typeattr create_anon_inode))
 
     (macro delete_all_anon_inodes ((type ARG1))
-	   (allow ARG1 typeattr delete_anon_inode))
+           (allow ARG1 typeattr delete_anon_inode))
 
     (macro manage_all_anon_inodes ((type ARG1))
-	   (allow ARG1 typeattr manage_anon_inode))
+           (allow ARG1 typeattr manage_anon_inode))
 
     (macro mapexecute_all_anon_inodes ((type ARG1))
-	   (allow ARG1 typeattr mapexecute_anon_inode))
+           (allow ARG1 typeattr mapexecute_anon_inode))
 
     (macro mounton_all_anon_inodes ((type ARG1))
-	   (allow ARG1 typeattr mounton_anon_inode))
+           (allow ARG1 typeattr mounton_anon_inode))
 
     (macro read_all_anon_inodes ((type ARG1))
-	   (allow ARG1 typeattr read_anon_inode))
+           (allow ARG1 typeattr read_anon_inode))
 
     (macro readwrite_all_anon_inodes ((type ARG1))
-	   (allow ARG1 typeattr readwrite_anon_inode))
+           (allow ARG1 typeattr readwrite_anon_inode))
 
     (macro relabel_all_anon_inodes ((type ARG1))
-	   (allow ARG1 typeattr relabel_anon_inode))
+           (allow ARG1 typeattr relabel_anon_inode))
 
     (macro relabelfrom_all_anon_inodes ((type ARG1))
-	   (allow ARG1 typeattr relabelfrom_anon_inode))
+           (allow ARG1 typeattr relabelfrom_anon_inode))
 
     (macro relabelto_all_anon_inodes ((type ARG1))
-	   (allow ARG1 typeattr relabelto_anon_inode))
+           (allow ARG1 typeattr relabelto_anon_inode))
 
     (macro rename_all_anon_inodes ((type ARG1))
-	   (allow ARG1 typeattr rename_anon_inode))
+           (allow ARG1 typeattr rename_anon_inode))
 
     (macro write_all_anon_inodes ((type ARG1))
-	   (allow ARG1 typeattr write_anon_inode)))
+           (allow ARG1 typeattr write_anon_inode)))
 
   (block base_template
 
@@ -153,19 +153,19 @@
   (block except
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (blockinherit anon_inode.all_macro_template_anon_inodes)
 
     (typeattribute typeattr)
 
     (typeattributeset typeattr
-		      (and anon_inode.typeattr (not (exception.typeattr)))))
+                      (and anon_inode.typeattr (not (exception.typeattr)))))
 
   (block exception
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute typeattr)
 
@@ -176,46 +176,46 @@
     (blockabstract macro_template_anon_inodes)
 
     (macro append_anon_inode_anon_inodes ((type ARG1))
-	   (allow ARG1 anon_inode append_anon_inode))
+           (allow ARG1 anon_inode append_anon_inode))
 
     (macro create_anon_inode_anon_inodes ((type ARG1))
-	   (allow ARG1 anon_inode create_anon_inode))
+           (allow ARG1 anon_inode create_anon_inode))
 
     (macro delete_anon_inode_anon_inodes ((type ARG1))
-	   (allow ARG1 anon_inode delete_anon_inode))
+           (allow ARG1 anon_inode delete_anon_inode))
 
     (macro manage_anon_inode_anon_inodes ((type ARG1))
-	   (allow ARG1 anon_inode manage_anon_inode))
+           (allow ARG1 anon_inode manage_anon_inode))
 
     (macro mapexecute_anon_inode_anon_inodes ((type ARG1))
-	   (allow ARG1 anon_inode mapexecute_anon_inode))
+           (allow ARG1 anon_inode mapexecute_anon_inode))
 
     (macro mounton_anon_inode_anon_inodes ((type ARG1))
-	   (allow ARG1 anon_inode mounton_anon_inode))
+           (allow ARG1 anon_inode mounton_anon_inode))
 
     (macro read_anon_inode_anon_inodes ((type ARG1))
-	   (allow ARG1 anon_inode read_anon_inode))
+           (allow ARG1 anon_inode read_anon_inode))
 
     (macro readwrite_anon_inode_anon_inodes ((type ARG1))
-	   (allow ARG1 anon_inode readwrite_anon_inode))
+           (allow ARG1 anon_inode readwrite_anon_inode))
 
     (macro relabel_anon_inode_anon_inodes ((type ARG1))
-	   (allow ARG1 anon_inode relabel_anon_inode))
+           (allow ARG1 anon_inode relabel_anon_inode))
 
     (macro relabelfrom_anon_inode_anon_inodes ((type ARG1))
-	   (allow ARG1 anon_inode relabelfrom_anon_inode))
+           (allow ARG1 anon_inode relabelfrom_anon_inode))
 
     (macro relabelto_anon_inode_anon_inodes ((type ARG1))
-	   (allow ARG1 anon_inode relabelto_anon_inode))
+           (allow ARG1 anon_inode relabelto_anon_inode))
 
     (macro rename_anon_inode_anon_inodes ((type ARG1))
-	   (allow ARG1 anon_inode rename_anon_inode))
+           (allow ARG1 anon_inode rename_anon_inode))
 
     (macro self_type_transition ((type ARG1)(type ARG2)(name ARG3))
-	   (typetransition ARG1 ARG1 anon_inode ARG3 ARG2))
+           (typetransition ARG1 ARG1 anon_inode ARG3 ARG2))
 
     (macro write_anon_inode_anon_inodes ((type ARG1))
-	   (allow ARG1 anon_inode write_anon_inode)))
+           (allow ARG1 anon_inode write_anon_inode)))
 
   (block template
 
@@ -227,23 +227,23 @@
   (block unconfined
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute typeattr)
 
     (allow typeattr anon_inode.typeattr
-	   (anon_inode (not (audit_access execmod mounton))))))
+           (anon_inode (not (audit_access execmod mounton))))))
 
 (in invalid.unconfined
 
     (allow typeattr .invalid
-	   (anon_inode (not (audit_access create execmod mounton)))))
+           (anon_inode (not (audit_access create execmod mounton)))))
 
 (in subj.unconfined
 
     (allow typeattr self (anon_inode (create)))
     (allow typeattr subj.typeattr
-	   (anon_inode (not (audit_access create execmod mounton)))))
+           (anon_inode (not (audit_access create execmod mounton)))))
 
 (in unconfined
 

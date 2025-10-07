@@ -19,16 +19,16 @@
 (classcommon capability2 common_capability2)
 
 (common common_capability
-	(audit_control audit_write chown dac_read_search dac_override fowner
-		       fsetid ipc_lock ipc_owner kill linux_immutable lease
-		       mknod net_admin net_bind_service net_broadcast net_raw
-		       setfcap setgid setpcap setuid sys_admin sys_boot
-		       sys_chroot sys_module sys_nice sys_pacct sys_ptrace
-		       sys_rawio sys_resource sys_time sys_tty_config))
+        (audit_control audit_write chown dac_read_search dac_override fowner
+                       fsetid ipc_lock ipc_owner kill linux_immutable lease
+                       mknod net_admin net_bind_service net_broadcast net_raw
+                       setfcap setgid setpcap setuid sys_admin sys_boot
+                       sys_chroot sys_module sys_nice sys_pacct sys_ptrace
+                       sys_rawio sys_resource sys_time sys_tty_config))
 
 (common common_capability2
-	(audit_read block_suspend bpf checkpoint_restore mac_admin mac_override
-		    perfmon syslog wake_alarm))
+        (audit_read block_suspend bpf checkpoint_restore mac_admin mac_override
+                    perfmon syslog wake_alarm))
 
 (in subj.unconfined
 

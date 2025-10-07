@@ -4,10 +4,10 @@
 (block loginserialtermdev
 
   (macro all_type_change ((type ARG1)(type ARG2))
-	 (typechange ARG1 typeattr chr_file ARG2))
+         (typechange ARG1 typeattr chr_file ARG2))
 
   (macro type ((type ARG1))
-	 (typeattributeset typeattr ARG1))
+         (typeattributeset typeattr ARG1))
 
   (typeattribute typeattr)
 
@@ -28,7 +28,7 @@
     (blockabstract template)
 
     (macro serialtermdev_type_change ((type ARG1)(type ARG2))
-	   (typechange ARG1 serialtermdev chr_file ARG2))
+           (typechange ARG1 serialtermdev chr_file ARG2))
 
     (blockinherit .loginserialtermdev.base_template)
     (blockinherit .serialtermdev.macro_template_chr_files)))

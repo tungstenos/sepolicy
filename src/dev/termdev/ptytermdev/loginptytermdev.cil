@@ -4,10 +4,10 @@
 (block loginptytermdev
 
   (macro all_type_change ((type ARG1)(type ARG2))
-	 (typechange ARG1 typeattr chr_file ARG2))
+         (typechange ARG1 typeattr chr_file ARG2))
 
   (macro type ((type ARG1))
-	 (typeattributeset typeattr ARG1))
+         (typeattributeset typeattr ARG1))
 
   (typeattribute typeattr)
 
@@ -28,7 +28,7 @@
     (blockabstract template)
 
     (macro ptytermdev_type_change ((type ARG1)(type ARG2))
-	   (typechange ARG1 ptytermdev chr_file ARG2))
+           (typechange ARG1 ptytermdev chr_file ARG2))
 
     (blockinherit .loginptytermdev.base_template)
     (blockinherit .ptytermdev.macro_template_chr_files)))

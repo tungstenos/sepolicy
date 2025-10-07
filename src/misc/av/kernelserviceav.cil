@@ -22,14 +22,14 @@
       (blockabstract all_macro_template_kernel_services)
 
       (macro createfileas_all_kernel_services ((type ARG1))
-	     (allow ARG1 typeattr (kernel_service (create_files_as)))))
+             (allow ARG1 typeattr (kernel_service (create_files_as)))))
 
     (block macro_template_kernel_services
 
       (blockabstract macro_template_kernel_services)
 
       (macro createfileas_file_kernel_services ((type ARG1))
-	     (allow ARG1 file (kernel_service (create_files_as))))))
+             (allow ARG1 file (kernel_service (create_files_as))))))
 
 (in file.unconfined
 

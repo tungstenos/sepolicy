@@ -10,7 +10,7 @@
     (block cert
 
       (macro type ((type ARG1))
-	     (typeattributeset typeattr ARG1))
+             (typeattributeset typeattr ARG1))
 
       (blockinherit file.all_macro_template_dirs)
       (blockinherit file.all_macro_template_files)
@@ -24,17 +24,17 @@
 
       (block base_template
 
-	(blockabstract base_template)
+        (blockabstract base_template)
 
-	(blockinherit .file.base_template)
+        (blockinherit .file.base_template)
 
-	(call .file.cert.type (file)))
+        (call .file.cert.type (file)))
 
       (block template
 
-	(blockabstract template)
+        (blockabstract template)
 
-	(blockinherit .file.cert.base_template)
-	(blockinherit .file.macro_template_dirs)
-	(blockinherit .file.macro_template_files)
-	(blockinherit .file.macro_template_lnk_files))))
+        (blockinherit .file.cert.base_template)
+        (blockinherit .file.macro_template_dirs)
+        (blockinherit .file.macro_template_files)
+        (blockinherit .file.macro_template_lnk_files))))

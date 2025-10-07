@@ -8,7 +8,7 @@
   (block anon_inode
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute typeattr)
 
@@ -27,11 +27,11 @@
     (block template
 
       (macro map_anon_inode_anon_inodes ((type ARG1))
-	     (allow ARG1 anon_inode (anon_inode (map))))
+             (allow ARG1 anon_inode (anon_inode (map))))
 
       (macro self_type_transition_anon_inode ((type ARG1))
-	     (call self_type_transition
-		   (ARG1 anon_inode "[io_uring]")))
+             (call self_type_transition
+                   (ARG1 anon_inode "[io_uring]")))
 
       (blockabstract template)
 

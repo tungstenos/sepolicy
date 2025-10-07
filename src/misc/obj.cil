@@ -4,10 +4,10 @@
 (block obj
 
   (macro role ((role ARG1))
-	 (roleattributeset roleattr ARG1))
+         (roleattributeset roleattr ARG1))
 
   (macro type ((type ARG1))
-	 (typeattributeset typeattr ARG1))
+         (typeattributeset typeattr ARG1))
 
   (roleattribute roleattr)
 

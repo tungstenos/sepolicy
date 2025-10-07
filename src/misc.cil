@@ -9,8 +9,8 @@
     (filecon "/boot/.*" any file_context)
 
     (macro root_file_type_transition_file ((type ARG1))
-	   (call .root.file_type_transition
-		 (ARG1 file dir "boot"))))
+           (call .root.file_type_transition
+                 (ARG1 file dir "boot"))))
 
 (in bpf
 
@@ -23,8 +23,8 @@
     (filecon "/var/cache/.*" any file_context)
 
     (macro var_file_type_transition_file ((type ARG1))
-	   (call .var.file_type_transition
-		 (ARG1 file dir "cache")))
+           (call .var.file_type_transition
+                 (ARG1 file dir "cache")))
 
     (call .root.associate_fs (file)))
 
@@ -43,18 +43,18 @@
     (filecon "/usr/share/ca-certificates/.*" any file_context)
 
     (macro conf_file_type_transition_file ((type ARG1))
-	   (call .conf.file_type_transition
-		 (ARG1 file dir "ca-certificates"))
-	   (call .conf.file_type_transition
-		 (ARG1 file dir "ssl"))
-	   (call .conf.file_type_transition
-		 (ARG1 file file "ca-certificates.conf"))
-	   (call .conf.file_type_transition
-		 (ARG1 file file "ca-certificates.conf.dpkg-new")))
+           (call .conf.file_type_transition
+                 (ARG1 file dir "ca-certificates"))
+           (call .conf.file_type_transition
+                 (ARG1 file dir "ssl"))
+           (call .conf.file_type_transition
+                 (ARG1 file file "ca-certificates.conf"))
+           (call .conf.file_type_transition
+                 (ARG1 file file "ca-certificates.conf.dpkg-new")))
 
     (macro data_file_type_transition_file ((type ARG1))
-	   (call .data.file_type_transition
-		 (ARG1 file dir "ca-certificates"))))
+           (call .data.file_type_transition
+                 (ARG1 file dir "ca-certificates"))))
 
 (in cgroup
 
@@ -73,12 +73,12 @@
     (filecon "/etc/.*" any file_context)
 
     (macro data_file_type_transition_file ((type ARG1))
-	   (call .data.file_type_transition
-		 (ARG1 file dir "etc")))
+           (call .data.file_type_transition
+                 (ARG1 file dir "etc")))
 
     (macro root_file_type_transition_file ((type ARG1))
-	   (call .root.file_type_transition
-		 (ARG1 file dir "etc"))))
+           (call .root.file_type_transition
+                 (ARG1 file dir "etc"))))
 
 (in config
 
@@ -96,10 +96,10 @@
     (filecon "/tmp" symlink file_context)
 
     (macro root_file_type_transition_file ((type ARG1))
-	   (call .root.file_type_transition
-		 (ARG1 file dir "opt"))
-	   (call .root.file_type_transition
-		 (ARG1 file dir "usr"))))
+           (call .root.file_type_transition
+                 (ARG1 file dir "opt"))
+           (call .root.file_type_transition
+                 (ARG1 file dir "usr"))))
 
 (in db
 
@@ -107,8 +107,8 @@
     (filecon "/var/db/.*" any file_context)
 
     (macro var_file_type_transition_file ((type ARG1))
-	   (call .var.file_type_transition
-		 (ARG1 file dir "db"))))
+           (call .var.file_type_transition
+                 (ARG1 file dir "db"))))
 
 (in debug
 
@@ -127,8 +127,8 @@
     (filecon "/dev/.*" symlink file_context)
 
     (macro root_file_type_transition_file ((type ARG1))
-	   (call .root.file_type_transition
-		 (ARG1 file dir "dev")))
+           (call .root.file_type_transition
+                 (ARG1 file dir "dev")))
 
     (call .tmp.associate_fs (typeattr))
 
@@ -154,12 +154,12 @@
     (filecon "/efi/.*" any ())
 
     (macro boot_file_type_transition_fs ((type ARG1))
-	   (call .boot.file_type_transition
-		 (ARG1 fs dir "efi")))
+           (call .boot.file_type_transition
+                 (ARG1 fs dir "efi")))
 
     (macro root_file_type_transition_fs ((type ARG1))
-	   (call .root.file_type_transition
-		 (ARG1 fs dir "efi")))
+           (call .root.file_type_transition
+                 (ARG1 fs dir "efi")))
 
     (call .xattr.associate_fs (fs)))
 
@@ -174,18 +174,18 @@
     (filecon "/usr/bin/.*" any file_context)
 
     (macro data_file_type_transition_file ((type ARG1))
-	   (call .data.file_type_transition
-		 (ARG1 file dir "bin"))
-	   (call .data.file_type_transition
-		 (ARG1 file dir "libexec"))
-	   (call .data.file_type_transition
-		 (ARG1 file dir "sbin")))
+           (call .data.file_type_transition
+                 (ARG1 file dir "bin"))
+           (call .data.file_type_transition
+                 (ARG1 file dir "libexec"))
+           (call .data.file_type_transition
+                 (ARG1 file dir "sbin")))
 
     (macro root_file_type_transition_file ((type ARG1))
-	   (call .root.file_type_transition
-		 (ARG1 file dir "bin"))
-	   (call .root.file_type_transition
-		 (ARG1 file dir "sbin"))))
+           (call .root.file_type_transition
+                 (ARG1 file dir "bin"))
+           (call .root.file_type_transition
+                 (ARG1 file dir "sbin"))))
 
 (in file.run
 
@@ -250,8 +250,8 @@
     (filecon "/usr/lib/firmware/.*" any file_context)
 
     (macro lib_file_type_transition_file ((type ARG1))
-	   (call .lib.file_type_transition
-		 (ARG1 file dir "firmware"))))
+           (call .lib.file_type_transition
+                 (ARG1 file dir "firmware"))))
 
 (in fs.unconfined
 
@@ -271,8 +271,8 @@
     (filecon "/home/.*" any file_context)
 
     (macro root_file_type_transition_file ((type ARG1))
-	   (call .root.file_type_transition
-		 (ARG1 file dir "home"))))
+           (call .root.file_type_transition
+                 (ARG1 file dir "home"))))
 
 (in hugetlb
 
@@ -287,16 +287,16 @@
     (filecon "/usr/lib/.*" any file_context)
 
     (macro data_file_type_transition_file ((type ARG1))
-	   (call .data.file_type_transition
-		 (ARG1 file dir "lib"))
-	   (call .data.file_type_transition
-		 (ARG1 file dir "lib64")))
+           (call .data.file_type_transition
+                 (ARG1 file dir "lib"))
+           (call .data.file_type_transition
+                 (ARG1 file dir "lib64")))
 
     (macro root_file_type_transition_file ((type ARG1))
-	   (call .root.file_type_transition
-		 (ARG1 file dir "lib"))
-	   (call .root.file_type_transition
-		 (ARG1 file dir "lib64"))))
+           (call .root.file_type_transition
+                 (ARG1 file dir "lib"))
+           (call .root.file_type_transition
+                 (ARG1 file dir "lib64"))))
 
 (in log
 
@@ -304,8 +304,8 @@
     (filecon "/var/log/.*" any file_context)
 
     (macro var_file_type_transition_file ((type ARG1))
-	   (call .var.file_type_transition
-		 (ARG1 file dir "log")))
+           (call .var.file_type_transition
+                 (ARG1 file dir "log")))
 
     (call .tmp.associate_fs (file)))
 
@@ -366,56 +366,56 @@
     (filecon "/var/tmp/lost\+found" dir file_context)
 
     (macro boot_file_type_transition_file ((type ARG1))
-	   (call .boot.file_type_transition
-		 (ARG1 file dir "lost+found")))
+           (call .boot.file_type_transition
+                 (ARG1 file dir "lost+found")))
 
     (macro cache_file_type_transition_file ((type ARG1))
-	   (call .cache.file_type_transition
-		 (ARG1 file dir "lost+found")))
+           (call .cache.file_type_transition
+                 (ARG1 file dir "lost+found")))
 
     (macro conf_file_type_transition_file ((type ARG1))
-	   (call .conf.file_type_transition
-		 (ARG1 file dir "lost+found")))
+           (call .conf.file_type_transition
+                 (ARG1 file dir "lost+found")))
 
     (macro data_file_type_transition_file ((type ARG1))
-	   (call .data.file_type_transition
-		 (ARG1 file dir "lost+found")))
+           (call .data.file_type_transition
+                 (ARG1 file dir "lost+found")))
 
     (macro db_file_type_transition_file ((type ARG1))
-	   (call .db.file_type_transition
-		 (ARG1 file dir "lost+found")))
+           (call .db.file_type_transition
+                 (ARG1 file dir "lost+found")))
 
     (macro home_file_type_transition_file ((type ARG1))
-	   (call .home.file_type_transition
-		 (ARG1 file dir "lost+found")))
+           (call .home.file_type_transition
+                 (ARG1 file dir "lost+found")))
 
     (macro log_file_type_transition_file ((type ARG1))
-	   (call .log.file_type_transition
-		 (ARG1 file dir "lost+found")))
+           (call .log.file_type_transition
+                 (ARG1 file dir "lost+found")))
 
     (macro root_file_type_transition_file ((type ARG1))
-	   (call .root.file_type_transition
-		 (ARG1 file dir "lost+found")))
+           (call .root.file_type_transition
+                 (ARG1 file dir "lost+found")))
 
     (macro run_file_type_transition_file ((type ARG1))
-	   (call .run.file_type_transition
-		 (ARG1 file dir "lost+found")))
+           (call .run.file_type_transition
+                 (ARG1 file dir "lost+found")))
 
     (macro spool_file_type_transition_file ((type ARG1))
-	   (call .spool.file_type_transition
-		 (ARG1 file dir "lost+found")))
+           (call .spool.file_type_transition
+                 (ARG1 file dir "lost+found")))
 
     (macro state_file_type_transition_file ((type ARG1))
-	   (call .state.file_type_transition
-		 (ARG1 file dir "lost+found")))
+           (call .state.file_type_transition
+                 (ARG1 file dir "lost+found")))
 
     (macro tmp_file_type_transition_file ((type ARG1))
-	   (call .tmp.file_type_transition
-		 (ARG1 file dir "lost+found")))
+           (call .tmp.file_type_transition
+                 (ARG1 file dir "lost+found")))
 
     (macro var_file_type_transition_file ((type ARG1))
-	   (call .var.file_type_transition
-		 (ARG1 file dir "lost+found"))))
+           (call .var.file_type_transition
+                 (ARG1 file dir "lost+found"))))
 
 (in mail.spool
 
@@ -423,12 +423,12 @@
     (filecon "/var/spool/mail/.*" any file_context)
 
     (macro spool_file_type_transition_file ((type ARG1))
-	   (call .spool.file_type_transition
-		 (ARG1 file dir "mail")))
+           (call .spool.file_type_transition
+                 (ARG1 file dir "mail")))
 
     (macro var_file_type_transition_file ((type ARG1))
-	   (call .var.file_type_transition
-		 (ARG1 file dir "mail"))))
+           (call .var.file_type_transition
+                 (ARG1 file dir "mail"))))
 
 (in media
 
@@ -443,14 +443,14 @@
     (filecon "/run/media/.*" any ())
 
     (macro root_file_type_transition_file ((type ARG1))
-	   (call .root.file_type_transition
-		 (ARG1 file dir "media"))
-	   (call .root.file_type_transition
-		 (ARG1 file dir "mnt")))
+           (call .root.file_type_transition
+                 (ARG1 file dir "media"))
+           (call .root.file_type_transition
+                 (ARG1 file dir "mnt")))
 
     (macro run_file_type_transition_file ((type ARG1))
-	   (call .run.file_type_transition
-		 (ARG1 file dir "media")))
+           (call .run.file_type_transition
+                 (ARG1 file dir "media")))
 
     (call .tmp.associate_fs (file)))
 
@@ -460,8 +460,8 @@
     (filecon "/usr/lib/modules/.*" any file_context)
 
     (macro lib_file_type_transition_file ((type ARG1))
-	   (call .lib.file_type_transition
-		 (ARG1 file dir "modules"))))
+           (call .lib.file_type_transition
+                 (ARG1 file dir "modules"))))
 
 (in mqueue
 
@@ -476,8 +476,8 @@
     (filecon "/proc/.*" any ())
 
     (macro root_file_type_transition_fs ((type ARG1))
-	   (call .root.file_type_transition
-		 (ARG1 fs dir "proc")))
+           (call .root.file_type_transition
+                 (ARG1 fs dir "proc")))
 
     (call .xattr.associate_fs (fs)))
 
@@ -504,12 +504,12 @@
     (filecon "/run/.*" any file_context)
 
     (macro root_file_type_transition_file ((type ARG1))
-	   (call .root.file_type_transition
-		 (ARG1 file dir "run")))
+           (call .root.file_type_transition
+                 (ARG1 file dir "run")))
 
     (macro var_file_type_transition_file ((type ARG1))
-	   (call .var.file_type_transition
-		 (ARG1 file dir "run")))
+           (call .var.file_type_transition
+                 (ARG1 file dir "run")))
 
     (call .root.associate_fs (file)))
 
@@ -521,12 +521,12 @@
     (filecon "/run/lock/subsys" dir file_context)
 
     (macro run_file_type_transition_file ((type ARG1))
-	   (call .run.file_type_transition
-		 (ARG1 file dir "lock")))
+           (call .run.file_type_transition
+                 (ARG1 file dir "lock")))
 
     (macro var_file_type_transition_file ((type ARG1))
-	   (call .var.file_type_transition
-		 (ARG1 file dir "lock"))))
+           (call .var.file_type_transition
+                 (ARG1 file dir "lock"))))
 
 (in runuser
 
@@ -534,8 +534,8 @@
     (filecon "/run/user/.*" any file_context)
 
     (macro run_file_type_transition_file ((type ARG1))
-	   (call .run.file_type_transition
-		 (ARG1 file dir "user"))))
+           (call .run.file_type_transition
+                 (ARG1 file dir "user"))))
 
 (in security
 
@@ -553,8 +553,8 @@
     (filecon "/var/spool/.*" any file_context)
 
     (macro var_file_type_transition_file ((type ARG1))
-	   (call .var.file_type_transition
-		 (ARG1 file dir "spool"))))
+           (call .var.file_type_transition
+                 (ARG1 file dir "spool"))))
 
 (in src
 
@@ -562,8 +562,8 @@
     (filecon "/usr/src/.*" any file_context)
 
     (macro data_file_type_transition_file ((type ARG1))
-	   (call .data.file_type_transition
-		 (ARG1 file dir "src"))))
+           (call .data.file_type_transition
+                 (ARG1 file dir "src"))))
 
 (in state
 
@@ -571,8 +571,8 @@
     (filecon "/var/lib/.*" any file_context)
 
     (macro var_file_type_transition_file ((type ARG1))
-	   (call .var.file_type_transition
-		 (ARG1 file dir "lib")))
+           (call .var.file_type_transition
+                 (ARG1 file dir "lib")))
 
     (call .root.associate_fs (file)))
 
@@ -582,8 +582,8 @@
     (filecon "/sys/.*" any ())
 
     (macro root_file_type_transition_fs ((type ARG1))
-	   (call .root.file_type_transition
-		 (ARG1 fs dir "sys")))
+           (call .root.file_type_transition
+                 (ARG1 fs dir "sys")))
 
     (allow fs self (filesystem (associate)))
 
@@ -613,32 +613,32 @@
     (filecon "/root/.*" any file_context)
 
     (macro root_file_type_transition_file ((type ARG1))
-	   (call .root.fs_type_transition
-		 (ARG1 file dir "root"))))
+           (call .root.fs_type_transition
+                 (ARG1 file dir "root"))))
 
 (in sys.hugetlbfs
 
     (macro hugetlb_fs_type_transition_file ((type ARG1)(name ARG2))
-	   (call .hugetlb.fs_type_transition
-		 (ARG1 file file ARG2))))
+           (call .hugetlb.fs_type_transition
+                 (ARG1 file file ARG2))))
 
 (in sys.mqueuefs
 
     (macro mqueue_fs_type_transition_file ((type ARG1)(name ARG2))
-	   (call .mqueue.fs_type_transition
-		 (ARG1 file file ARG2))))
+           (call .mqueue.fs_type_transition
+                 (ARG1 file file ARG2))))
 
 (in sys.tmp
 
     (macro tmp_file_type_transition_file ((type ARG1)(class ARG2)(name ARG3))
-	   (call .tmp.file_type_transition
-		 (ARG1 file ARG2 ARG3))))
+           (call .tmp.file_type_transition
+                 (ARG1 file ARG2 ARG3))))
 
 (in sys.tmpfs
 
     (macro tmp_fs_type_transition_file ((type ARG1)(class ARG2)(name ARG3))
-	   (call .tmp.fs_type_transition
-		 (ARG1 file ARG2 ARG3))))
+           (call .tmp.fs_type_transition
+                 (ARG1 file ARG2 ARG3))))
 
 (in sys.unconfined
 
@@ -666,20 +666,20 @@
     (filecon "/tmp/\.XIM-unix/.*" any ())
 
     (macro data_file_type_transition_file ((type ARG1))
-	   (call .data.file_type_transition
-		 (ARG1 file dir "tmp")))
+           (call .data.file_type_transition
+                 (ARG1 file dir "tmp")))
 
     (macro root_file_type_transition_file ((type ARG1))
-	   (call .root.file_type_transition
-		 (ARG1 file dir "tmp")))
+           (call .root.file_type_transition
+                 (ARG1 file dir "tmp")))
 
     (macro sys_tmp_file_type_transition_file ((type ARG1))
-	   (call .sys.tmp.file_type_transition
-		 (ARG1 file dir "tmp")))
+           (call .sys.tmp.file_type_transition
+                 (ARG1 file dir "tmp")))
 
     (macro var_file_type_transition_file ((type ARG1))
-	   (call .var.file_type_transition
-		 (ARG1 file dir "tmp")))
+           (call .var.file_type_transition
+                 (ARG1 file dir "tmp")))
 
     (allow fs self (filesystem (associate)))
 
@@ -704,10 +704,10 @@
     (filecon "/var/spool/mail" symlink file_context)
 
     (macro root_file_type_transition_file ((type ARG1))
-	   (call .root.file_type_transition
-		 (ARG1 file dir "srv"))
-	   (call .root.file_type_transition
-		 (ARG1 file dir "var"))))
+           (call .root.file_type_transition
+                 (ARG1 file dir "srv"))
+           (call .root.file_type_transition
+                 (ARG1 file dir "var"))))
 
 (typealias dpkg_script_t)
 

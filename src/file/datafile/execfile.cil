@@ -12,25 +12,25 @@
     (block exec
 
       (macro entrypoint_all_files ((type ARG1))
-	     (allow ARG1 typeattr (file (entrypoint))))
+             (allow ARG1 typeattr (file (entrypoint))))
 
       (macro getattr_all_files ((type ARG1))
-	     (allow ARG1 typeattr (file (getattr))))
+             (allow ARG1 typeattr (file (getattr))))
 
       (macro map_all_files ((type ARG1))
-	     (allow ARG1 typeattr (file (map))))
+             (allow ARG1 typeattr (file (map))))
 
       (macro subj_range_transition ((type ARG1)(levelrange ARG2))
-	     (rangetransition ARG1 typeattr process ARG2))
+             (rangetransition ARG1 typeattr process ARG2))
 
       (macro subj_role_transition ((role ARG1)(role ARG2))
-	     (roletransition ARG1 typeattr process ARG2))
+             (roletransition ARG1 typeattr process ARG2))
 
       (macro subj_type_transition ((type ARG1)(type ARG2))
-	     (typetransition ARG1 typeattr process ARG2))
+             (typetransition ARG1 typeattr process ARG2))
 
       (macro type ((type ARG1))
-	     (typeattributeset typeattr ARG1))
+             (typeattributeset typeattr ARG1))
 
       (blockinherit file.all_macro_template_files)
 
@@ -42,33 +42,33 @@
 
       (block base_template
 
-	(blockabstract base_template)
+        (blockabstract base_template)
 
-	(blockinherit .file.base_template)
+        (blockinherit .file.base_template)
 
-	(call .file.exec.type (file)))
+        (call .file.exec.type (file)))
 
       (block template
 
-	(blockabstract template)
+        (blockabstract template)
 
-	(macro entrypoint_file_files ((type ARG1))
-	       (allow ARG1 file (file (entrypoint))))
+        (macro entrypoint_file_files ((type ARG1))
+               (allow ARG1 file (file (entrypoint))))
 
-	(macro getattr_file_files ((type ARG1))
-	       (allow ARG1 file (file (getattr))))
+        (macro getattr_file_files ((type ARG1))
+               (allow ARG1 file (file (getattr))))
 
-	(macro map_file_files ((type ARG1))
-	       (allow ARG1 file (file (map))))
+        (macro map_file_files ((type ARG1))
+               (allow ARG1 file (file (map))))
 
-	(macro subj_range_transition ((type ARG1)(levelrange ARG2))
-	       (rangetransition ARG1 file process ARG2))
+        (macro subj_range_transition ((type ARG1)(levelrange ARG2))
+               (rangetransition ARG1 file process ARG2))
 
-	(macro subj_role_transition ((role ARG1)(role ARG2))
-	       (roletransition ARG1 file process ARG2))
+        (macro subj_role_transition ((role ARG1)(role ARG2))
+               (roletransition ARG1 file process ARG2))
 
-	(macro subj_type_transition ((type ARG1)(type ARG2))
-	       (typetransition ARG1 file process ARG2))
+        (macro subj_type_transition ((type ARG1)(type ARG2))
+               (typetransition ARG1 file process ARG2))
 
-	(blockinherit .file.exec.base_template)
-	(blockinherit .file.macro_template_files))))
+        (blockinherit .file.exec.base_template)
+        (blockinherit .file.macro_template_files))))

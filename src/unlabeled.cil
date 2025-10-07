@@ -359,23 +359,23 @@
   (block unconfined
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute typeattr)
 
     (allow typeattr .unlabeled
-	   (blk_file (not (audit_access execmod map mounton relabelto))))
+           (blk_file (not (audit_access execmod map mounton relabelto))))
     (allow typeattr .unlabeled
-	   (chr_file (not (audit_access execmod mounton relabelto))))
+           (chr_file (not (audit_access execmod mounton relabelto))))
     (allow typeattr .unlabeled (dir (not (audit_access execmod relabelto))))
     (allow typeattr .unlabeled
-	   (fifo_file (not (audit_access execmod map mounton relabelto))))
+           (fifo_file (not (audit_access execmod map mounton relabelto))))
     (allow typeattr .unlabeled
-	   (file (not (audit_access entrypoint execmod relabelto))))
+           (file (not (audit_access entrypoint execmod relabelto))))
     (allow typeattr .unlabeled
-	   (lnk_file (not (audit_access execmod map mounton relabelto))))
+           (lnk_file (not (audit_access execmod map mounton relabelto))))
     (allow typeattr .unlabeled
-	   (sock_file (not (audit_access execmod map mounton relabelto))))))
+           (sock_file (not (audit_access execmod map mounton relabelto))))))
 
 (in unconfined
 

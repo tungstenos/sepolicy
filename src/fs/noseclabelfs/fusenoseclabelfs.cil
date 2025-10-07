@@ -8,7 +8,7 @@
     (genfscon "fusectl" "/" fs_context)
 
     (macro map_fs_files ((type ARG1))
-	   (allow ARG1 fs (file (map))))
+           (allow ARG1 fs (file (map))))
 
     (blockinherit .fs.macro_template_lnk_files)
     (blockinherit .noseclabelfs.template)

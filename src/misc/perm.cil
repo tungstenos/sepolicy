@@ -129,20 +129,20 @@
 (classpermission writeinherited_sock_file)
 
 (classpermissionset addname_dir
-		    (dir (add_name getattr ioctl lock open read search write)))
+                    (dir (add_name getattr ioctl lock open read search write)))
 
 (classpermissionset append_blk_file (blk_file (append getattr ioctl lock open)))
 (classpermissionset append_chr_file (chr_file (append getattr ioctl lock open)))
 (classpermissionset append_fifo_file
-		    (fifo_file (append getattr ioctl lock open)))
+                    (fifo_file (append getattr ioctl lock open)))
 (classpermissionset append_file (file (append getattr ioctl lock open)))
 
 (classpermissionset appendinherited_blk_file
-		    (blk_file (append getattr ioctl lock)))
+                    (blk_file (append getattr ioctl lock)))
 (classpermissionset appendinherited_chr_file
-		    (chr_file (append getattr ioctl lock)))
+                    (chr_file (append getattr ioctl lock)))
 (classpermissionset appendinherited_fifo_file
-		    (fifo_file (append getattr ioctl lock)))
+                    (fifo_file (append getattr ioctl lock)))
 (classpermissionset appendinherited_file (file (append getattr ioctl lock)))
 
 (classpermissionset create_blk_file (blk_file (create getattr)))
@@ -162,39 +162,39 @@
 (classpermissionset delete_sock_file (sock_file (getattr unlink)))
 
 (classpermissionset deletename_dir
-		    (dir (getattr ioctl lock open read remove_name search
-				  write)))
+                    (dir (getattr ioctl lock open read remove_name search
+                                  write)))
 
 (classpermissionset execute_file
-		    (file (execute execute_no_trans getattr ioctl map open
-				   read)))
+                    (file (execute execute_no_trans getattr ioctl map open
+                                   read)))
 
 (classpermissionset list_dir (dir (getattr ioctl lock open read search)))
 
 (classpermissionset listinherited_dir (dir (getattr ioctl lock read search)))
 
 (classpermissionset manage_blk_file
-		    (blk_file (append create getattr ioctl link lock open read
-				      rename setattr unlink write)))
+                    (blk_file (append create getattr ioctl link lock open read
+                                      rename setattr unlink write)))
 (classpermissionset manage_chr_file
-		    (chr_file (append create getattr ioctl link lock open read
-				      rename setattr unlink write)))
+                    (chr_file (append create getattr ioctl link lock open read
+                                      rename setattr unlink write)))
 (classpermissionset manage_dir
-		    (dir (add_name create getattr ioctl link lock open read
-				   setattr remove_name rename reparent rmdir
-				   search write)))
+                    (dir (add_name create getattr ioctl link lock open read
+                                   setattr remove_name rename reparent rmdir
+                                   search write)))
 (classpermissionset manage_fifo_file
-		    (fifo_file (append create getattr ioctl link lock open read
-				       rename setattr unlink write)))
+                    (fifo_file (append create getattr ioctl link lock open read
+                                       rename setattr unlink write)))
 (classpermissionset manage_file
-		    (file (append create getattr ioctl link lock open read
-				  rename setattr unlink write)))
+                    (file (append create getattr ioctl link lock open read
+                                  rename setattr unlink write)))
 (classpermissionset manage_lnk_file
-		    (lnk_file (append create getattr link lock read rename
-				      setattr unlink write)))
+                    (lnk_file (append create getattr link lock read rename
+                                      setattr unlink write)))
 (classpermissionset manage_sock_file
-		    (sock_file (append create getattr ioctl link lock open read
-				       rename setattr unlink write)))
+                    (sock_file (append create getattr ioctl link lock open read
+                                       rename setattr unlink write)))
 
 (classpermissionset mapexecute_chr_file (chr_file (execute map)))
 (classpermissionset mapexecute_file (file (execute map)))
@@ -213,50 +213,50 @@
 (classpermissionset readinherited_blk_file (blk_file (getattr ioctl lock read)))
 (classpermissionset readinherited_chr_file (chr_file (getattr ioctl lock read)))
 (classpermissionset readinherited_fifo_file
-		    (fifo_file (getattr ioctl lock read)))
+                    (fifo_file (getattr ioctl lock read)))
 (classpermissionset readinherited_file (file (getattr ioctl lock read)))
 (classpermissionset readinherited_sock_file
-		    (sock_file (getattr ioctl lock read)))
+                    (sock_file (getattr ioctl lock read)))
 
 (classpermissionset readwrite_blk_file
-		    (blk_file (append getattr ioctl lock open read write)))
+                    (blk_file (append getattr ioctl lock open read write)))
 (classpermissionset readwrite_chr_file
-		    (chr_file (append getattr ioctl lock open read write)))
+                    (chr_file (append getattr ioctl lock open read write)))
 (classpermissionset readwrite_dir
-		    (dir (add_name getattr ioctl lock open read remove_name
-				   search write)))
+                    (dir (add_name getattr ioctl lock open read remove_name
+                                   search write)))
 (classpermissionset readwrite_fifo_file
-		    (fifo_file (append getattr ioctl lock open read write)))
+                    (fifo_file (append getattr ioctl lock open read write)))
 (classpermissionset readwrite_file
-		    (file (append getattr ioctl lock open read write)))
+                    (file (append getattr ioctl lock open read write)))
 (classpermissionset readwrite_lnk_file
-		    (lnk_file (append getattr lock read write)))
+                    (lnk_file (append getattr lock read write)))
 (classpermissionset readwrite_sock_file
-		    (sock_file (append getattr ioctl lock open read write)))
+                    (sock_file (append getattr ioctl lock open read write)))
 
 (classpermissionset readwriteinherited_blk_file
-		    (blk_file (append getattr ioctl lock read write)))
+                    (blk_file (append getattr ioctl lock read write)))
 (classpermissionset readwriteinherited_chr_file
-		    (chr_file (append getattr ioctl lock read write)))
+                    (chr_file (append getattr ioctl lock read write)))
 (classpermissionset readwriteinherited_dir
-		    (dir (add_name getattr ioctl lock read remove_name search
-				   write)))
+                    (dir (add_name getattr ioctl lock read remove_name search
+                                   write)))
 (classpermissionset readwriteinherited_fifo_file
-		    (fifo_file (append getattr ioctl lock read write)))
+                    (fifo_file (append getattr ioctl lock read write)))
 (classpermissionset readwriteinherited_file
-		    (file (append getattr ioctl lock read write)))
+                    (file (append getattr ioctl lock read write)))
 (classpermissionset readwriteinherited_sock_file
-		    (sock_file (append getattr ioctl lock read write)))
+                    (sock_file (append getattr ioctl lock read write)))
 
 (classpermissionset relabel_blk_file (blk_file (getattr relabelfrom relabelto)))
 (classpermissionset relabel_chr_file (chr_file (getattr relabelfrom relabelto)))
 (classpermissionset relabel_dir (dir (getattr relabelfrom relabelto)))
 (classpermissionset relabel_fifo_file
-		    (fifo_file (getattr relabelfrom relabelto)))
+                    (fifo_file (getattr relabelfrom relabelto)))
 (classpermissionset relabel_file (file (getattr relabelfrom relabelto)))
 (classpermissionset relabel_lnk_file (lnk_file (getattr relabelfrom relabelto)))
 (classpermissionset relabel_sock_file
-		    (sock_file (getattr relabelfrom relabelto)))
+                    (sock_file (getattr relabelfrom relabelto)))
 
 (classpermissionset relabelfrom_blk_file (blk_file (getattr relabelfrom)))
 (classpermissionset relabelfrom_chr_file (chr_file (getattr relabelfrom)))
@@ -285,30 +285,30 @@
 (classpermissionset search_dir (dir (getattr search)))
 
 (classpermissionset write_blk_file
-		    (blk_file (append getattr ioctl lock open write)))
+                    (blk_file (append getattr ioctl lock open write)))
 (classpermissionset write_chr_file
-		    (chr_file (append getattr ioctl lock open write)))
+                    (chr_file (append getattr ioctl lock open write)))
 (classpermissionset write_dir
-		    (dir (add_name getattr ioctl lock open remove_name search
-				   write)))
+                    (dir (add_name getattr ioctl lock open remove_name search
+                                   write)))
 (classpermissionset write_fifo_file
-		    (fifo_file (append getattr ioctl lock open write)))
+                    (fifo_file (append getattr ioctl lock open write)))
 (classpermissionset write_file
-		    (file (append getattr ioctl lock open write)))
+                    (file (append getattr ioctl lock open write)))
 (classpermissionset write_lnk_file (lnk_file (append getattr lock write)))
 (classpermissionset write_sock_file
-		    (sock_file (append getattr ioctl lock open write)))
+                    (sock_file (append getattr ioctl lock open write)))
 
 (classpermissionset writeinherited_blk_file
-		    (blk_file (append getattr ioctl lock write)))
+                    (blk_file (append getattr ioctl lock write)))
 (classpermissionset writeinherited_chr_file
-		    (chr_file (append getattr ioctl lock write)))
+                    (chr_file (append getattr ioctl lock write)))
 (classpermissionset writeinherited_dir
-		    (dir (add_name getattr ioctl lock remove_name search
-				   write)))
+                    (dir (add_name getattr ioctl lock remove_name search
+                                   write)))
 (classpermissionset writeinherited_fifo_file
-		    (fifo_file (append getattr ioctl lock write)))
+                    (fifo_file (append getattr ioctl lock write)))
 (classpermissionset writeinherited_file
-		    (file (append getattr ioctl lock write)))
+                    (file (append getattr ioctl lock write)))
 (classpermissionset writeinherited_sock_file
-		    (sock_file (append getattr ioctl lock write)))
+                    (sock_file (append getattr ioctl lock write)))

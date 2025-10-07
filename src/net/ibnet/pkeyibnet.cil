@@ -14,8 +14,8 @@
 (in mcs
 
     (mlsconstrain (infiniband_pkey (access))
-		  (or (dom h1 h2)
-		      (neq t1 constrained.typeattr))))
+                  (or (dom h1 h2)
+                      (neq t1 constrained.typeattr))))
 
 (in net.ib
 
@@ -24,7 +24,7 @@
     (block pkey
 
       (macro type ((type ARG1))
-	     (typeattributeset typeattr ARG1))
+             (typeattributeset typeattr ARG1))
 
       (typeattribute typeattr)
 
@@ -34,42 +34,42 @@
 
       (block all_macro_template
 
-	(blockabstract all_macro_template)
+        (blockabstract all_macro_template)
 
-	(macro access_all_pkeys ((type ARG1))
-	       (allow ARG1 typeattr (infiniband_pkey (access)))))
+        (macro access_all_pkeys ((type ARG1))
+               (allow ARG1 typeattr (infiniband_pkey (access)))))
 
       (block base_template
 
-	(blockabstract base_template)
+        (blockabstract base_template)
 
-	(context pkey_context (.sys.id .sys.role pkey .sys.lowlow))
+        (context pkey_context (.sys.id .sys.role pkey .sys.lowlow))
 
-	(type pkey)
-	(call .net.ib.pkey.type (pkey)))
+        (type pkey)
+        (call .net.ib.pkey.type (pkey)))
 
       (block macro_template
 
-	(blockabstract macro_template)
+        (blockabstract macro_template)
 
-	(macro access_pkeys ((type ARG1))
-	       (allow ARG1 pkey (infiniband_pkey (access)))))
+        (macro access_pkeys ((type ARG1))
+               (allow ARG1 pkey (infiniband_pkey (access)))))
 
       (block template
 
-	(blockabstract template)
+        (blockabstract template)
 
-	(blockinherit .net.ib.pkey.base_template)
-	(blockinherit .net.ib.pkey.macro_template))
+        (blockinherit .net.ib.pkey.base_template)
+        (blockinherit .net.ib.pkey.macro_template))
 
       (block unconfined
 
-	(macro type ((type ARG1))
-	       (typeattributeset typeattr ARG1))
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
 
-	(typeattribute typeattr)
+        (typeattribute typeattr)
 
-	(allow typeattr pkey.typeattr (infiniband_pkey (all))))))
+        (allow typeattr pkey.typeattr (infiniband_pkey (all))))))
 
 (in net.ib.unconfined
 

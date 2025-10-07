@@ -4,8 +4,8 @@
 (classmap constrainobject (append create getattr read relabelto setattr write))
 
 (classmap files
-	  (create delete manage read readwrite relabel relabelfrom relabelto
-		  rename watch write))
+          (create delete manage read readwrite relabel relabelfrom relabelto
+                  rename watch write))
 
 (classmapping constrainobject append (blk_file (append)))
 (classmapping constrainobject append (chr_file (append)))

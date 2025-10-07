@@ -13,7 +13,7 @@
     (block dev
 
       (macro type ((type ARG1))
-	     (typeattributeset typeattr ARG1))
+             (typeattributeset typeattr ARG1))
 
       (typeattribute typeattr)
 
@@ -24,15 +24,15 @@
 
       (block base_template
 
-	(blockabstract base_template)
+        (blockabstract base_template)
 
-	(blockinherit .sysctlfile.base_template)
+        (blockinherit .sysctlfile.base_template)
 
-	(call .sysctlfile.dev.type (sysctlfile)))
+        (call .sysctlfile.dev.type (sysctlfile)))
 
       (block template
 
-	(blockabstract template)
+        (blockabstract template)
 
-	(blockinherit .sysctlfile.dev.base_template)
-	(blockinherit .sysctlfile.macro_template_files))))
+        (blockinherit .sysctlfile.dev.base_template)
+        (blockinherit .sysctlfile.macro_template_files))))

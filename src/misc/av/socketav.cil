@@ -63,7 +63,7 @@
 
 (class netlink_audit_socket
        (nlmsg nlmsg_read nlmsg_readpriv nlmsg_relay nlmsg_tty_audit
-	      nlmsg_write))
+              nlmsg_write))
 (classorder (unordered netlink_audit_socket))
 
 (class netlink_connector_socket ())
@@ -241,9 +241,9 @@
 (classcommon xdp_socket common_socket)
 
 (common common_socket
-	(accept append bind connect create getattr getopt ioctl listen lock map
-		name_bind read recvfrom relabelfrom relabelto sendto setattr
-		setopt shutdown write))
+        (accept append bind connect create getattr getopt ioctl listen lock map
+                name_bind read recvfrom relabelfrom relabelto sendto setattr
+                setopt shutdown write))
 
 (classpermission create_alg_socket)
 (classpermission create_alg_stream_socket)
@@ -334,325 +334,325 @@
 (classpermission write_vsock_socket)
 
 (classpermissionset create_alg_socket
-		    (alg_socket (append bind connect create getattr getopt ioctl
-					read setattr setopt shutdown write)))
+                    (alg_socket (append bind connect create getattr getopt ioctl
+                                        read setattr setopt shutdown write)))
 (classpermissionset create_alg_stream_socket
-		    (alg_socket (accept append bind connect create getattr
-					getopt ioctl listen read setattr setopt
-					shutdown write)))
+                    (alg_socket (accept append bind connect create getattr
+                                        getopt ioctl listen read setattr setopt
+                                        shutdown write)))
 (classpermissionset create_appletalk_socket
-		    (appletalk_socket (append bind connect create getattr getopt
-					      ioctl read setattr setopt shutdown
-					      write)))
+                    (appletalk_socket (append bind connect create getattr getopt
+                                              ioctl read setattr setopt shutdown
+                                              write)))
 (classpermissionset create_atmpvc_socket
-		    (atmpvc_socket (append bind connect create getattr getopt
-					   ioctl read setattr setopt shutdown
-					   write)))
+                    (atmpvc_socket (append bind connect create getattr getopt
+                                           ioctl read setattr setopt shutdown
+                                           write)))
 (classpermissionset create_atmsvc_socket
-		    (atmsvc_socket (append bind connect create getattr getopt
-					   ioctl read setattr setopt shutdown
-					   write)))
+                    (atmsvc_socket (append bind connect create getattr getopt
+                                           ioctl read setattr setopt shutdown
+                                           write)))
 (classpermissionset create_ax25_socket
-		    (ax25_socket (append bind connect create getattr getopt
-					 ioctl read setattr setopt shutdown
-					 write)))
+                    (ax25_socket (append bind connect create getattr getopt
+                                         ioctl read setattr setopt shutdown
+                                         write)))
 (classpermissionset create_bluetooth_socket
-		    (bluetooth_socket (append bind connect create getattr getopt
-					      ioctl read setattr setopt shutdown
-					      write)))
+                    (bluetooth_socket (append bind connect create getattr getopt
+                                              ioctl read setattr setopt shutdown
+                                              write)))
 (classpermissionset create_bluetooth_stream_socket
-		    (bluetooth_socket (accept append bind connect create getattr
-					      getopt ioctl listen read setattr
-					      setopt shutdown write)))
+                    (bluetooth_socket (accept append bind connect create getattr
+                                              getopt ioctl listen read setattr
+                                              setopt shutdown write)))
 (classpermissionset create_caif_socket
-		    (caif_socket (append bind connect create getattr getopt
-					 ioctl read setattr setopt shutdown
-					 write)))
+                    (caif_socket (append bind connect create getattr getopt
+                                         ioctl read setattr setopt shutdown
+                                         write)))
 (classpermissionset create_can_socket
-		    (can_socket (append bind connect create getattr getopt ioctl
-					read setattr setopt shutdown write)))
+                    (can_socket (append bind connect create getattr getopt ioctl
+                                        read setattr setopt shutdown write)))
 (classpermissionset create_dccp_socket
-		    (dccp_socket (append bind connect create getattr getopt
-					 ioctl read setattr setopt shutdown
-					 write)))
+                    (dccp_socket (append bind connect create getattr getopt
+                                         ioctl read setattr setopt shutdown
+                                         write)))
 (classpermissionset create_dccp_stream_socket
-		    (dccp_socket (accept append bind connect create getattr
-					 getopt ioctl listen read setattr setopt
-					 shutdown write)))
+                    (dccp_socket (accept append bind connect create getattr
+                                         getopt ioctl listen read setattr setopt
+                                         shutdown write)))
 (classpermissionset create_decnet_socket
-		    (decnet_socket (append bind connect create getattr getopt
-					   ioctl read setattr setopt shutdown
-					   write)))
+                    (decnet_socket (append bind connect create getattr getopt
+                                           ioctl read setattr setopt shutdown
+                                           write)))
 (classpermissionset create_icmp_socket
-		    (icmp_socket (append bind connect create getattr getopt
-					 ioctl read setattr setopt shutdown
-					 write)))
+                    (icmp_socket (append bind connect create getattr getopt
+                                         ioctl read setattr setopt shutdown
+                                         write)))
 (classpermissionset create_ieee802154_socket
-		    (ieee802154_socket (append bind connect create getattr
-					       getopt ioctl read setattr setopt
-					       shutdown write)))
+                    (ieee802154_socket (append bind connect create getattr
+                                               getopt ioctl read setattr setopt
+                                               shutdown write)))
 (classpermissionset create_ipx_socket
-		    (ipx_socket (append bind connect create getattr getopt ioctl
-					read setattr setopt shutdown write)))
+                    (ipx_socket (append bind connect create getattr getopt ioctl
+                                        read setattr setopt shutdown write)))
 (classpermissionset create_irda_socket
-		    (irda_socket (append bind connect create getattr getopt
-					 ioctl read setattr setopt shutdown
-					 write)))
+                    (irda_socket (append bind connect create getattr getopt
+                                         ioctl read setattr setopt shutdown
+                                         write)))
 (classpermissionset create_isdn_socket
-		    (isdn_socket (append bind connect create getattr getopt
-					 ioctl read setattr setopt shutdown
-					 write)))
+                    (isdn_socket (append bind connect create getattr getopt
+                                         ioctl read setattr setopt shutdown
+                                         write)))
 (classpermissionset create_iucv_socket
-		    (iucv_socket (append bind connect create getattr getopt
-					 ioctl read setattr setopt shutdown
-					 write)))
+                    (iucv_socket (append bind connect create getattr getopt
+                                         ioctl read setattr setopt shutdown
+                                         write)))
 (classpermissionset create_kcm_socket
-		    (kcm_socket (append bind connect create getattr getopt ioctl
-					read setattr setopt shutdown write)))
+                    (kcm_socket (append bind connect create getattr getopt ioctl
+                                        read setattr setopt shutdown write)))
 (classpermissionset create_key_socket
-		    (key_socket (append bind connect create getattr getopt ioctl
-					read setattr setopt shutdown write)))
+                    (key_socket (append bind connect create getattr getopt ioctl
+                                        read setattr setopt shutdown write)))
 (classpermissionset create_llc_socket
-		    (llc_socket (append bind connect create getattr getopt ioctl
-					read setattr setopt shutdown write)))
+                    (llc_socket (append bind connect create getattr getopt ioctl
+                                        read setattr setopt shutdown write)))
 (classpermissionset create_mctp_socket
-		    (mctp_socket (append bind connect create getattr getopt
-					 ioctl read setattr setopt shutdown
-					 write)))
+                    (mctp_socket (append bind connect create getattr getopt
+                                         ioctl read setattr setopt shutdown
+                                         write)))
 (classpermissionset create_netlink_audit_socket
-		    (netlink_audit_socket (append bind connect create getattr
-						  getopt ioctl read setattr
-						  setopt shutdown write)))
+                    (netlink_audit_socket (append bind connect create getattr
+                                                  getopt ioctl read setattr
+                                                  setopt shutdown write)))
 (classpermissionset create_netlink_connector_socket
-		    (netlink_connector_socket (append bind connect create
-						      getattr getopt ioctl read
-						      setattr setopt shutdown
-						      write)))
+                    (netlink_connector_socket (append bind connect create
+                                                      getattr getopt ioctl read
+                                                      setattr setopt shutdown
+                                                      write)))
 (classpermissionset create_netlink_crypto_socket
-		    (netlink_crypto_socket (append bind connect create getattr
-						   getopt ioctl read setattr
-						   setopt shutdown write)))
+                    (netlink_crypto_socket (append bind connect create getattr
+                                                   getopt ioctl read setattr
+                                                   setopt shutdown write)))
 (classpermissionset create_netlink_dnrt_socket
-		    (netlink_dnrt_socket (append bind connect create getattr
-						 getopt ioctl read setattr
-						 setopt shutdown write)))
+                    (netlink_dnrt_socket (append bind connect create getattr
+                                                 getopt ioctl read setattr
+                                                 setopt shutdown write)))
 (classpermissionset create_netlink_fib_lookup_socket
-		    (netlink_fib_lookup_socket (append bind connect create
-						       getattr getopt ioctl
-						       read setattr setopt
-						       shutdown write)))
+                    (netlink_fib_lookup_socket (append bind connect create
+                                                       getattr getopt ioctl
+                                                       read setattr setopt
+                                                       shutdown write)))
 (classpermissionset create_netlink_generic_socket
-		    (netlink_generic_socket (append bind connect create getattr
-						    getopt ioctl read setattr
-						    setopt shutdown write)))
+                    (netlink_generic_socket (append bind connect create getattr
+                                                    getopt ioctl read setattr
+                                                    setopt shutdown write)))
 (classpermissionset create_netlink_iscsi_socket
-		    (netlink_iscsi_socket (append bind connect create getattr
-						  getopt ioctl read setattr
-						  setopt shutdown write)))
+                    (netlink_iscsi_socket (append bind connect create getattr
+                                                  getopt ioctl read setattr
+                                                  setopt shutdown write)))
 (classpermissionset create_netlink_kobject_uevent_socket
-		    (netlink_kobject_uevent_socket (append bind connect create
-							   getattr getopt ioctl
-							   read setattr setopt
-							   shutdown write)))
+                    (netlink_kobject_uevent_socket (append bind connect create
+                                                           getattr getopt ioctl
+                                                           read setattr setopt
+                                                           shutdown write)))
 (classpermissionset create_netlink_netfilter_socket
-		    (netlink_netfilter_socket (append bind connect create
-						      getattr getopt ioctl read
-						      setattr setopt shutdown
-						      write)))
+                    (netlink_netfilter_socket (append bind connect create
+                                                      getattr getopt ioctl read
+                                                      setattr setopt shutdown
+                                                      write)))
 (classpermissionset create_netlink_nflog_socket
-		    (netlink_nflog_socket (append bind connect create getattr
-						  getopt ioctl read setattr
-						  setopt shutdown write)))
+                    (netlink_nflog_socket (append bind connect create getattr
+                                                  getopt ioctl read setattr
+                                                  setopt shutdown write)))
 (classpermissionset create_netlink_rdma_socket
-		    (netlink_rdma_socket (append bind connect create getattr
-						 getopt ioctl read setattr
-						 setopt shutdown write)))
+                    (netlink_rdma_socket (append bind connect create getattr
+                                                 getopt ioctl read setattr
+                                                 setopt shutdown write)))
 (classpermissionset create_netlink_route_socket
-		    (netlink_route_socket (append bind connect create getattr
-						  getopt ioctl read setattr
-						  setopt shutdown write)))
+                    (netlink_route_socket (append bind connect create getattr
+                                                  getopt ioctl read setattr
+                                                  setopt shutdown write)))
 (classpermissionset create_netlink_scsitransport_socket
-		    (netlink_scsitransport_socket (append bind connect create
-							  getattr getopt ioctl
-							  read setattr setopt
-							  shutdown write)))
+                    (netlink_scsitransport_socket (append bind connect create
+                                                          getattr getopt ioctl
+                                                          read setattr setopt
+                                                          shutdown write)))
 (classpermissionset create_netlink_selinux_socket
-		    (netlink_selinux_socket (append bind connect create getattr
-						    getopt ioctl read setattr
-						    setopt shutdown write)))
+                    (netlink_selinux_socket (append bind connect create getattr
+                                                    getopt ioctl read setattr
+                                                    setopt shutdown write)))
 (classpermissionset create_netlink_socket
-		    (netlink_socket (append bind connect create getattr getopt
-					    ioctl read setattr setopt shutdown
-					    write)))
+                    (netlink_socket (append bind connect create getattr getopt
+                                            ioctl read setattr setopt shutdown
+                                            write)))
 (classpermissionset create_netlink_tcpdiag_socket
-		    (netlink_tcpdiag_socket (append bind connect create getattr
-						    getopt ioctl read setattr
-						    setopt shutdown write)))
+                    (netlink_tcpdiag_socket (append bind connect create getattr
+                                                    getopt ioctl read setattr
+                                                    setopt shutdown write)))
 (classpermissionset create_netlink_xfrm_socket
-		    (netlink_xfrm_socket (append bind connect create getattr
-						 getopt ioctl read setattr
-						 setopt shutdown write)))
+                    (netlink_xfrm_socket (append bind connect create getattr
+                                                 getopt ioctl read setattr
+                                                 setopt shutdown write)))
 (classpermissionset create_netrom_socket
-		    (netrom_socket (append bind connect create getattr getopt
-					   ioctl read setattr setopt shutdown
-					   write)))
+                    (netrom_socket (append bind connect create getattr getopt
+                                           ioctl read setattr setopt shutdown
+                                           write)))
 (classpermissionset create_nfc_socket
-		    (nfc_socket (append bind connect create getattr getopt ioctl
-					read setattr setopt shutdown write)))
+                    (nfc_socket (append bind connect create getattr getopt ioctl
+                                        read setattr setopt shutdown write)))
 (classpermissionset create_packet_socket
-		    (packet_socket (append bind connect create getattr getopt
-					   ioctl read setattr setopt shutdown
-					   write)))
+                    (packet_socket (append bind connect create getattr getopt
+                                           ioctl read setattr setopt shutdown
+                                           write)))
 (classpermissionset create_phonet_socket
-		    (phonet_socket (append bind connect create getattr getopt
-					   ioctl read setattr setopt shutdown
-					   write)))
+                    (phonet_socket (append bind connect create getattr getopt
+                                           ioctl read setattr setopt shutdown
+                                           write)))
 (classpermissionset create_pppox_socket
-		    (pppox_socket (append bind connect create getattr getopt
-					  ioctl read setattr setopt shutdown
-					  write)))
+                    (pppox_socket (append bind connect create getattr getopt
+                                          ioctl read setattr setopt shutdown
+                                          write)))
 (classpermissionset create_qipcrtr_socket
-		    (qipcrtr_socket (append bind connect create getattr getopt
-					    ioctl read setattr setopt shutdown
-					    write)))
+                    (qipcrtr_socket (append bind connect create getattr getopt
+                                            ioctl read setattr setopt shutdown
+                                            write)))
 (classpermissionset create_rawip_socket
-		    (rawip_socket (append bind connect create getattr getopt
-					  ioctl read setattr setopt shutdown
-					  write)))
+                    (rawip_socket (append bind connect create getattr getopt
+                                          ioctl read setattr setopt shutdown
+                                          write)))
 (classpermissionset create_rds_socket
-		    (rds_socket (append bind connect create getattr getopt ioctl
-					read setattr setopt shutdown write)))
+                    (rds_socket (append bind connect create getattr getopt ioctl
+                                        read setattr setopt shutdown write)))
 (classpermissionset create_rose_socket
-		    (rose_socket (append bind connect create getattr getopt
-					 ioctl read setattr setopt shutdown
-					 write)))
+                    (rose_socket (append bind connect create getattr getopt
+                                         ioctl read setattr setopt shutdown
+                                         write)))
 (classpermissionset create_rxrpc_socket
-		    (rxrpc_socket (append bind connect create getattr getopt
-					  ioctl read setattr setopt shutdown
-					  write)))
+                    (rxrpc_socket (append bind connect create getattr getopt
+                                          ioctl read setattr setopt shutdown
+                                          write)))
 (classpermissionset create_sctp_socket
-		    (sctp_socket (append bind connect create getattr getopt
-					 ioctl read setattr setopt shutdown
-					 write)))
+                    (sctp_socket (append bind connect create getattr getopt
+                                         ioctl read setattr setopt shutdown
+                                         write)))
 (classpermissionset create_sctp_stream_socket
-		    (sctp_socket (accept append bind connect create getattr
-					 getopt ioctl listen read setattr setopt
-					 shutdown write)))
+                    (sctp_socket (accept append bind connect create getattr
+                                         getopt ioctl listen read setattr setopt
+                                         shutdown write)))
 (classpermissionset create_smc_socket
-		    (smc_socket (append bind connect create getattr getopt ioctl
-					read setattr setopt shutdown write)))
+                    (smc_socket (append bind connect create getattr getopt ioctl
+                                        read setattr setopt shutdown write)))
 (classpermissionset create_socket
-		    (socket (append bind connect create getattr getopt ioctl
-				    read setattr setopt shutdown write)))
+                    (socket (append bind connect create getattr getopt ioctl
+                                    read setattr setopt shutdown write)))
 (classpermissionset create_tcp_socket
-		    (tcp_socket (append bind connect create getattr getopt ioctl
-					read setattr setopt shutdown write)))
+                    (tcp_socket (append bind connect create getattr getopt ioctl
+                                        read setattr setopt shutdown write)))
 (classpermissionset create_tcp_stream_socket
-		    (tcp_socket (accept append bind connect create getattr
-					getopt ioctl listen read setattr setopt
-					shutdown write)))
+                    (tcp_socket (accept append bind connect create getattr
+                                        getopt ioctl listen read setattr setopt
+                                        shutdown write)))
 (classpermissionset create_tipc_socket
-		    (tipc_socket (append bind connect create getattr getopt
-					 ioctl read setattr setopt shutdown
-					 write)))
+                    (tipc_socket (append bind connect create getattr getopt
+                                         ioctl read setattr setopt shutdown
+                                         write)))
 (classpermissionset create_tun_socket
-		    (tun_socket (append bind connect create getattr getopt ioctl
-					read setattr setopt shutdown write)))
+                    (tun_socket (append bind connect create getattr getopt ioctl
+                                        read setattr setopt shutdown write)))
 (classpermissionset create_udp_socket
-		    (udp_socket (append bind connect create getattr getopt ioctl
-					read setattr setopt shutdown write)))
+                    (udp_socket (append bind connect create getattr getopt ioctl
+                                        read setattr setopt shutdown write)))
 (classpermissionset create_unix_dgram_socket
-		    (unix_dgram_socket (append bind connect create getattr
-					       getopt ioctl read setattr setopt
-					       shutdown write)))
+                    (unix_dgram_socket (append bind connect create getattr
+                                               getopt ioctl read setattr setopt
+                                               shutdown write)))
 (classpermissionset create_unix_stream_socket
-		    (unix_stream_socket (append bind connect create getattr
-						getopt ioctl read setattr setopt
-						shutdown write)))
+                    (unix_stream_socket (append bind connect create getattr
+                                                getopt ioctl read setattr setopt
+                                                shutdown write)))
 (classpermissionset create_unix_stream_stream_socket
-		    (unix_stream_socket (accept append bind connect create
-						getattr getopt ioctl listen read
-						setattr setopt shutdown write)))
+                    (unix_stream_socket (accept append bind connect create
+                                                getattr getopt ioctl listen read
+                                                setattr setopt shutdown write)))
 (classpermissionset create_vsock_socket
-		    (vsock_socket (append bind connect create getattr getopt
-					  ioctl read setattr setopt shutdown
-					  write)))
+                    (vsock_socket (append bind connect create getattr getopt
+                                          ioctl read setattr setopt shutdown
+                                          write)))
 (classpermissionset create_vsock_stream_socket
-		    (vsock_socket (accept append bind connect create getattr
-					  getopt ioctl listen read setattr
-					  setopt shutdown write)))
+                    (vsock_socket (accept append bind connect create getattr
+                                          getopt ioctl listen read setattr
+                                          setopt shutdown write)))
 (classpermissionset create_x25_socket
-		    (x25_socket (append bind connect create getattr getopt ioctl
-					read setattr setopt shutdown write)))
+                    (x25_socket (append bind connect create getattr getopt ioctl
+                                        read setattr setopt shutdown write)))
 (classpermissionset create_xdp_socket
-		    (xdp_socket (append bind connect create getattr getopt ioctl
-					read setattr setopt shutdown write)))
+                    (xdp_socket (append bind connect create getattr getopt ioctl
+                                        read setattr setopt shutdown write)))
 
 (classpermissionset readwrite_alg_socket
-		    (alg_socket (append bind connect getattr getopt ioctl read
-					setopt shutdown write)))
+                    (alg_socket (append bind connect getattr getopt ioctl read
+                                        setopt shutdown write)))
 (classpermissionset readwrite_bluetooth_socket
-		    (bluetooth_socket (append bind connect getattr getopt ioctl
-					      read setopt shutdown write)))
+                    (bluetooth_socket (append bind connect getattr getopt ioctl
+                                              read setopt shutdown write)))
 (classpermissionset readwrite_dccp_socket
-		    (dccp_socket (append bind connect getattr getopt ioctl read
-					 setopt shutdown write)))
+                    (dccp_socket (append bind connect getattr getopt ioctl read
+                                         setopt shutdown write)))
 (classpermissionset readwrite_netlink_audit_socket
-		    (netlink_audit_socket (append bind connect getattr getopt
-						  ioctl read setopt shutdown
-						  write)))
+                    (netlink_audit_socket (append bind connect getattr getopt
+                                                  ioctl read setopt shutdown
+                                                  write)))
 (classpermissionset readwrite_sctp_socket
-		    (sctp_socket (append bind connect getattr getopt ioctl read
-					 setopt shutdown write)))
+                    (sctp_socket (append bind connect getattr getopt ioctl read
+                                         setopt shutdown write)))
 (classpermissionset readwrite_tcp_socket
-		    (tcp_socket (append bind connect getattr getopt ioctl read
-					setopt shutdown write)))
+                    (tcp_socket (append bind connect getattr getopt ioctl read
+                                        setopt shutdown write)))
 (classpermissionset readwrite_tun_socket
-		    (tun_socket (append bind connect getattr getopt ioctl read
-					setopt shutdown write)))
+                    (tun_socket (append bind connect getattr getopt ioctl read
+                                        setopt shutdown write)))
 (classpermissionset readwrite_unix_dgram_socket
-		    (unix_dgram_socket (append bind connect getattr getopt ioctl
-					       read setopt shutdown write)))
+                    (unix_dgram_socket (append bind connect getattr getopt ioctl
+                                               read setopt shutdown write)))
 (classpermissionset readwrite_unix_stream_socket
-		    (unix_stream_socket (append bind connect getattr getopt
-						ioctl read setopt shutdown
-						write)))
+                    (unix_stream_socket (append bind connect getattr getopt
+                                                ioctl read setopt shutdown
+                                                write)))
 (classpermissionset readwrite_vsock_socket
-		    (vsock_socket (append bind connect getattr getopt ioctl
-					  read setopt shutdown write)))
+                    (vsock_socket (append bind connect getattr getopt ioctl
+                                          read setopt shutdown write)))
 
 (classpermissionset write_alg_socket
-		    (alg_socket (append bind connect getattr getopt ioctl setopt
-					shutdown write)))
+                    (alg_socket (append bind connect getattr getopt ioctl setopt
+                                        shutdown write)))
 (classpermissionset write_bluetooth_socket
-		    (bluetooth_socket (append bind connect getattr getopt ioctl
-					      setopt shutdown write)))
+                    (bluetooth_socket (append bind connect getattr getopt ioctl
+                                              setopt shutdown write)))
 (classpermissionset write_dccp_socket
-		    (dccp_socket (append bind connect getattr getopt ioctl
-					 setopt shutdown write)))
+                    (dccp_socket (append bind connect getattr getopt ioctl
+                                         setopt shutdown write)))
 (classpermissionset write_sctp_socket
-		    (sctp_socket (append bind connect getattr getopt ioctl
-					 setopt shutdown write)))
+                    (sctp_socket (append bind connect getattr getopt ioctl
+                                         setopt shutdown write)))
 (classpermissionset write_tcp_socket
-		    (tcp_socket (append bind connect getattr getopt ioctl setopt
-					shutdown write)))
+                    (tcp_socket (append bind connect getattr getopt ioctl setopt
+                                        shutdown write)))
 (classpermissionset write_tun_socket
-		    (tun_socket (append bind connect getattr getopt ioctl setopt
-					shutdown write)))
+                    (tun_socket (append bind connect getattr getopt ioctl setopt
+                                        shutdown write)))
 (classpermissionset write_unix_dgram_socket
-		    (unix_dgram_socket (append bind connect getattr getopt ioctl
-					       setopt shutdown write)))
+                    (unix_dgram_socket (append bind connect getattr getopt ioctl
+                                               setopt shutdown write)))
 (classpermissionset write_unix_stream_socket
-		    (unix_stream_socket (append bind connect getattr getopt
-						ioctl setopt shutdown write)))
+                    (unix_stream_socket (append bind connect getattr getopt
+                                                ioctl setopt shutdown write)))
 (classpermissionset write_vsock_socket
-		    (vsock_socket (append bind connect getattr getopt ioctl
-					  setopt shutdown write)))
+                    (vsock_socket (append bind connect getattr getopt ioctl
+                                          setopt shutdown write)))
 
 (classmap constrainsocketobject (nameconnect nodebind))
 (classmap constrainsocketsubject
-	  (append association attachqueue connectto create getattr read
-		  relabelto sendto setattr write))
+          (append association attachqueue connectto create getattr read
+                  relabelto sendto setattr write))
 
 (classmap sockets (common getattr))
 
@@ -692,17 +692,17 @@
 (classmapping constrainsocketsubject append (netlink_crypto_socket (append)))
 (classmapping constrainsocketsubject append (netlink_dnrt_socket (append)))
 (classmapping constrainsocketsubject append
-	      (netlink_fib_lookup_socket (append)))
+              (netlink_fib_lookup_socket (append)))
 (classmapping constrainsocketsubject append (netlink_generic_socket (append)))
 (classmapping constrainsocketsubject append (netlink_iscsi_socket (append)))
 (classmapping constrainsocketsubject append
-	      (netlink_kobject_uevent_socket (append)))
+              (netlink_kobject_uevent_socket (append)))
 (classmapping constrainsocketsubject append (netlink_netfilter_socket (append)))
 (classmapping constrainsocketsubject append (netlink_nflog_socket (append)))
 (classmapping constrainsocketsubject append (netlink_rdma_socket (append)))
 (classmapping constrainsocketsubject append (netlink_route_socket (append)))
 (classmapping constrainsocketsubject append
-	      (netlink_scsitransport_socket (append)))
+              (netlink_scsitransport_socket (append)))
 (classmapping constrainsocketsubject append (netlink_selinux_socket (append)))
 (classmapping constrainsocketsubject append (netlink_socket (append)))
 (classmapping constrainsocketsubject append (netlink_tcpdiag_socket (append)))
@@ -731,13 +731,13 @@
 (classmapping constrainsocketsubject append (xdp_socket (append)))
 
 (classmapping constrainsocketsubject
-	      association (sctp_socket (association)))
+              association (sctp_socket (association)))
 
 (classmapping constrainsocketsubject
-	      attachqueue (tun_socket (attach_queue)))
+              attachqueue (tun_socket (attach_queue)))
 
 (classmapping constrainsocketsubject
-	      connectto (unix_stream_socket (connectto)))
+              connectto (unix_stream_socket (connectto)))
 
 (classmapping constrainsocketsubject create (alg_socket (create)))
 (classmapping constrainsocketsubject create (appletalk_socket (create)))
@@ -764,17 +764,17 @@
 (classmapping constrainsocketsubject create (netlink_crypto_socket (create)))
 (classmapping constrainsocketsubject create (netlink_dnrt_socket (create)))
 (classmapping constrainsocketsubject create
-	      (netlink_fib_lookup_socket (create)))
+              (netlink_fib_lookup_socket (create)))
 (classmapping constrainsocketsubject create (netlink_generic_socket (create)))
 (classmapping constrainsocketsubject create (netlink_iscsi_socket (create)))
 (classmapping constrainsocketsubject create
-	      (netlink_kobject_uevent_socket (create)))
+              (netlink_kobject_uevent_socket (create)))
 (classmapping constrainsocketsubject create (netlink_netfilter_socket (create)))
 (classmapping constrainsocketsubject create (netlink_nflog_socket (create)))
 (classmapping constrainsocketsubject create (netlink_rdma_socket (create)))
 (classmapping constrainsocketsubject create (netlink_route_socket (create)))
 (classmapping constrainsocketsubject create
-	      (netlink_scsitransport_socket (create)))
+              (netlink_scsitransport_socket (create)))
 (classmapping constrainsocketsubject create (netlink_selinux_socket (create)))
 (classmapping constrainsocketsubject create (netlink_socket (create)))
 (classmapping constrainsocketsubject create (netlink_tcpdiag_socket (create)))
@@ -824,22 +824,22 @@
 (classmapping constrainsocketsubject getattr (mctp_socket (getattr)))
 (classmapping constrainsocketsubject getattr (netlink_audit_socket (getattr)))
 (classmapping constrainsocketsubject getattr
-	      (netlink_connector_socket (getattr)))
+              (netlink_connector_socket (getattr)))
 (classmapping constrainsocketsubject getattr (netlink_crypto_socket (getattr)))
 (classmapping constrainsocketsubject getattr (netlink_dnrt_socket (getattr)))
 (classmapping constrainsocketsubject getattr
-	      (netlink_fib_lookup_socket (getattr)))
+              (netlink_fib_lookup_socket (getattr)))
 (classmapping constrainsocketsubject getattr (netlink_generic_socket (getattr)))
 (classmapping constrainsocketsubject getattr (netlink_iscsi_socket (getattr)))
 (classmapping constrainsocketsubject getattr
-	      (netlink_kobject_uevent_socket (getattr)))
+              (netlink_kobject_uevent_socket (getattr)))
 (classmapping constrainsocketsubject getattr
-	      (netlink_netfilter_socket (getattr)))
+              (netlink_netfilter_socket (getattr)))
 (classmapping constrainsocketsubject getattr (netlink_nflog_socket (getattr)))
 (classmapping constrainsocketsubject getattr (netlink_rdma_socket (getattr)))
 (classmapping constrainsocketsubject getattr (netlink_route_socket (getattr)))
 (classmapping constrainsocketsubject getattr
-	      (netlink_scsitransport_socket (getattr)))
+              (netlink_scsitransport_socket (getattr)))
 (classmapping constrainsocketsubject getattr (netlink_selinux_socket (getattr)))
 (classmapping constrainsocketsubject getattr (netlink_socket (getattr)))
 (classmapping constrainsocketsubject getattr (netlink_tcpdiag_socket (getattr)))
@@ -896,7 +896,7 @@
 (classmapping constrainsocketsubject read (netlink_generic_socket (read)))
 (classmapping constrainsocketsubject read (netlink_iscsi_socket (read)))
 (classmapping constrainsocketsubject read
-	      (netlink_kobject_uevent_socket (read)))
+              (netlink_kobject_uevent_socket (read)))
 (classmapping constrainsocketsubject read (netlink_netfilter_socket (read)))
 (classmapping constrainsocketsubject read (netlink_nflog_socket (read)))
 (classmapping constrainsocketsubject read (netlink_rdma_socket (read)))
@@ -950,38 +950,38 @@
 (classmapping constrainsocketsubject relabelto (llc_socket (relabelto)))
 (classmapping constrainsocketsubject relabelto (mctp_socket (relabelto)))
 (classmapping constrainsocketsubject relabelto
-	      (netlink_audit_socket (relabelto)))
+              (netlink_audit_socket (relabelto)))
 (classmapping constrainsocketsubject relabelto
-	      (netlink_connector_socket (relabelto)))
+              (netlink_connector_socket (relabelto)))
 (classmapping constrainsocketsubject relabelto
-	      (netlink_crypto_socket (relabelto)))
+              (netlink_crypto_socket (relabelto)))
 (classmapping constrainsocketsubject relabelto
-	      (netlink_dnrt_socket (relabelto)))
+              (netlink_dnrt_socket (relabelto)))
 (classmapping constrainsocketsubject relabelto
-	      (netlink_fib_lookup_socket (relabelto)))
+              (netlink_fib_lookup_socket (relabelto)))
 (classmapping constrainsocketsubject relabelto
-	      (netlink_generic_socket (relabelto)))
+              (netlink_generic_socket (relabelto)))
 (classmapping constrainsocketsubject relabelto
-	      (netlink_iscsi_socket (relabelto)))
+              (netlink_iscsi_socket (relabelto)))
 (classmapping constrainsocketsubject relabelto
-	      (netlink_kobject_uevent_socket (relabelto)))
+              (netlink_kobject_uevent_socket (relabelto)))
 (classmapping constrainsocketsubject relabelto
-	      (netlink_netfilter_socket (relabelto)))
+              (netlink_netfilter_socket (relabelto)))
 (classmapping constrainsocketsubject relabelto
-	      (netlink_nflog_socket (relabelto)))
+              (netlink_nflog_socket (relabelto)))
 (classmapping constrainsocketsubject relabelto
-	      (netlink_rdma_socket (relabelto)))
+              (netlink_rdma_socket (relabelto)))
 (classmapping constrainsocketsubject relabelto
-	      (netlink_route_socket (relabelto)))
+              (netlink_route_socket (relabelto)))
 (classmapping constrainsocketsubject relabelto
-	      (netlink_scsitransport_socket (relabelto)))
+              (netlink_scsitransport_socket (relabelto)))
 (classmapping constrainsocketsubject relabelto
-	      (netlink_selinux_socket (relabelto)))
+              (netlink_selinux_socket (relabelto)))
 (classmapping constrainsocketsubject relabelto (netlink_socket (relabelto)))
 (classmapping constrainsocketsubject relabelto
-	      (netlink_tcpdiag_socket (relabelto)))
+              (netlink_tcpdiag_socket (relabelto)))
 (classmapping constrainsocketsubject relabelto
-	      (netlink_xfrm_socket (relabelto)))
+              (netlink_xfrm_socket (relabelto)))
 (classmapping constrainsocketsubject relabelto (netrom_socket (relabelto)))
 (classmapping constrainsocketsubject relabelto (nfc_socket (relabelto)))
 (classmapping constrainsocketsubject relabelto (packet_socket (relabelto)))
@@ -1029,22 +1029,22 @@
 (classmapping constrainsocketsubject setattr (mctp_socket (setattr)))
 (classmapping constrainsocketsubject setattr (netlink_audit_socket (setattr)))
 (classmapping constrainsocketsubject setattr
-	      (netlink_connector_socket (setattr)))
+              (netlink_connector_socket (setattr)))
 (classmapping constrainsocketsubject setattr (netlink_crypto_socket (setattr)))
 (classmapping constrainsocketsubject setattr (netlink_dnrt_socket (setattr)))
 (classmapping constrainsocketsubject setattr
-	      (netlink_fib_lookup_socket (setattr)))
+              (netlink_fib_lookup_socket (setattr)))
 (classmapping constrainsocketsubject setattr (netlink_generic_socket (setattr)))
 (classmapping constrainsocketsubject setattr (netlink_iscsi_socket (setattr)))
 (classmapping constrainsocketsubject setattr
-	      (netlink_kobject_uevent_socket (setattr)))
+              (netlink_kobject_uevent_socket (setattr)))
 (classmapping constrainsocketsubject setattr
-	      (netlink_netfilter_socket (setattr)))
+              (netlink_netfilter_socket (setattr)))
 (classmapping constrainsocketsubject setattr (netlink_nflog_socket (setattr)))
 (classmapping constrainsocketsubject setattr (netlink_rdma_socket (setattr)))
 (classmapping constrainsocketsubject setattr (netlink_route_socket (setattr)))
 (classmapping constrainsocketsubject setattr
-	      (netlink_scsitransport_socket (setattr)))
+              (netlink_scsitransport_socket (setattr)))
 (classmapping constrainsocketsubject setattr (netlink_selinux_socket (setattr)))
 (classmapping constrainsocketsubject setattr (netlink_socket (setattr)))
 (classmapping constrainsocketsubject setattr (netlink_tcpdiag_socket (setattr)))
@@ -1100,13 +1100,13 @@
 (classmapping constrainsocketsubject write (netlink_generic_socket (write)))
 (classmapping constrainsocketsubject write (netlink_iscsi_socket (write)))
 (classmapping constrainsocketsubject write
-	      (netlink_kobject_uevent_socket (write)))
+              (netlink_kobject_uevent_socket (write)))
 (classmapping constrainsocketsubject write (netlink_netfilter_socket (write)))
 (classmapping constrainsocketsubject write (netlink_nflog_socket (write)))
 (classmapping constrainsocketsubject write (netlink_rdma_socket (write)))
 (classmapping constrainsocketsubject write (netlink_route_socket (write)))
 (classmapping constrainsocketsubject write
-	      (netlink_scsitransport_socket (write)))
+              (netlink_scsitransport_socket (write)))
 (classmapping constrainsocketsubject write (netlink_selinux_socket (write)))
 (classmapping constrainsocketsubject write (netlink_socket (write)))
 (classmapping constrainsocketsubject write (netlink_tcpdiag_socket (write)))
@@ -1135,207 +1135,207 @@
 (classmapping constrainsocketsubject write (xdp_socket (write)))
 
 (classmapping sockets common
-	      (alg_socket (not (accept listen map name_bind relabelfrom
-				       relabelto recvfrom sendto))))
+              (alg_socket (not (accept listen map name_bind relabelfrom
+                                       relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (appletalk_socket (not (accept listen map name_bind relabelfrom
-					     relabelto recvfrom sendto))))
+              (appletalk_socket (not (accept listen map name_bind relabelfrom
+                                             relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (atmpvc_socket (not (accept listen map name_bind relabelfrom
-					  relabelto recvfrom sendto))))
+              (atmpvc_socket (not (accept listen map name_bind relabelfrom
+                                          relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (atmsvc_socket (not (accept listen map name_bind relabelfrom
-					  relabelto recvfrom sendto))))
+              (atmsvc_socket (not (accept listen map name_bind relabelfrom
+                                          relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (ax25_socket (not (accept listen map name_bind relabelfrom
-					relabelto recvfrom sendto))))
+              (ax25_socket (not (accept listen map name_bind relabelfrom
+                                        relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (bluetooth_socket (not (accept listen map name_bind relabelfrom
-					     relabelto recvfrom sendto))))
+              (bluetooth_socket (not (accept listen map name_bind relabelfrom
+                                             relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (caif_socket (not (accept listen map name_bind relabelfrom
-					relabelto recvfrom sendto))))
+              (caif_socket (not (accept listen map name_bind relabelfrom
+                                        relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (can_socket (not (accept listen map name_bind relabelfrom
-				       relabelto recvfrom sendto))))
+              (can_socket (not (accept listen map name_bind relabelfrom
+                                       relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (dccp_socket (not (accept listen map name_connect name_bind
-					node_bind relabelfrom relabelto recvfrom
-					sendto))))
+              (dccp_socket (not (accept listen map name_connect name_bind
+                                        node_bind relabelfrom relabelto recvfrom
+                                        sendto))))
 (classmapping sockets common
-	      (decnet_socket (not (accept listen map name_bind relabelfrom
-					  relabelto recvfrom sendto))))
+              (decnet_socket (not (accept listen map name_bind relabelfrom
+                                          relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (icmp_socket (not (accept listen map name_bind node_bind
-					relabelfrom relabelto recvfrom
-					sendto))))
+              (icmp_socket (not (accept listen map name_bind node_bind
+                                        relabelfrom relabelto recvfrom
+                                        sendto))))
 (classmapping sockets common
-	      (ieee802154_socket (not (accept listen map name_bind relabelfrom
-					      relabelto recvfrom sendto))))
+              (ieee802154_socket (not (accept listen map name_bind relabelfrom
+                                              relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (ipx_socket (not (accept listen map name_bind relabelfrom
-				       relabelto recvfrom sendto))))
+              (ipx_socket (not (accept listen map name_bind relabelfrom
+                                       relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (irda_socket (not (accept listen map name_bind relabelfrom
-					relabelto recvfrom sendto))))
+              (irda_socket (not (accept listen map name_bind relabelfrom
+                                        relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (isdn_socket (not (accept listen map name_bind relabelfrom
-					relabelto recvfrom sendto))))
+              (isdn_socket (not (accept listen map name_bind relabelfrom
+                                        relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (iucv_socket (not (accept listen map name_bind relabelfrom
-					relabelto recvfrom sendto))))
+              (iucv_socket (not (accept listen map name_bind relabelfrom
+                                        relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (kcm_socket (not (accept listen map name_bind relabelfrom
-				       relabelto recvfrom sendto))))
+              (kcm_socket (not (accept listen map name_bind relabelfrom
+                                       relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (key_socket (not (accept listen map name_bind relabelfrom
-				       relabelto recvfrom sendto))))
+              (key_socket (not (accept listen map name_bind relabelfrom
+                                       relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (llc_socket (not (accept listen map name_bind relabelfrom
-				       relabelto recvfrom sendto))))
+              (llc_socket (not (accept listen map name_bind relabelfrom
+                                       relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (mctp_socket (not (accept listen map name_bind relabelfrom
-					relabelto recvfrom sendto))))
+              (mctp_socket (not (accept listen map name_bind relabelfrom
+                                        relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (netlink_audit_socket (not (accept listen map name_bind nlmsg_read
-						 nlmsg_readpriv nlmsg_relay
-						 nlmsg_tty_audit nlmsg_write
-						 relabelfrom relabelto recvfrom
-						 sendto))))
+              (netlink_audit_socket (not (accept listen map name_bind nlmsg_read
+                                                 nlmsg_readpriv nlmsg_relay
+                                                 nlmsg_tty_audit nlmsg_write
+                                                 relabelfrom relabelto recvfrom
+                                                 sendto))))
 (classmapping sockets common
-	      (netlink_connector_socket (not (accept listen map name_bind
-						     relabelfrom relabelto
-						     recvfrom sendto))))
+              (netlink_connector_socket (not (accept listen map name_bind
+                                                     relabelfrom relabelto
+                                                     recvfrom sendto))))
 (classmapping sockets common
-	      (netlink_crypto_socket (not (accept listen map name_bind
-						  relabelfrom relabelto
-						  recvfrom sendto))))
+              (netlink_crypto_socket (not (accept listen map name_bind
+                                                  relabelfrom relabelto
+                                                  recvfrom sendto))))
 (classmapping sockets common
-	      (netlink_dnrt_socket (not (accept listen map name_bind
-						relabelfrom relabelto
-						recvfrom sendto))))
+              (netlink_dnrt_socket (not (accept listen map name_bind
+                                                relabelfrom relabelto
+                                                recvfrom sendto))))
 (classmapping sockets common
-	      (netlink_fib_lookup_socket (not (accept listen map name_bind
-						      relabelfrom relabelto
-						      recvfrom sendto))))
+              (netlink_fib_lookup_socket (not (accept listen map name_bind
+                                                      relabelfrom relabelto
+                                                      recvfrom sendto))))
 (classmapping sockets common
-	      (netlink_generic_socket (not (accept listen map name_bind
-						   relabelfrom relabelto
-						   recvfrom sendto))))
+              (netlink_generic_socket (not (accept listen map name_bind
+                                                   relabelfrom relabelto
+                                                   recvfrom sendto))))
 (classmapping sockets common
-	      (netlink_iscsi_socket (not (accept listen map name_bind
-						 relabelfrom relabelto
-						 recvfrom sendto))))
+              (netlink_iscsi_socket (not (accept listen map name_bind
+                                                 relabelfrom relabelto
+                                                 recvfrom sendto))))
 (classmapping sockets common
-	      (netlink_kobject_uevent_socket (not (accept listen map name_bind
-							  relabelfrom relabelto
-							  recvfrom sendto))))
+              (netlink_kobject_uevent_socket (not (accept listen map name_bind
+                                                          relabelfrom relabelto
+                                                          recvfrom sendto))))
 (classmapping sockets common
-	      (netlink_netfilter_socket (not (accept listen map name_bind
-						     relabelfrom relabelto
-						     recvfrom sendto))))
+              (netlink_netfilter_socket (not (accept listen map name_bind
+                                                     relabelfrom relabelto
+                                                     recvfrom sendto))))
 (classmapping sockets common
-	      (netlink_nflog_socket (not (accept listen map name_bind
-						 relabelfrom relabelto
-						 recvfrom sendto))))
+              (netlink_nflog_socket (not (accept listen map name_bind
+                                                 relabelfrom relabelto
+                                                 recvfrom sendto))))
 (classmapping sockets common
-	      (netlink_rdma_socket (not (accept listen map name_bind
-						relabelfrom relabelto
-						recvfrom sendto))))
+              (netlink_rdma_socket (not (accept listen map name_bind
+                                                relabelfrom relabelto
+                                                recvfrom sendto))))
 (classmapping sockets common
-	      (netlink_route_socket (not (accept listen map name_bind nlmsg_read
-						 nlmsg_write relabelfrom
-						 relabelto recvfrom sendto))))
+              (netlink_route_socket (not (accept listen map name_bind nlmsg_read
+                                                 nlmsg_write relabelfrom
+                                                 relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (netlink_scsitransport_socket (not (accept listen map name_bind
-							 relabelfrom relabelto
-							 recvfrom sendto))))
+              (netlink_scsitransport_socket (not (accept listen map name_bind
+                                                         relabelfrom relabelto
+                                                         recvfrom sendto))))
 (classmapping sockets common
-	      (netlink_selinux_socket (not (accept listen map name_bind
-						   relabelfrom relabelto
-						   recvfrom sendto))))
+              (netlink_selinux_socket (not (accept listen map name_bind
+                                                   relabelfrom relabelto
+                                                   recvfrom sendto))))
 (classmapping sockets common
-	      (netlink_socket (not (accept listen map name_bind relabelfrom
-					   relabelto recvfrom sendto))))
+              (netlink_socket (not (accept listen map name_bind relabelfrom
+                                           relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (netlink_tcpdiag_socket (not (accept listen map name_bind
-						   nlmsg_read nlmsg_write
-						   relabelfrom relabelto
-						   recvfrom sendto))))
+              (netlink_tcpdiag_socket (not (accept listen map name_bind
+                                                   nlmsg_read nlmsg_write
+                                                   relabelfrom relabelto
+                                                   recvfrom sendto))))
 (classmapping sockets common
-	      (netlink_xfrm_socket (not (accept listen map name_bind nlmsg_read
-						nlmsg_write relabelfrom
-						relabelto recvfrom sendto))))
+              (netlink_xfrm_socket (not (accept listen map name_bind nlmsg_read
+                                                nlmsg_write relabelfrom
+                                                relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (netrom_socket (not (accept listen map name_bind relabelfrom
-					  relabelto recvfrom sendto))))
+              (netrom_socket (not (accept listen map name_bind relabelfrom
+                                          relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (nfc_socket (not (accept listen map name_bind relabelfrom
-				       relabelto recvfrom sendto))))
+              (nfc_socket (not (accept listen map name_bind relabelfrom
+                                       relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (packet_socket (not (accept listen map name_bind relabelfrom
-					  relabelto recvfrom sendto))))
+              (packet_socket (not (accept listen map name_bind relabelfrom
+                                          relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (phonet_socket (not (accept listen map name_bind relabelfrom
-					  relabelto recvfrom sendto))))
+              (phonet_socket (not (accept listen map name_bind relabelfrom
+                                          relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (pppox_socket (not (accept listen map name_bind relabelfrom
-					 relabelto recvfrom sendto))))
+              (pppox_socket (not (accept listen map name_bind relabelfrom
+                                         relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (qipcrtr_socket (not (accept listen map name_bind relabelfrom
-					   relabelto recvfrom sendto))))
+              (qipcrtr_socket (not (accept listen map name_bind relabelfrom
+                                           relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (rawip_socket (not (accept listen map name_bind node_bind
-					 relabelfrom relabelto recvfrom
-					 sendto))))
+              (rawip_socket (not (accept listen map name_bind node_bind
+                                         relabelfrom relabelto recvfrom
+                                         sendto))))
 (classmapping sockets common
-	      (rds_socket (not (accept listen map name_bind relabelfrom
-				       relabelto recvfrom sendto))))
+              (rds_socket (not (accept listen map name_bind relabelfrom
+                                       relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (rose_socket (not (accept listen map name_bind relabelfrom
-					relabelto recvfrom sendto))))
+              (rose_socket (not (accept listen map name_bind relabelfrom
+                                        relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (rxrpc_socket (not (accept listen map name_bind relabelfrom
-					 relabelto recvfrom sendto))))
+              (rxrpc_socket (not (accept listen map name_bind relabelfrom
+                                         relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (sctp_socket (not (accept association listen map name_connect
-					name_bind node_bind relabelfrom
-					relabelto recvfrom sendto))))
+              (sctp_socket (not (accept association listen map name_connect
+                                        name_bind node_bind relabelfrom
+                                        relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (smc_socket (not (accept listen map name_bind relabelfrom
-				       relabelto recvfrom sendto))))
+              (smc_socket (not (accept listen map name_bind relabelfrom
+                                       relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (socket (not (accept listen map name_bind relabelfrom
-				   relabelto recvfrom sendto))))
+              (socket (not (accept listen map name_bind relabelfrom
+                                   relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (tcp_socket (not (accept listen map name_connect name_bind
-				       node_bind relabelfrom relabelto recvfrom
-				       sendto))))
+              (tcp_socket (not (accept listen map name_connect name_bind
+                                       node_bind relabelfrom relabelto recvfrom
+                                       sendto))))
 (classmapping sockets common
-	      (tipc_socket (not (accept listen map name_bind relabelfrom
-					relabelto recvfrom sendto))))
+              (tipc_socket (not (accept listen map name_bind relabelfrom
+                                        relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (tun_socket (not (accept attach_queue listen map name_bind
-				       relabelfrom relabelto recvfrom sendto))))
+              (tun_socket (not (accept attach_queue listen map name_bind
+                                       relabelfrom relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (udp_socket (not (accept listen map name_bind node_bind
-				       relabelfrom relabelto recvfrom sendto))))
+              (udp_socket (not (accept listen map name_bind node_bind
+                                       relabelfrom relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (unix_dgram_socket (not (accept listen map name_bind relabelfrom
-					      relabelto recvfrom sendto))))
+              (unix_dgram_socket (not (accept listen map name_bind relabelfrom
+                                              relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (unix_stream_socket (not (accept connectto listen map name_bind
-					       relabelfrom relabelto recvfrom
-					       sendto))))
+              (unix_stream_socket (not (accept connectto listen map name_bind
+                                               relabelfrom relabelto recvfrom
+                                               sendto))))
 (classmapping sockets common
-	      (vsock_socket (not (accept listen map name_bind relabelfrom
-					 relabelto recvfrom sendto))))
+              (vsock_socket (not (accept listen map name_bind relabelfrom
+                                         relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (x25_socket (not (accept listen map name_bind relabelfrom
-				       relabelto recvfrom sendto))))
+              (x25_socket (not (accept listen map name_bind relabelfrom
+                                       relabelto recvfrom sendto))))
 (classmapping sockets common
-	      (xdp_socket (not (accept listen map name_bind relabelfrom
-				       relabelto recvfrom sendto))))
+              (xdp_socket (not (accept listen map name_bind relabelfrom
+                                       relabelto recvfrom sendto))))
 
 (classmapping sockets getattr (ax25_socket (getattr)))
 (classmapping sockets getattr (alg_socket (getattr)))
@@ -1469,10 +1469,10 @@
 (in ibac
 
     (constrain (constrainsocketsubject (create relabelto))
-	       (or (or (or (eq u1 u2)
-			   (and (eq t1 subjchangesys.typeattr) (eq u2 .sys.id)))
-		       (eq t1 subjchange.typeattr))
-		   (eq t1 exempt.typeattr))))
+               (or (or (or (eq u1 u2)
+                           (and (eq t1 subjchangesys.typeattr) (eq u2 .sys.id)))
+                       (eq t1 subjchange.typeattr))
+                   (eq t1 exempt.typeattr))))
 
 (in invalid.unconfined
 
@@ -1480,15 +1480,15 @@
     (allow typeattr .invalid (alg_socket (accept listen)))
     (allow typeattr .invalid (bluetooth_socket (accept listen)))
     (allow typeattr .invalid
-	   (dccp_socket (accept listen name_bind name_connect node_bind)))
+           (dccp_socket (accept listen name_bind name_connect node_bind)))
     (allow typeattr .invalid (icmp_socket (name_bind node_bind)))
     (allow typeattr .invalid (rawip_socket (name_bind node_bind)))
     (allow typeattr .invalid
-	   (sctp_socket (association accept listen name_bind name_connect
-				     node_bind)))
+           (sctp_socket (association accept listen name_bind name_connect
+                                     node_bind)))
     (allow typeattr .invalid (udp_socket (name_bind node_bind)))
     (allow typeattr .invalid
-	   (tcp_socket (accept listen name_bind name_connect node_bind)))
+           (tcp_socket (accept listen name_bind name_connect node_bind)))
     (allow typeattr .invalid (tun_socket (attach_queue)))
     (allow typeattr .invalid (unix_dgram_socket (sendto)))
     (allow typeattr .invalid (unix_stream_socket (accept connectto listen)))
@@ -1497,95 +1497,95 @@
 (in mcs
 
     (mlsconstrain (constrainsocketobject (nameconnect nodebind))
-		  (or (dom h1 h2)
-		      (neq t1 constrained.typeattr)))
+                  (or (dom h1 h2)
+                      (neq t1 constrained.typeattr)))
 
     (mlsconstrain
      (constrainsocketsubject (append association attachqueue connectto create
-				     getattr read relabelto sendto setattr
-				     write))
+                                     getattr read relabelto sendto setattr
+                                     write))
      (or (dom h1 h2)
-	 (neq t1 constrained.typeattr))))
+         (neq t1 constrained.typeattr))))
 
 (in rbac
 
     (constrain (constrainsocketsubject (create relabelto))
-	       (or (or (or (eq r1 r2)
-			   (and (eq t1 subjchangesys.typeattr)
-				(eq r2 .sys.role)))
-		       (eq t1 subjchange.typeattr))
-		   (eq t1 exempt.typeattr))))
+               (or (or (or (eq r1 r2)
+                           (and (eq t1 subjchangesys.typeattr)
+                                (eq r2 .sys.role)))
+                       (eq t1 subjchange.typeattr))
+                   (eq t1 exempt.typeattr))))
 
 (in rbacsep
 
     (constrain (constrainsocketsubject (append getattr read setattr write))
-	       (or (or (or (eq r1 r2)
-			   (and (eq r1 exempt.roleattr)
-				(neq t1 constrained.typeattr)))
-		       (eq t1 exempt.subj.typeattr))
-		   (and (eq t1 exemptsource.typeattr)
-			(eq t2 exempttarget.typeattr)))))
+               (or (or (or (eq r1 r2)
+                           (and (eq r1 exempt.roleattr)
+                                (neq t1 constrained.typeattr)))
+                       (eq t1 exempt.subj.typeattr))
+                   (and (eq t1 exemptsource.typeattr)
+                        (eq t2 exempttarget.typeattr)))))
 
 (in subj.all_macro_template
 
     (macro association_all_sctp_sockets ((type ARG1))
-	   (allow ARG1 typeattr (sctp_socket (association))))
+           (allow ARG1 typeattr (sctp_socket (association))))
 
     (macro connectto_all_unix_stream_sockets ((type ARG1))
-	   (allow ARG1 typeattr (unix_stream_socket (connectto))))
+           (allow ARG1 typeattr (unix_stream_socket (connectto))))
 
     (macro getattr_all_sockets ((type ARG1))
-	   (allow ARG1 typeattr (sockets (getattr))))
+           (allow ARG1 typeattr (sockets (getattr))))
 
     (macro readwrite_all_unix_dgram_sockets ((type ARG1))
-	   (allow ARG1 typeattr readwrite_unix_dgram_socket))
+           (allow ARG1 typeattr readwrite_unix_dgram_socket))
 
     (macro readwrite_all_unix_stream_sockets ((type ARG1))
-	   (allow ARG1 typeattr readwrite_unix_stream_socket))
+           (allow ARG1 typeattr readwrite_unix_stream_socket))
 
     (macro sendto_all_unix_dgram_sockets ((type ARG1))
-	   (allow ARG1 typeattr (unix_dgram_socket (sendto))))
+           (allow ARG1 typeattr (unix_dgram_socket (sendto))))
 
     (macro write_all_unix_dgram_sockets ((type ARG1))
-	   (allow ARG1 typeattr write_unix_dgram_socket))
+           (allow ARG1 typeattr write_unix_dgram_socket))
 
     (macro write_all_unix_stream_sockets ((type ARG1))
-	   (allow ARG1 typeattr write_unix_stream_socket)))
+           (allow ARG1 typeattr write_unix_stream_socket)))
 
 (in subj.macro_template
 
     (macro association_subj_sctp_sockets ((type ARG1))
-	   (allow ARG1 subj (sctp_socket (association))))
+           (allow ARG1 subj (sctp_socket (association))))
 
     (macro connectto_subj_unix_stream_sockets ((type ARG1))
-	   (allow ARG1 subj (unix_stream_socket (connectto))))
+           (allow ARG1 subj (unix_stream_socket (connectto))))
 
     (macro getattr_subj_sockets ((type ARG1))
-	   (allow ARG1 subj (sockets (getattr))))
+           (allow ARG1 subj (sockets (getattr))))
 
     (macro readwrite_subj_unix_dgram_sockets ((type ARG1))
-	   (allow ARG1 subj readwrite_unix_dgram_socket))
+           (allow ARG1 subj readwrite_unix_dgram_socket))
 
     (macro readwrite_subj_unix_stream_sockets ((type ARG1))
-	   (allow ARG1 subj readwrite_unix_stream_socket))
+           (allow ARG1 subj readwrite_unix_stream_socket))
 
     (macro sendto_subj_unix_dgram_sockets ((type ARG1))
-	   (allow ARG1 subj (unix_dgram_socket (sendto))))
+           (allow ARG1 subj (unix_dgram_socket (sendto))))
 
     (macro write_subj_unix_dgram_sockets ((type ARG1))
-	   (allow ARG1 subj write_unix_dgram_socket))
+           (allow ARG1 subj write_unix_dgram_socket))
 
     (macro write_subj_unix_stream_sockets ((type ARG1))
-	   (allow ARG1 subj write_unix_stream_socket)))
+           (allow ARG1 subj write_unix_stream_socket)))
 
 (in subj.unconfined
 
     (allow typeattr self
-	   (netlink_audit_socket (nlmsg nlmsg_read nlmsg_readpriv nlmsg_relay
-					nlmsg_tty_audit nlmsg_write)))
+           (netlink_audit_socket (nlmsg nlmsg_read nlmsg_readpriv nlmsg_relay
+                                        nlmsg_tty_audit nlmsg_write)))
     (allow typeattr self (netlink_route_socket (nlmsg nlmsg_read nlmsg_write)))
     (allow typeattr self
-	   (netlink_tcpdiag_socket (nlmsg nlmsg_read nlmsg_write)))
+           (netlink_tcpdiag_socket (nlmsg nlmsg_read nlmsg_write)))
     (allow typeattr self (netlink_xfrm_socket (nlmsg nlmsg_read nlmsg_write)))
     (allow typeattr self (packet_socket (map)))
     (allow typeattr self (tun_socket (relabelto)))
@@ -1599,5 +1599,5 @@
     (allow typeattr subj.typeattr (tun_socket (attach_queue relabelfrom)))
     (allow typeattr subj.typeattr (unix_dgram_socket (sendto)))
     (allow typeattr subj.typeattr
-	   (unix_stream_socket (accept connectto listen)))
+           (unix_stream_socket (accept connectto listen)))
     (allow typeattr subj.typeattr (vsock_socket (accept listen))))

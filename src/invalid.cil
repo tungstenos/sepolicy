@@ -413,28 +413,28 @@
   (block unconfined
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute typeattr)
 
     (allow typeattr .invalid
-	   (process (not (dyntransition execheap execstack transition))))
+           (process (not (dyntransition execheap execstack transition))))
     (allow typeattr .invalid
-	   (process2 (not (nnp_transition nosuid_transition))))
+           (process2 (not (nnp_transition nosuid_transition))))
 
     (allow typeattr .invalid
-	   (blk_file (not (audit_access execmod map mounton relabelto))))
+           (blk_file (not (audit_access execmod map mounton relabelto))))
     (allow typeattr .invalid
-	   (chr_file (not (audit_access execmod mounton relabelto))))
+           (chr_file (not (audit_access execmod mounton relabelto))))
     (allow typeattr .invalid (dir (not (audit_access execmod relabelto))))
     (allow typeattr .invalid
-	   (fifo_file (not (audit_access execmod map mounton relabelto))))
+           (fifo_file (not (audit_access execmod map mounton relabelto))))
     (allow typeattr .invalid
-	   (file (not (audit_access entrypoint execmod relabelto))))
+           (file (not (audit_access entrypoint execmod relabelto))))
     (allow typeattr .invalid
-	   (lnk_file (not (audit_access execmod map mounton relabelto))))
+           (lnk_file (not (audit_access execmod map mounton relabelto))))
     (allow typeattr .invalid
-	   (sock_file (not (audit_access execmod map mounton relabelto))))))
+           (sock_file (not (audit_access execmod map mounton relabelto))))))
 
 (in unconfined
 

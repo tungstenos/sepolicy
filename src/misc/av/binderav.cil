@@ -17,24 +17,24 @@
 (in subj
 
     (macro call_all_binders ((type ARG1))
-	   (allow ARG1 typeattr (binder (call))))
+           (allow ARG1 typeattr (binder (call))))
 
     (macro impersonate_all_binders ((type ARG1))
-	   (allow ARG1 typeattr (binder (impersonate))))
+           (allow ARG1 typeattr (binder (impersonate))))
 
     (macro transfer_all_binders ((type ARG1))
-	   (allow ARG1 typeattr (binder (transfer)))))
+           (allow ARG1 typeattr (binder (transfer)))))
 
 (in subj.macro_template
 
     (macro call_subj_binders ((type ARG1))
-	   (allow ARG1 subj (binder (call))))
+           (allow ARG1 subj (binder (call))))
 
     (macro impersonate_subj_binders ((type ARG1))
-	   (allow ARG1 subj (binder (impersonate))))
+           (allow ARG1 subj (binder (impersonate))))
 
     (macro transfer_subj_binders ((type ARG1))
-	   (allow ARG1 subj (binder (transfer)))))
+           (allow ARG1 subj (binder (transfer)))))
 
 (in subj.unconfined
 

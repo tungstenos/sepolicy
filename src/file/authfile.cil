@@ -9,7 +9,7 @@
     (block auth
 
       (macro type ((type ARG1))
-	     (typeattributeset typeattr ARG1))
+             (typeattributeset typeattr ARG1))
 
       (blockinherit file.all_macro_template_dirs)
       (blockinherit file.all_macro_template_fifo_files)
@@ -25,43 +25,43 @@
 
       (block base_template
 
-	(blockabstract base_template)
+        (blockabstract base_template)
 
-	(blockinherit .file.base_template)
+        (blockinherit .file.base_template)
 
-	(call .file.auth.type (file)))
+        (call .file.auth.type (file)))
 
       (block relabelto
 
-	(macro type ((type ARG1))
-	       (typeattributeset typeattr ARG1))
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
 
-	(typeattribute not_typeattr)
-	(typeattribute typeattr)
+        (typeattribute not_typeattr)
+        (typeattribute typeattr)
 
-	(typeattributeset not_typeattr (not typeattr))
+        (typeattributeset not_typeattr (not typeattr))
 
-	(neverallow not_typeattr auth.typeattr (file (relabelto))))
+        (neverallow not_typeattr auth.typeattr (file (relabelto))))
 
       (block template
 
-	(blockabstract template)
+        (blockabstract template)
 
-	(blockinherit .file.auth.base_template)
-	(blockinherit .file.macro_template_dirs)
-	(blockinherit .file.macro_template_fifo_files)
-	(blockinherit .file.macro_template_files)
-	(blockinherit .file.macro_template_lnk_files)
-	(blockinherit .file.macro_template_sock_files))
+        (blockinherit .file.auth.base_template)
+        (blockinherit .file.macro_template_dirs)
+        (blockinherit .file.macro_template_fifo_files)
+        (blockinherit .file.macro_template_files)
+        (blockinherit .file.macro_template_lnk_files)
+        (blockinherit .file.macro_template_sock_files))
 
       (block write
 
-	(macro type ((type ARG1))
-	       (typeattributeset typeattr ARG1))
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
 
-	(typeattribute not_typeattr)
-	(typeattribute typeattr)
+        (typeattribute not_typeattr)
+        (typeattribute typeattr)
 
-	(typeattributeset not_typeattr (not typeattr))
+        (typeattributeset not_typeattr (not typeattr))
 
-	(neverallow not_typeattr auth.typeattr (file (append write))))))
+        (neverallow not_typeattr auth.typeattr (file (append write))))))

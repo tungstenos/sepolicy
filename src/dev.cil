@@ -4,7 +4,7 @@
 (block dev
 
   (macro type ((type ARG1))
-	 (typeattributeset typeattr ARG1))
+         (typeattributeset typeattr ARG1))
 
   (typeattribute typeattr)
 
@@ -18,7 +18,7 @@
   (block except
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (blockinherit .file.all_macro_template_blk_files)
     (blockinherit .file.all_macro_template_chr_files)
@@ -30,7 +30,7 @@
   (block exception
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute typeattr)
 
@@ -39,7 +39,7 @@
   (block unconfined
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute typeattr)))
 

@@ -9,7 +9,7 @@
     (block mmapzero
 
       (macro type ((type ARG1))
-	     (typeattributeset typeattr ARG1))
+             (typeattributeset typeattr ARG1))
 
       (typeattribute not_typeattr)
       (typeattribute typeattr)

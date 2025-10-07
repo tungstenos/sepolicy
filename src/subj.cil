@@ -11,7 +11,7 @@
 (block subj
 
   (macro type ((type ARG1))
-	 (typeattributeset typeattr ARG1))
+         (typeattributeset typeattr ARG1))
 
   (blockinherit all_macro_template)
 
@@ -22,7 +22,7 @@
 
   (neverallow typeattr not_typeattr (process (dyntransition transition)))
   (neverallow typeattr not_typeattr
-	      (process2 (nnp_transition nosuid_transition)))
+              (process2 (nnp_transition nosuid_transition)))
 
   (dontaudit typeattr typeattr (process (noatsecure rlimitinh siginh)))
 
@@ -31,64 +31,64 @@
     (blockabstract all_macro_template)
 
     (macro getrlimit_all_processes ((type ARG1))
-	   (allow ARG1 typeattr (process (getrlimit))))
+           (allow ARG1 typeattr (process (getrlimit))))
 
     (macro getsched_all_processes ((type ARG1))
-	   (allow ARG1 typeattr (process (getsched))))
+           (allow ARG1 typeattr (process (getsched))))
 
     (macro nnptransition_all_processes ((type ARG1))
-	   (allow ARG1 typeattr (process2 (nnp_transition))))
+           (allow ARG1 typeattr (process2 (nnp_transition))))
 
     (macro noatsecure_all_processes ((type ARG1))
-	   (allow ARG1 typeattr (process (noatsecure))))
+           (allow ARG1 typeattr (process (noatsecure))))
 
     (macro nosuidtransition_all_processes ((type ARG1))
-	   (allow ARG1 typeattr (process2 (nosuid_transition))))
+           (allow ARG1 typeattr (process2 (nosuid_transition))))
 
     (macro ps_all_states ((type ARG1))
-	   (allow ARG1 typeattr (state (ps))))
+           (allow ARG1 typeattr (state (ps))))
 
     (macro ptrace_all_processes ((type ARG1))
-	   (allow ARG1 typeattr (process (ptrace))))
+           (allow ARG1 typeattr (process (ptrace))))
 
     (macro read_all_states ((type ARG1))
-	   (allow ARG1 typeattr (state (read))))
+           (allow ARG1 typeattr (state (read))))
 
     (macro readinherited_all_fifo_files ((type ARG1))
-	   (allow ARG1 typeattr readinherited_fifo_file))
+           (allow ARG1 typeattr readinherited_fifo_file))
 
     (macro readwriteinherited_all_fifo_files ((type ARG1))
-	   (allow ARG1 typeattr readwriteinherited_fifo_file))
+           (allow ARG1 typeattr readwriteinherited_fifo_file))
 
     (macro rlimitinh_all_processes ((type ARG1))
-	   (allow ARG1 typeattr (process (rlimitinh))))
+           (allow ARG1 typeattr (process (rlimitinh))))
 
     (macro setrlimit_all_processes ((type ARG1))
-	   (allow ARG1 typeattr (process (setrlimit))))
+           (allow ARG1 typeattr (process (setrlimit))))
 
     (macro setsched_all_processes ((type ARG1))
-	   (allow ARG1 typeattr (process (setsched))))
+           (allow ARG1 typeattr (process (setsched))))
 
     (macro sigchld_all_processes ((type ARG1))
-	   (allow ARG1 typeattr (process (sigchld))))
+           (allow ARG1 typeattr (process (sigchld))))
 
     (macro sigkill_all_processes ((type ARG1))
-	   (allow ARG1 typeattr (process (sigkill))))
+           (allow ARG1 typeattr (process (sigkill))))
 
     (macro signal_all_processes ((type ARG1))
-	   (allow ARG1 typeattr (process (signal))))
+           (allow ARG1 typeattr (process (signal))))
 
     (macro signull_all_processes ((type ARG1))
-	   (allow ARG1 typeattr (process (signull))))
+           (allow ARG1 typeattr (process (signull))))
 
     (macro sigstop_all_processes ((type ARG1))
-	   (allow ARG1 typeattr (process (sigstop))))
+           (allow ARG1 typeattr (process (sigstop))))
 
     (macro transition_all_processes ((type ARG1))
-	   (allow ARG1 typeattr (process (transition))))
+           (allow ARG1 typeattr (process (transition))))
 
     (macro writeinherited_all_fifo_files ((type ARG1))
-	   (allow ARG1 typeattr writeinherited_fifo_file)))
+           (allow ARG1 typeattr writeinherited_fifo_file)))
 
   (block base_template
 
@@ -100,10 +100,10 @@
   (block entry
 
     (macro entrypoint_all_files ((type ARG1))
-	   (allow ARG1 typeattr (file (entrypoint))))
+           (allow ARG1 typeattr (file (entrypoint))))
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (blockinherit .file.all_macro_template_files)
 
@@ -117,7 +117,7 @@
   (block execheap
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute not_typeattr)
     (typeattribute typeattr)
@@ -129,7 +129,7 @@
   (block execstack
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute not_typeattr)
     (typeattribute typeattr)
@@ -143,64 +143,64 @@
     (blockabstract macro_template)
 
     (macro getrlimit_subj_processes ((type ARG1))
-	   (allow ARG1 subj (process (getrlimit))))
+           (allow ARG1 subj (process (getrlimit))))
 
     (macro getsched_subj_processes ((type ARG1))
-	   (allow ARG1 subj (process (getsched))))
+           (allow ARG1 subj (process (getsched))))
 
     (macro nnptransition_subj_processes ((type ARG1))
-	   (allow ARG1 subj (process2 (nnp_transition))))
+           (allow ARG1 subj (process2 (nnp_transition))))
 
     (macro noatsecure_subj_processes ((type ARG1))
-	   (allow ARG1 subj (process (noatsecure))))
+           (allow ARG1 subj (process (noatsecure))))
 
     (macro nosuidtransition_subj_processes ((type ARG1))
-	   (allow ARG1 subj (process2 (nosuid_transition))))
+           (allow ARG1 subj (process2 (nosuid_transition))))
 
     (macro ps_subj_states ((type ARG1))
-	   (allow ARG1 subj (state (ps))))
+           (allow ARG1 subj (state (ps))))
 
     (macro ptrace_subj_processes ((type ARG1))
-	   (allow ARG1 subj (process (ptrace))))
+           (allow ARG1 subj (process (ptrace))))
 
     (macro read_subj_states ((type ARG1))
-	   (allow ARG1 subj (state (read))))
+           (allow ARG1 subj (state (read))))
 
     (macro readinherited_subj_fifo_files ((type ARG1))
-	   (allow ARG1 subj readinherited_fifo_file))
+           (allow ARG1 subj readinherited_fifo_file))
 
     (macro readwriteinherited_subj_fifo_files ((type ARG1))
-	   (allow ARG1 subj readwriteinherited_fifo_file))
+           (allow ARG1 subj readwriteinherited_fifo_file))
 
     (macro rlimitinh_subj_processes ((type ARG1))
-	   (allow ARG1 subj (process (rlimitinh))))
+           (allow ARG1 subj (process (rlimitinh))))
 
     (macro setrlimit_subj_processes ((type ARG1))
-	   (allow ARG1 subj (process (setrlimit))))
+           (allow ARG1 subj (process (setrlimit))))
 
     (macro setsched_subj_processes ((type ARG1))
-	   (allow ARG1 subj (process (setsched))))
+           (allow ARG1 subj (process (setsched))))
 
     (macro sigchld_subj_processes ((type ARG1))
-	   (allow ARG1 subj (process (sigchld))))
+           (allow ARG1 subj (process (sigchld))))
 
     (macro sigkill_subj_processes ((type ARG1))
-	   (allow ARG1 subj (process (sigkill))))
+           (allow ARG1 subj (process (sigkill))))
 
     (macro signal_subj_processes ((type ARG1))
-	   (allow ARG1 subj (process (signal))))
+           (allow ARG1 subj (process (signal))))
 
     (macro signull_subj_processes ((type ARG1))
-	   (allow ARG1 subj (process (signull))))
+           (allow ARG1 subj (process (signull))))
 
     (macro sigstop_subj_processes ((type ARG1))
-	   (allow ARG1 subj (process (sigstop))))
+           (allow ARG1 subj (process (sigstop))))
 
     (macro transition_subj_processes ((type ARG1))
-	   (allow ARG1 subj (process (transition))))
+           (allow ARG1 subj (process (transition))))
 
     (macro writeinherited_subj_fifo_files ((type ARG1))
-	   (allow ARG1 subj writeinherited_fifo_file)))
+           (allow ARG1 subj writeinherited_fifo_file)))
 
   (block template
 
@@ -212,7 +212,7 @@
   (block unconfined
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute typeattr)
 

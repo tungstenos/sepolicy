@@ -6,8 +6,8 @@
   (filecon "/.*" any file_context)
 
   (macro root_file_type_transition_file ((type ARG1)(class ARG2)(name ARG3))
-	 (call .root.file_type_transition
-	       (ARG1 file ARG2 ARG3)))
+         (call .root.file_type_transition
+               (ARG1 file ARG2 ARG3)))
 
   (blockinherit .file.base_template)
   (blockinherit .file.macro_template_blk_files)

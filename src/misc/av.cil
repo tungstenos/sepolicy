@@ -21,10 +21,10 @@
 
 (class process
        (dyntransition execheap execmem execstack fork getattr getcap getpgid
-		      getrlimit getsched getsession noatsecure ptrace rlimitinh
-		      setexec setcap setcurrent setfscreate setkeycreate setpgid
-		      setrlimit setsched setsockcreate share sigchld siginh
-		      sigkill signal signull sigstop transition))
+                      getrlimit getsched getsession noatsecure ptrace rlimitinh
+                      setexec setcap setcurrent setfscreate setkeycreate setpgid
+                      setrlimit setsched setsockcreate share sigchld siginh
+                      sigkill signal signull sigstop transition))
 (classorder (unordered process))
 
 (class process2 (nnp_transition nosuid_transition))
@@ -42,7 +42,7 @@
 (classcommon sock_file common_file)
 
 (common common_file
-	(append audit_access create execmod execute getattr ioctl lock link map
-		mounton open quotaon read relabelfrom relabelto rename setattr
-		unlink watch watch_mount watch_mountns watch_reads watch_sb
-		watch_with_perm write))
+        (append audit_access create execmod execute getattr ioctl lock link map
+                mounton open quotaon read relabelfrom relabelto rename setattr
+                unlink watch watch_mount watch_mountns watch_reads watch_sb
+                watch_with_perm write))

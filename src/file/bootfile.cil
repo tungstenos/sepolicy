@@ -10,7 +10,7 @@
     (block boot
 
       (macro type ((type ARG1))
-	     (typeattributeset typeattr ARG1))
+             (typeattributeset typeattr ARG1))
 
       (blockinherit file.all_macro_template_dirs)
       (blockinherit file.all_macro_template_files)
@@ -23,16 +23,16 @@
 
       (block base_template
 
-	(blockabstract base_template)
+        (blockabstract base_template)
 
-	(blockinherit .file.base_template)
+        (blockinherit .file.base_template)
 
-	(call .file.boot.type (file)))
+        (call .file.boot.type (file)))
 
       (block template
 
-	(blockabstract template)
+        (blockabstract template)
 
-	(blockinherit .file.boot.base_template)
-	(blockinherit .file.macro_template_dirs)
-	(blockinherit .file.macro_template_files))))
+        (blockinherit .file.boot.base_template)
+        (blockinherit .file.macro_template_dirs)
+        (blockinherit .file.macro_template_files))))

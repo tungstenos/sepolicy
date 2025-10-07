@@ -5,8 +5,8 @@
 
 (class security
        (check_context compute_av compute_create compute_member compute_relabel
-		      compute_user load_policy read_policy setbool
-		      setcheckreqprot setenforce setsecparam validate_trans))
+                      compute_user load_policy read_policy setbool
+                      setcheckreqprot setenforce setsecparam validate_trans))
 (classorder (unordered security))
 
 (macro checkcontext_selinux_security ((type ARG1))
@@ -56,7 +56,7 @@
   (block loadpolicy
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute not_typeattr)
     (typeattribute typeattr)
@@ -68,7 +68,7 @@
   (block setenforce
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute not_typeattr)
     (typeattribute typeattr)
@@ -80,7 +80,7 @@
   (block setsecparam
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute not_typeattr)
     (typeattribute typeattr)
@@ -92,7 +92,7 @@
   (block unconfined
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute typeattr)
 

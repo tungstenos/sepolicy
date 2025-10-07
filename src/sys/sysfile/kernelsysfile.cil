@@ -14,7 +14,7 @@
     (block kernel
 
       (macro type ((type ARG1))
-	     (typeattributeset typeattr ARG1))
+             (typeattributeset typeattr ARG1))
 
       (typeattribute typeattr)
 
@@ -26,15 +26,15 @@
 
       (block base_template
 
-	(blockabstract base_template)
+        (blockabstract base_template)
 
-	(blockinherit .sysfile.base_template)
+        (blockinherit .sysfile.base_template)
 
-	(call .sysfile.kernel.type (sysfile)))
+        (call .sysfile.kernel.type (sysfile)))
 
       (block template
 
-	(blockabstract template)
+        (blockabstract template)
 
-	(blockinherit .sysfile.kernel.base_template)
-	(blockinherit .sysfile.macro_template_files))))
+        (blockinherit .sysfile.kernel.base_template)
+        (blockinherit .sysfile.macro_template_files))))

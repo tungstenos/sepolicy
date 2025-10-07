@@ -23,12 +23,12 @@
        (allow ARG1 invalid (association (setcontext))))
 
 (tunableif invalid_associations
-	   (true
+           (true
 
-	    (call association_invalid_sctp_sockets
-		  (invalidassociations.except.typeattr))
-	    (call recvfromsendto_invalid_associations
-		  (invalidassociations.except.typeattr))))
+            (call association_invalid_sctp_sockets
+                  (invalidassociations.except.typeattr))
+            (call recvfromsendto_invalid_associations
+                  (invalidassociations.except.typeattr))))
 
 (in invalid.unconfined
 
@@ -37,10 +37,10 @@
 (in mcs
 
     (mlsconstrain (association (sendto recvfrom))
-		  (or (dom h1 h2)
-		      (and
-		       (neq t1 constrained.typeattr)
-		       (neq t2 constrained.typeattr)))))
+                  (or (dom h1 h2)
+                      (and
+                       (neq t1 constrained.typeattr)
+                       (neq t2 constrained.typeattr)))))
 
 (in net
 
@@ -49,7 +49,7 @@
     (block spd
 
       (macro type ((type ARG1))
-	     (typeattributeset typeattr ARG1))
+             (typeattributeset typeattr ARG1))
 
       (typeattribute typeattr)
 
@@ -59,54 +59,54 @@
 
       (block all_macro_template
 
-	(blockabstract all_macro_template)
+        (blockabstract all_macro_template)
 
-	(macro polmatch_all_associations ((type ARG1))
-	       (allow ARG1 typeattr (association (polmatch))))
+        (macro polmatch_all_associations ((type ARG1))
+               (allow ARG1 typeattr (association (polmatch))))
 
-	(macro polmatchsetcontext_all_associations ((type ARG1))
-	       (allow ARG1 typeattr (association (polmatch setcontext))))
+        (macro polmatchsetcontext_all_associations ((type ARG1))
+               (allow ARG1 typeattr (association (polmatch setcontext))))
 
-	(macro setcontext_all_associations ((type ARG1))
-	       (allow ARG1 typeattr (association (setcontext)))))
+        (macro setcontext_all_associations ((type ARG1))
+               (allow ARG1 typeattr (association (setcontext)))))
 
       (block base_template
 
-	(blockabstract base_template)
+        (blockabstract base_template)
 
-	(context spd_context (.sys.id .sys.role spd .sys.lowlow))
+        (context spd_context (.sys.id .sys.role spd .sys.lowlow))
 
-	(type spd)
-	(call .net.spd.type (spd)))
+        (type spd)
+        (call .net.spd.type (spd)))
 
       (block macro_template
 
-	(blockabstract macro_template)
+        (blockabstract macro_template)
 
-	(macro polmatch_spd_associations ((type ARG1))
-	       (allow ARG1 spd (association (polmatch))))
+        (macro polmatch_spd_associations ((type ARG1))
+               (allow ARG1 spd (association (polmatch))))
 
-	(macro polmatchsetcontext_spd_associations ((type ARG1))
-	       (allow ARG1 spd (association (polmatch setcontext))))
+        (macro polmatchsetcontext_spd_associations ((type ARG1))
+               (allow ARG1 spd (association (polmatch setcontext))))
 
-	(macro setcontext_spd_associations ((type ARG1))
-	       (allow ARG1 spd (association (setcontext)))))
+        (macro setcontext_spd_associations ((type ARG1))
+               (allow ARG1 spd (association (setcontext)))))
 
       (block template
 
-	(blockabstract template)
+        (blockabstract template)
 
-	(blockinherit .net.spd.base_template)
-	(blockinherit .net.spd.macro_template))
+        (blockinherit .net.spd.base_template)
+        (blockinherit .net.spd.macro_template))
 
       (block unconfined
 
-	(macro type ((type ARG1))
-	       (typeattributeset typeattr ARG1))
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
 
-	(typeattribute typeattr)
+        (typeattribute typeattr)
 
-	(allow typeattr spd.typeattr (association (polmatch setcontext))))))
+        (allow typeattr spd.typeattr (association (polmatch setcontext))))))
 
 (in net.unconfined
 
@@ -115,24 +115,24 @@
 (in subj
 
     (macro recvfrom_all_associations ((type ARG1))
-	   (allow ARG1 typeattr (association (recvfrom))))
+           (allow ARG1 typeattr (association (recvfrom))))
 
     (macro recvfromsendto_all_associations ((type ARG1))
-	   (allow ARG1 typeattr (association (recvfrom sendto))))
+           (allow ARG1 typeattr (association (recvfrom sendto))))
 
     (macro sendto_all_associations ((type ARG1))
-	   (allow ARG1 typeattr (association (sendto)))))
+           (allow ARG1 typeattr (association (sendto)))))
 
 (in subj.macro_template
 
     (macro recvfrom_subj_associations ((type ARG1))
-	   (allow ARG1 subj (association (recvfrom))))
+           (allow ARG1 subj (association (recvfrom))))
 
     (macro recvfromsendto_subj_associations ((type ARG1))
-	   (allow ARG1 subj (association (recvfrom sendto))))
+           (allow ARG1 subj (association (recvfrom sendto))))
 
     (macro sendto_subj_associations ((type ARG1))
-	   (allow ARG1 subj (association (sendto)))))
+           (allow ARG1 subj (association (sendto)))))
 
 (in subj.unconfined
 

@@ -8,7 +8,7 @@
 (in sys
 
     (macro loginserialtermdev_all_type_change_serialtermdev ((type ARG1))
-	   (call .loginserialtermdev.all_type_change
-		 (ARG1 serialtermdev)))
+           (call .loginserialtermdev.all_type_change
+                 (ARG1 serialtermdev)))
 
     (blockinherit .serialtermdev.template))

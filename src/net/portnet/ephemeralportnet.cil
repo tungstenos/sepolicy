@@ -15,7 +15,7 @@
     (block ephemeral
 
       (macro type ((type ARG1))
-	     (typeattributeset typeattr ARG1))
+             (typeattributeset typeattr ARG1))
 
       (blockinherit .net.port.all_macro_template)
 
@@ -25,15 +25,15 @@
 
       (block base_template
 
-	(blockabstract base_template)
+        (blockabstract base_template)
 
-	(blockinherit .net.port.base_template)
+        (blockinherit .net.port.base_template)
 
-	(call .net.port.ephemeral.type (port)))
+        (call .net.port.ephemeral.type (port)))
 
       (block template
 
-	(blockabstract template)
+        (blockabstract template)
 
-	(blockinherit .net.port.ephemeral.base_template)
-	(blockinherit .net.port.macro_template))))
+        (blockinherit .net.port.ephemeral.base_template)
+        (blockinherit .net.port.macro_template))))

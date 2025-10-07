@@ -12,23 +12,23 @@
 (block invalidpackets
 
   (macro type ((type ARG1))
-	 (typeattributeset typeattr ARG1))
+         (typeattributeset typeattr ARG1))
 
   (typeattribute typeattr)
 
   (block except
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute typeattr)
 
     (typeattributeset typeattr
-		      (and invalidpackets.typeattr (not (exception.typeattr)))))
+                      (and invalidpackets.typeattr (not (exception.typeattr)))))
 
   (block exception
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute typeattr)))

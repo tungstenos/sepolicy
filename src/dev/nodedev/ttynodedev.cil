@@ -6,10 +6,10 @@
   (filecon "/dev/tty" char nodedev_context)
 
   (macro tioclinux_nodedev_chr_files ((type ARG1))
-	 (allowx ARG1 nodedev TIOCLINUX))
+         (allowx ARG1 nodedev TIOCLINUX))
 
   (macro tiocsti_nodedev_chr_files ((type ARG1))
-	 (allowx ARG1 nodedev TIOCSTI))
+         (allowx ARG1 nodedev TIOCSTI))
 
   (blockinherit .nodedev.template)
 

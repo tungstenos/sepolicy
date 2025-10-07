@@ -13,7 +13,7 @@
     (block home
 
       (macro type ((type ARG1))
-	     (typeattributeset typeattr ARG1))
+             (typeattributeset typeattr ARG1))
 
       (blockinherit file.all_macro_template_dirs)
       (blockinherit file.all_macro_template_fifo_files)
@@ -29,19 +29,19 @@
 
       (block base_template
 
-	(blockabstract base_template)
+        (blockabstract base_template)
 
-	(blockinherit .file.base_template)
+        (blockinherit .file.base_template)
 
-	(call .file.home.type (file)))
+        (call .file.home.type (file)))
 
       (block template
 
-	(blockabstract template)
+        (blockabstract template)
 
-	(blockinherit .file.home.base_template)
-	(blockinherit .file.macro_template_dirs)
-	(blockinherit .file.macro_template_fifo_files)
-	(blockinherit .file.macro_template_files)
-	(blockinherit .file.macro_template_lnk_files)
-	(blockinherit .file.macro_template_sock_files))))
+        (blockinherit .file.home.base_template)
+        (blockinherit .file.macro_template_dirs)
+        (blockinherit .file.macro_template_fifo_files)
+        (blockinherit .file.macro_template_files)
+        (blockinherit .file.macro_template_lnk_files)
+        (blockinherit .file.macro_template_sock_files))))

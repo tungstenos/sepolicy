@@ -13,7 +13,7 @@
     (block abi
 
       (macro type ((type ARG1))
-	     (typeattributeset typeattr ARG1))
+             (typeattributeset typeattr ARG1))
 
       (typeattribute typeattr)
 
@@ -24,15 +24,15 @@
 
       (block base_template
 
-	(blockabstract base_template)
+        (blockabstract base_template)
 
-	(blockinherit .sysctlfile.base_template)
+        (blockinherit .sysctlfile.base_template)
 
-	(call .sysctlfile.abi.type (sysctlfile)))
+        (call .sysctlfile.abi.type (sysctlfile)))
 
       (block template
 
-	(blockabstract template)
+        (blockabstract template)
 
-	(blockinherit .sysctlfile.abi.base_template)
-	(blockinherit .sysctlfile.macro_template_files))))
+        (blockinherit .sysctlfile.abi.base_template)
+        (blockinherit .sysctlfile.macro_template_files))))

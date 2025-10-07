@@ -4,23 +4,23 @@
 (block rbac
 
   (constrain (constrainobject (create relabelto))
-	     (or (or (or (eq r1 r2)
-			 (and (eq t1 objchangesys.typeattr)
-			      (eq r2 .sys.role)))
-		     (eq t1 objchange.typeattr))
-		 (eq t1 exempt.typeattr)))
+             (or (or (or (eq r1 r2)
+                         (and (eq t1 objchangesys.typeattr)
+                              (eq r2 .sys.role)))
+                     (eq t1 objchange.typeattr))
+                 (eq t1 exempt.typeattr)))
 
   (constrain (process (dyntransition transition))
-	     (or (or (or (eq r1 r2)
-			 (and (eq t1 subjchange.typeattr)
-			      (eq t2 subjchangetarget.typeattr)))
-		     (and (eq t1 subjchangesys.typeattr) (eq r2 .sys.role)))
-		 (eq t1 exempt.typeattr)))
+             (or (or (or (eq r1 r2)
+                         (and (eq t1 subjchange.typeattr)
+                              (eq t2 subjchangetarget.typeattr)))
+                     (and (eq t1 subjchangesys.typeattr) (eq r2 .sys.role)))
+                 (eq t1 exempt.typeattr)))
 
   (block change
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute typeattr)
 
@@ -30,7 +30,7 @@
   (block changesys
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute typeattr)
 
@@ -40,42 +40,42 @@
   (block exempt
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute typeattr))
 
   (block objchange
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute typeattr))
 
   (block objchangesys
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute typeattr))
 
   (block subjchange
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute typeattr))
 
   (block subjchangesys
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute typeattr))
 
   (block subjchangetarget
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute typeattr)))
 

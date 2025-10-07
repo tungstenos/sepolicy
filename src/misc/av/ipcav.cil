@@ -19,8 +19,8 @@
 (classcommon shm common_ipc)
 
 (common common_ipc
-	(associate create destroy getattr read setattr unix_read unix_write
-		   write))
+        (associate create destroy getattr read setattr unix_read unix_write
+                   write))
 
 (classpermission create_ipc)
 (classpermission create_msgq)
@@ -38,17 +38,17 @@
 (classpermission readwrite_shm)
 
 (classpermissionset create_ipc
-		    (ipc (associate create destroy getattr read setattr
-				    unix_read unix_write write)))
+                    (ipc (associate create destroy getattr read setattr
+                                    unix_read unix_write write)))
 (classpermissionset create_msgq
-		    (msgq (associate create destroy enqueue getattr read setattr
-				     unix_read unix_write write)))
+                    (msgq (associate create destroy enqueue getattr read setattr
+                                     unix_read unix_write write)))
 (classpermissionset create_sem
-		    (sem (associate create destroy getattr read setattr
-				    unix_read unix_write write)))
+                    (sem (associate create destroy getattr read setattr
+                                    unix_read unix_write write)))
 (classpermissionset create_shm
-		    (shm (associate create destroy getattr read setattr
-				    unix_read unix_write write)))
+                    (shm (associate create destroy getattr read setattr
+                                    unix_read unix_write write)))
 
 (classpermissionset read_ipc (ipc (associate getattr read unix_read)))
 (classpermissionset read_msgq (msgq (associate getattr read unix_read)))
@@ -56,14 +56,14 @@
 (classpermissionset read_shm (shm (associate getattr read unix_read)))
 
 (classpermissionset readwrite_ipc
-		    (ipc (associate getattr read unix_read unix_write write)))
+                    (ipc (associate getattr read unix_read unix_write write)))
 (classpermissionset readwrite_msgq
-		    (msgq (associate enqueue getattr read unix_read unix_write
-				     write)))
+                    (msgq (associate enqueue getattr read unix_read unix_write
+                                     write)))
 (classpermissionset readwrite_sem
-		    (sem (associate getattr read unix_read unix_write write)))
+                    (sem (associate getattr read unix_read unix_write write)))
 (classpermissionset readwrite_shm
-		    (shm (associate getattr read unix_read unix_write write)))
+                    (shm (associate getattr read unix_read unix_write write)))
 
 (classmap constrainipcsubject (create getattr read setattr write))
 
@@ -95,10 +95,10 @@
 (in ibac
 
     (constrain (constrainipcsubject (create))
-	       (or (or (or (eq u1 u2)
-			   (and (eq t1 subjchangesys.typeattr) (eq u2 .sys.id)))
-		       (eq t1 subjchange.typeattr))
-		   (eq t1 exempt.typeattr))))
+               (or (or (or (eq u1 u2)
+                           (and (eq t1 subjchangesys.typeattr) (eq u2 .sys.id)))
+                       (eq t1 subjchange.typeattr))
+                   (eq t1 exempt.typeattr))))
 
 (in invalid.unconfined
 
@@ -110,27 +110,27 @@
 (in mcs
 
     (mlsconstrain (constrainipcsubject (create getattr read setattr write))
-		  (or (dom h1 h2)
-		      (neq t1 constrained.typeattr))))
+                  (or (dom h1 h2)
+                      (neq t1 constrained.typeattr))))
 
 (in rbac
 
     (constrain (constrainipcsubject (create))
-	       (or (or (or (eq r1 r2)
-			   (and (eq t1 subjchangesys.typeattr)
-				(eq r2 .sys.role)))
-		       (eq t1 subjchange.typeattr))
-		   (eq t1 exempt.typeattr))))
+               (or (or (or (eq r1 r2)
+                           (and (eq t1 subjchangesys.typeattr)
+                                (eq r2 .sys.role)))
+                       (eq t1 subjchange.typeattr))
+                   (eq t1 exempt.typeattr))))
 
 (in rbacsep
 
     (constrain (constrainipcsubject (getattr read setattr write))
-	       (or (or (or (eq r1 r2)
-			   (and (eq r1 exempt.roleattr)
-				(neq t1 constrained.typeattr)))
-		       (eq t1 exempt.subj.typeattr))
-		   (and (eq t1 exemptsource.typeattr)
-			(eq t2 exempttarget.typeattr)))))
+               (or (or (or (eq r1 r2)
+                           (and (eq r1 exempt.roleattr)
+                                (neq t1 constrained.typeattr)))
+                       (eq t1 exempt.subj.typeattr))
+                   (and (eq t1 exemptsource.typeattr)
+                        (eq t2 exempttarget.typeattr)))))
 
 (in subj.unconfined
 

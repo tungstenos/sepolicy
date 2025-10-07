@@ -12,27 +12,27 @@
 (block mcs
 
   (mlsconstrain (constrainobject (create relabelto))
-		(or (neq t1 constrained.typeattr)
-		    (and (dom h1 h2) (eq l2 h2))))
+                (or (neq t1 constrained.typeattr)
+                    (and (dom h1 h2) (eq l2 h2))))
 
   (mlsconstrain (constrainobject (append getattr read setattr write))
-		(or (dom h1 h2)
-		    (neq t1 constrained.typeattr)))
+                (or (dom h1 h2)
+                    (neq t1 constrained.typeattr)))
 
   (mlsconstrain
    (process (dyntransition getrlimit getsched ptrace setrlimit setsched
-			   sigchld sigkill signal signull sigstop
-			   transition))
+                           sigchld sigkill signal signull sigstop
+                           transition))
    (or (dom h1 h2)
        (neq t1 constrained.typeattr)))
 
   (mlsconstrain (fifo_file (append getattr read write setattr))
-		(or (dom h1 h2)
-		    (neq t1 constrained.typeattr)))
+                (or (dom h1 h2)
+                    (neq t1 constrained.typeattr)))
 
   (block constrained
 
     (macro type ((type ARG1))
-	   (typeattributeset typeattr ARG1))
+           (typeattributeset typeattr ARG1))
 
     (typeattribute typeattr)))
