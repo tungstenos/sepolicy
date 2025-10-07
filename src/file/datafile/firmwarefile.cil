@@ -1,0 +1,52 @@
+;; SPDX-FileCopyrightText: © 2025 Dominick Grift <dominick.grift@defensec.nl>
+;; SPDX-License-Identifier: Unlicense
+
+(in file
+
+    (block firmware
+
+      (macro load_all_files ((type ARG1))
+	     (allow ARG1 typeattr (system (firmware_load))))
+
+      (macro map_all_files ((type ARG1))
+	     (allow ARG1 typeattr (file (map))))
+
+      (macro type ((type ARG1))
+	     (typeattributeset typeattr ARG1))
+
+      (blockinherit file.all_macro_template_files)
+
+      (typeattribute typeattr)
+
+      (call file.data.type (typeattr))
+
+      (block base_template
+
+	(blockabstract base_template)
+
+	(blockinherit .file.base_template)
+
+	(call .file.firmware.type (file)))
+
+      (block template
+
+	(blockabstract template)
+
+	(macro load_file_files ((type ARG1))
+	       (allow ARG1 file (system (firmware_load))))
+
+	(macro map_file_files ((type ARG1))
+	       (allow ARG1 file (file (map))))
+
+	(blockinherit .file.macro_template_files)
+	(blockinherit .file.firmware.base_template))))
+
+(in firmware
+
+    (blockinherit .file.firmware.template)
+    (blockinherit .file.macro_template_dirs)
+    (blockinherit .file.macro_template_lnk_files))
+
+(in sys
+
+    (call .file.firmware.load_all_files (unconfined.typeattr)))
