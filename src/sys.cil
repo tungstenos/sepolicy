@@ -6,7 +6,6 @@
 ;; run before init (e.g. plymouth) after policy load, so
 ;; start off in sys.id:sys.role:sys.subj:s0.
 (sidcontext init (sys.id sys.role sys.subj sys.lowlow))
-(sidcontext kernel (sys.id sys.role sys.subj sys.lowlow))
 
 (block sys
 

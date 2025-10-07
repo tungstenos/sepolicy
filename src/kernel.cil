@@ -1,0 +1,74 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+;; Context for kernel userspace helpers.
+(sidcontext kernel (sys.id sys.role kernel.subj sys.lowlow))
+
+(block kernel
+
+  ;; This domain exists so that we may control interactions of other processes'
+  ;; with kernel threads. See the `neverallow` rules below for some examples.
+  (roletype .sys.role subj)
+
+  ;; TODO: maybe filter down to .subj.template?
+  (blockinherit .subj.base_template)
+
+  ;; TODO: in the future, we might try and confine this domain. However, this
+  ;; isn't a huge deal: kernel threads run in ring0 anyway, so any constraints
+  ;; we may add don't protect against a malicious or comprimised kernel thread.
+  (call .unconfined.type (subj))
+
+  (block ptrace
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute not_typeattr)
+    (typeattribute typeattr)
+
+    (typeattributeset not_typeattr (not typeattr))
+
+    ;; Nothing should ptrace kernel threads.
+    (neverallow not_typeattr subj (process (ptrace))))
+
+  (block silenced
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (dontaudit typeattr subj (process (ptrace transition dyntransition)))
+    (dontaudit typeattr subj (process2 (nnp_transition))))
+
+  (block transition
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute not_typeattr)
+    (typeattribute typeattr)
+
+    (typeattributeset not_typeattr (not typeattr))
+
+    ;; The initial task starts in subj, but nothing ever transitions into it.
+    (neverallow not_typeattr subj (process (transition dyntransition)))
+    (neverallow not_typeattr subj (process2 (nnp_transition))))
+
+  (block unconfined
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (call ptrace.type (typeattr))
+    (call transition.type (typeattr))))
+
+(in silenced
+
+    (call .kernel.silenced.type (typeattr)))
+
+(in unconfined
+
+    (call .kernel.unconfined.type (typeattr)))

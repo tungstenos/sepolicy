@@ -7,6 +7,7 @@ cil_files = [
     'file.cil',
     'fs.cil',
     'invalid.cil',
+    'kernel.cil',
     'misc.cil',
     'net.cil',
     'selinux.cil',
