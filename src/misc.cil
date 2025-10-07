@@ -5,10 +5,6 @@
 
     (allow typeattr subj (system (reboot reload start status stop))))
 
-(typealias dpkg_script_t)
-
-(in sys (typealiasactual dpkg_script_t subj))
-
 (typealias portage_t)
 (typealias portage_fetch_t)
 (typealias portage_sandbox_t)
@@ -16,9 +12,5 @@
 (in sys (typealiasactual portage_t subj))
 (in sys (typealiasactual portage_fetch_t subj))
 (in sys (typealiasactual portage_sandbox_t subj))
-
-(typealias rpm_script_t)
-
-(in sys (typealiasactual rpm_script_t subj))
 
 (boolean xserver_object_manager false)
