@@ -1,11 +1,5 @@
-;; SPDX-FileCopyrightText: © 2025 Dominick Grift <dominick.grift@defensec.nl>
-;; SPDX-License-Identifier: Unlicense
-
-;; userspace_initial_context
-;; Although we run init in its own domain, processes may
-;; run before init (e.g. plymouth) after policy load, so
-;; start off in sys.id:sys.role:sys.subj:s0.
-(sidcontext init (sys.id sys.role sys.subj sys.lowlow))
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
 
 (block sys
 

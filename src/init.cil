@@ -1,0 +1,20 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+;; userspace_initial_context
+;; Although we run systemd in its own domain, processes may run beforehand in
+;; the initramfs (e.g. plymouth) after policy load, so start off in init.subj.
+(sidcontext init (sys.id sys.role init.subj sys.lowlow))
+
+(block init
+
+  (roletype .sys.role subj)
+
+  (blockinherit .subj.template)
+
+  ;; Confining early boot processes in the initramfs doesn't give us much. cpio
+  ;; doesn't support xattrs, so we end up running everything in a single domain
+  ;; anyway. Given that initramfs performs numerous privileged tasks, such as
+  ;; decrypting and mounting the root partition, and possibly loading policy,
+  ;; there isn't much to confine anyway.
+  (call .unconfined.type (subj)))

@@ -6,6 +6,7 @@ cil_files = [
     'dev.cil',
     'file.cil',
     'fs.cil',
+    'init.cil',
     'invalid.cil',
     'kernel.cil',
     'misc.cil',
