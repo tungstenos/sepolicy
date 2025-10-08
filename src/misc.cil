@@ -12,5 +12,3 @@
 (in sys (typealiasactual portage_t subj))
 (in sys (typealiasactual portage_fetch_t subj))
 (in sys (typealiasactual portage_sandbox_t subj))
-
-(boolean xserver_object_manager false)
