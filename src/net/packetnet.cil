@@ -66,15 +66,6 @@
                        (neq t1 constrained.typeattr)
                        (neq t2 constrained.typeattr)))))
 
-(in rbac
-
-    (constrain (packet (relabelto))
-               (or (or (or (eq r1 r2)
-                           (and (eq t1 objchangesys.typeattr)
-                                (eq r2 .sys.role)))
-                       (eq t1 objchange.typeattr))
-                   (eq t1 exempt.typeattr))))
-
 (in net
 
     (blockinherit packet.template)
@@ -183,3 +174,12 @@
 (in net.unconfined
 
     (call .net.packet.unconfined.type (typeattr)))
+
+(in rbac
+
+    (constrain (packet (relabelto))
+               (or (or (or (eq r1 r2)
+                           (and (eq t1 objchangesys.typeattr)
+                                (eq r2 .sys.role)))
+                       (eq t1 objchange.typeattr))
+                   (eq t1 exempt.typeattr))))
