@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 cil_files = [
+    'agent.cil',
     'anoninode.cil',
     'dev.cil',
     'file.cil',

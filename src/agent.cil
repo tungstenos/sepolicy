@@ -1,0 +1,89 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(block agent
+
+  (macro anon_subj_type_transition ((type ARG1)(type ARG2)(type ARG3))
+         (typetransition ARG1 ARG2 process ARG3)
+
+         (allow ARG1 ARG2 mapexecute_file)
+         (allow ARG1 ARG2 read_file)
+
+         (allow ARG1 ARG3 (process (transition)))
+
+         (allow ARG3 ARG1 (process (sigchld)))
+         (allow ARG3 ARG1 (fd (use)))
+         (allow ARG3 ARG1 readwriteinherited_fifo_file)
+
+         (allow ARG3 ARG2 (file (entrypoint)))
+         (allow ARG3 ARG2 mapexecute_file)
+         (allow ARG3 ARG2 read_file))
+
+  (macro type ((type ARG1))
+         (typeattributeset typeattr ARG1))
+
+  (typeattribute typeattr)
+
+  ;; sys agents can be rbacsep constrained
+  (call .rbacsep.usefdsource.type (typeattr))
+
+  (call .subj.common.type (typeattr))
+  (call .subj.useinteractivefd.type (typeattr))
+
+  (block exec
+
+    (macro auditexecuteaccess_all_files ((type ARG1))
+           (allow ARG1 typeattr (file (getattr execute))))
+
+    (macro dontaudit_auditaccess_all_files ((type ARG1))
+           (dontaudit ARG1 typeattr (file (audit_access))))
+
+    (macro entrypoint_all_files ((type ARG1))
+           (allow ARG1 typeattr (file (entrypoint))))
+
+    (macro map_all_files ((type ARG1))
+           (allow ARG1 typeattr (file (map))))
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (blockinherit .file.all_macro_template_files)
+
+    (typeattribute typeattr)
+
+    (call .file.exec.type (typeattr)))
+
+  (block template
+
+    (blockabstract template)
+
+    (macro role ((role ARG1))
+           (roleattributeset roleattr ARG1))
+
+    (macro subj_type_transition ((type ARG1))
+           (allow ARG1 subj (process (transition)))
+
+           (allow subj ARG1 (process (sigchld)))
+           (allow subj ARG1 (fd (use)))
+           (allow subj ARG1 readwriteinherited_fifo_file)
+
+           (call exec.mapexecute_file_files (ARG1))
+           (call exec.read_file_files (ARG1))
+           (call exec.subj_type_transition (ARG1 subj)))
+
+    (blockinherit .subj.common.template)
+
+    (roleattribute roleattr)
+    (roletype roleattr subj)
+
+    (call .agent.type (subj))
+
+    (block exec
+
+      (blockinherit .file.exec.template)
+
+      (call entrypoint_file_files (subj))
+      (call mapexecute_file_files (subj))
+      (call read_file_files (subj))
+
+      (call .agent.exec.type (file)))))
