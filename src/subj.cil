@@ -97,6 +97,63 @@
     (type subj)
     (call .subj.type (subj)))
 
+  (block common
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (blockinherit all_macro_template)
+
+    (typeattribute typeattr)
+
+    (allow typeattr self
+           (process (fork sigchld sigkill signal signull sigstop)))
+
+    (allow typeattr self list_dir)
+    (allow typeattr self read_lnk_file)
+    (allow typeattr self readwrite_fifo_file)
+    (allow typeattr self readwrite_file)
+
+    (call subj.type (typeattr))
+
+    (call .conf.traverse_file_pattern.type (typeattr))
+
+    (call .dev.traverse_file_pattern.type (typeattr))
+
+    (call .exec.traverse_file_pattern.type (typeattr))
+
+    (call .lib.mapexecute_file_files (typeattr))
+    (call .lib.read_file_pattern.type (typeattr))
+
+    (call .null.readwrite_nodedev_chr_files (typeattr))
+
+    (call .proc.traverse_fs_pattern.type (typeattr))
+
+    (call .sys.sigchld_subj_processes (typeattr))
+
+    (call .textrel.lib.execmod_file_files (typeattr))
+    (call .textrel.lib.mapexecute_file_files (typeattr))
+    (call .textrel.lib.read_file_files (typeattr))
+
+    (call .tty.readwrite_nodedev_chr_files (typeattr))
+
+    (call .zero.map_nodedev_chr_files (typeattr))
+    (call .zero.readwrite_nodedev_chr_files (typeattr))
+
+    (block base_template
+
+      (blockabstract base_template)
+
+      (type subj)
+      (call .subj.common.type (subj)))
+
+    (block template
+
+      (blockabstract template)
+
+      (blockinherit .subj.common.base_template)
+      (blockinherit .subj.macro_template)))
+
   (block entry
 
     (macro entrypoint_all_files ((type ARG1))

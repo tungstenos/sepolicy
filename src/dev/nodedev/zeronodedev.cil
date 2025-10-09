@@ -5,6 +5,15 @@
 
   (filecon "/dev/zero" char nodedev_context)
 
+  (macro dontaudit_auditexecute_nodedev_chr_files ((type ARG1))
+         (dontaudit ARG1 nodedev (chr_file (getattr execute))))
+
+  (macro map_nodedev_chr_files ((type ARG1))
+         (allow ARG1 nodedev (chr_file (map))))
+
+  (macro mounton_nodedev_chr_files ((type ARG1))
+         (allow ARG1 nodedev mounton_chr_file))
+
   (blockinherit .nodedev.template)
 
   (call .rbacsep.exempt.obj.type (nodedev)))
