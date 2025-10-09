@@ -23,6 +23,7 @@ foreach file : cil_files
     policy_sources += files(file)
 endforeach
 
+subdir('authfile')
 subdir('datafile')
 subdir('homefile')
 subdir('hugetlbfsfile')
