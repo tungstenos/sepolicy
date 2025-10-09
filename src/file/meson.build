@@ -24,6 +24,7 @@ foreach file : cil_files
 endforeach
 
 subdir('authfile')
+subdir('conffile')
 subdir('datafile')
 subdir('homefile')
 subdir('hugetlbfsfile')
