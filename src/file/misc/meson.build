@@ -4,6 +4,7 @@
 cil_files = [
     'lostfoundfile.cil',
     'mediafile.cil',
+    'passwdfile.cil',
     'rootfile.cil',
     'unknownfile.cil',
 ]
