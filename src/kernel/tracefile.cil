@@ -147,10 +147,10 @@
     (allow typeattr tracefile.typeattr
            (file (not (audit_access entrypoint execmod))))))
 
-(in sys.silenced
+(in kernel.silenced
 
     (call .tracefile.silenced.type (typeattr)))
 
-(in sys.unconfined
+(in kernel.unconfined
 
     (call .tracefile.unconfined.type (typeattr)))

@@ -146,10 +146,10 @@
     (allow typeattr pstorefile.typeattr (dir (not execmod)))
     (allow typeattr pstorefile.typeattr (file (not (entrypoint execmod))))))
 
-(in sys.silenced
+(in kernel.silenced
 
     (call .pstorefile.silenced.type (typeattr)))
 
-(in sys.unconfined
+(in kernel.unconfined
 
     (call .pstorefile.unconfined.type (typeattr)))

@@ -179,10 +179,10 @@
     (allow typeattr sysfile.typeattr
            (lnk_file (not (audit_access execmod map mounton))))))
 
-(in sys.silenced
+(in kernel.silenced
 
     (call .sysfile.silenced.type (typeattr)))
 
-(in sys.unconfined
+(in kernel.unconfined
 
     (call .sysfile.unconfined.type (typeattr)))

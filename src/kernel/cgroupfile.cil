@@ -147,10 +147,10 @@
     (allow typeattr cgroupfile.typeattr
            (file (not (audit_access entrypoint execmod))))))
 
-(in sys.silenced
+(in kernel.silenced
 
     (call .cgroupfile.silenced.type (typeattr)))
 
-(in sys.unconfined
+(in kernel.unconfined
 
     (call .cgroupfile.unconfined.type (typeattr)))

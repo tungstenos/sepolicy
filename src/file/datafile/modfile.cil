@@ -64,10 +64,10 @@
 
     (call .mod.lib_file_type_transition_file (typeattr)))
 
-(in sys
-
-    (call .file.mod.load_all_files (unconfined.typeattr)))
-
-(in sys.moduleload
+(in kernel.moduleload
 
     (neverallow not_typeattr .file.mod.typeattr (system (module_load))))
+
+(in kernel.unconfined
+
+    (call .file.mod.load_all_files (typeattr)))

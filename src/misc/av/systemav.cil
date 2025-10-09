@@ -1,12 +1,12 @@
-;; SPDX-FileCopyrightText: © 2025 Dominick Grift <dominick.grift@defensec.nl>
-;; SPDX-License-Identifier: Unlicense
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
 
 (class system
        (firmware_load halt ipc_info module_load module_request reboot reload
                       start status stop syslog_console syslog_mod syslog_read))
 (classorder (unordered system))
 
-(in sys
+(in kernel
 
     (macro ipcinfo_system ((type ARG1))
            (allow ARG1 subj (system (ipc_info))))
@@ -33,45 +33,26 @@
 
       (typeattributeset not_typeattr (not typeattr))
 
-      (neverallow not_typeattr self (system (module_load))))
+      (neverallow not_typeattr self (system (module_load)))))
 
-    (block silenced
+(in kernel.silenced
 
-      (macro type ((type ARG1))
-             (typeattributeset typeattr ARG1))
+    (dontaudit typeattr self (system (module_load)))
+    (dontaudit typeattr subj
+               (system (ipc_info module_request syslog_console syslog_mod
+                                 syslog_read))))
 
-      (typeattribute typeattr)
+(in kernel.unconfined
 
-      (dontaudit typeattr self (system (module_load)))
-      (dontaudit typeattr subj
-                 (system (ipc_info module_request reboot reload start
-                                   status stop syslog_console syslog_mod
-                                   syslog_read))))
+    (allow typeattr self (system (module_load)))
+    (allow typeattr subj
+           (system (ipc_info module_request syslog_console syslog_mod
+                             syslog_read)))
 
-    (block unconfined
+    ;; potentially happens in autorelabel.target on policy model change
+    (allow typeattr .invalid (system (firmware_load module_load)))
 
-      (macro type ((type ARG1))
-             (typeattributeset typeattr ARG1))
+    ;; potentially happens in autorelabel.target on fresh install
+    (allow typeattr .unlabeled (system (firmware_load module_load)))
 
-      (typeattribute typeattr)
-
-      (allow typeattr self (system (module_load)))
-      (allow typeattr subj
-             (system (ipc_info module_request syslog_console syslog_mod
-                               syslog_read)))
-
-      ;; potentially happens in autorelabel.target on policy model change
-      (allow typeattr .invalid (system (firmware_load module_load)))
-
-      ;; potentially happens in autorelabel.target on fresh install
-      (allow typeattr .unlabeled (system (firmware_load module_load)))
-
-      (call moduleload.type (typeattr))))
-
-(in silenced
-
-    (call .sys.silenced.type (typeattr)))
-
-(in unconfined
-
-    (call .sys.unconfined.type (typeattr)))
+    (call moduleload.type (typeattr)))

@@ -1,9 +1,11 @@
 ;; SPDX-FileCopyrightText: © 2025 Dominick Grift <dominick.grift@defensec.nl>
 ;; SPDX-License-Identifier: Unlicense
 
-(in sys.unconfined
+(in unconfined
 
-    (allow typeattr subj (system (reboot reload start status stop))))
+    ;; For systemd: the system class is for access control against unit state.
+    ;; TODO: we can get rid of this when systemd gets its own domain.
+    (allow typeattr .sys.subj (system (reboot reload start status stop))))
 
 (typealias portage_t)
 (typealias portage_fetch_t)

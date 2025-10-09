@@ -147,10 +147,10 @@
     (allow typeattr debugfile.typeattr
            (file (not (audit_access entrypoint execmod))))))
 
-(in sys.silenced
+(in kernel.silenced
 
     (call .debugfile.silenced.type (typeattr)))
 
-(in sys.unconfined
+(in kernel.unconfined
 
     (call .debugfile.unconfined.type (typeattr)))

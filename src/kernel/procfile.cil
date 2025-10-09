@@ -202,10 +202,10 @@
            (lnk_file (not (audit_access execmod map mounton relabelfrom
                                         relabelto))))))
 
-(in sys.silenced
+(in kernel.silenced
 
     (call .procfile.silenced.type (typeattr)))
 
-(in sys.unconfined
+(in kernel.unconfined
 
     (call .procfile.unconfined.type (typeattr)))

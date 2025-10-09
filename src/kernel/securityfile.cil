@@ -191,10 +191,10 @@
            (lnk_file (not (audit_access execmod map mounton relabelfrom
                                         relabelto))))))
 
-(in sys.silenced
+(in kernel.silenced
 
     (call .securityfile.silenced.type (typeattr)))
 
-(in sys.unconfined
+(in kernel.unconfined
 
     (call .securityfile.unconfined.type (typeattr)))
