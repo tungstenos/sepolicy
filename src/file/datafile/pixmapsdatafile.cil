@@ -1,0 +1,44 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(block pixmaps
+
+  (block data
+
+    (filecon "/usr/share/pixmaps" dir file_context)
+    (filecon "/usr/share/pixmaps/.*" any file_context)
+
+    (macro data_file_type_transition_file ((type ARG1))
+           (call .data.file_type_transition
+                 (ARG1 file dir "pixmaps")))
+
+    (macro map_file_files ((type ARG1))
+           (allow ARG1 file (file (map))))
+
+    (blockinherit .file.data.template)
+
+    (block map_file_pattern
+
+      (macro type ((type ARG1))
+             (typeattributeset typeattr ARG1))
+
+      (typeattribute typeattr)
+
+      (call map_file_files (typeattr))
+
+      (call .data.search_file_pattern.type (typeattr)))
+
+    (block read_file_pattern
+
+      (macro type ((type ARG1))
+             (typeattributeset typeattr ARG1))
+
+      (typeattribute typeattr)
+
+      (call list_file_dirs (typeattr))
+      (call read_file_files (typeattr))
+      (call read_file_lnk_files (typeattr)))))
+
+(in file.unconfined
+
+    (call .pixmaps.data.data_file_type_transition_file (typeattr)))
