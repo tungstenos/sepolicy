@@ -7,6 +7,7 @@ cil_files = [
     'terminfohomefile.cil',
     'userhomecachefile.cil',
     'userhomeconffile.cil',
+    'userhomedatafile.cil',
 ]
 
 foreach file : cil_files
