@@ -10,6 +10,7 @@ cil_files = [
     'firmwaredatafile.cil',
     'firmwarefile.cil',
     'fontdatafile.cil',
+    'iconsdatafile.cil',
     'libfile.cil',
     'libglvnddatafile.cil',
     'libvulkandatafile.cil',
