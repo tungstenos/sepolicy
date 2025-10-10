@@ -7,6 +7,7 @@ cil_files = [
     'fontconffile.cil',
     'hostsconffile.cil',
     'inputrcconffile.cil',
+    'libvulkanconffile.cil',
     'localeconffile.cil',
     'mimeconffile.cil',
     'selinuxconffile.cil',
