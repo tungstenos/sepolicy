@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 cil_files = [
+    'environrunfile.cil',
     'runlockfile.cil',
     'runuserfile.cil',
     'utmprunfile.cil',

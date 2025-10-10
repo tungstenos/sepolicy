@@ -4,6 +4,7 @@
 cil_files = [
     'bashcompletiondatafile.cil',
     'editordatafile.cil',
+    'environdatafile.cil',
     'execfile.cil',
     'firmwaredatafile.cil',
     'firmwarefile.cil',
