@@ -15,3 +15,5 @@ foreach file : cil_files
 endforeach
 
 subdir('userhomecachefile')
+subdir('userhomeconffile')
+subdir('userhomedatafile')

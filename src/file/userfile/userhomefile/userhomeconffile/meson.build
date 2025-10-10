@@ -2,8 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 cil_files = [
-    'fonthomecachefile.cil',
-    'mesahomecachefile.cil',
+    'fonthomeconffile.cil',
 ]
 
 foreach file : cil_files
