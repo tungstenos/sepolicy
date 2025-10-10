@@ -16,6 +16,7 @@ cil_files = [
     'subj.cil',
     'sys.cil',
     'unlabeled.cil',
+    'user.cil',
 ]
 
 foreach file : cil_files

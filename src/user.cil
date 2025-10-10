@@ -1,0 +1,308 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+;; Base for user login shells.
+
+(in user
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (blockinherit all_macro_template)
+
+    (categoryset catset (range c512 c1023))
+
+    (level clearance (s0 catset))
+
+    (levelrange securitylevel (.sys.low clearance))
+
+    (block all_macro_template
+
+      (blockabstract all_macro_template)
+
+      (macro create_all_keyrings ((type ARG1))
+             (allow ARG1 typeattr (key (create))))
+
+      (macro link_all_keyrings ((type ARG1))
+             (allow ARG1 typeattr (key (link))))
+
+      (macro search_all_keyrings ((type ARG1))
+             (allow ARG1 typeattr (key (search))))
+
+      (macro write_all_keyrings ((type ARG1))
+             (allow ARG1 typeattr (key (write))))
+
+      (blockinherit .subj.all_macro_template))
+
+    (block common
+
+      ;; Permissions here should be fairly light: this domain is exposed to the
+      ;; user, and hence is untrusted by the system. Read-only access to system
+      ;; data is permissible, but only when scoped: broad access comes with the
+      ;; risk of metadata leaks.
+
+      (macro type ((type ARG1))
+             (typeattributeset typeattr ARG1))
+
+      (blockinherit all_macro_template)
+
+      (typeattribute typeattr)
+
+      (allow typeattr self (cap_userns (kill sys_ptrace)))
+
+      ;; only ever allow these to unprivileged login shells
+      (neverallow typeattr self (cap_userns (not (kill sys_ptrace))))
+
+      (allow typeattr self (fd (use)))
+      (allow typeattr self
+             (process (getattr getrlimit getsched ptrace setfscreate setpgid
+                               setrlimit setsched)))
+      (dontaudit typeattr self (constrainsocketsubject (create)))
+
+      (call user.type (typeattr))
+
+      (call .auto.getattr_fs_dirs (typeattr))
+
+      (call .cache.search_file_pattern.type (typeattr))
+
+      (call .caplastcap.read_sysctlfile_pattern.type (typeattr))
+
+      (call .computecreate_selinux_security (typeattr))
+
+      (call .cpu.read_sysfile_pattern.type (typeattr))
+
+      (call .cpuinfo.read_procfile_files (typeattr))
+
+      (call .crypto.read_sysctlfile_pattern.type (typeattr))
+
+      (call .dev.getattr_all_chr_files (typeattr))
+
+      (call .devices.search_sysfile_pattern.type (typeattr))
+
+      (call .devpts.search_fs_pattern.type (typeattr))
+
+      ;; Editors should not be type transitioned out: they have access to all
+      ;; files that the user has access to.
+      (call .editor.read_file_pattern.type (typeattr))
+
+      ;; Agents unknown to policy execute without a type transition. In the
+      ;; future, we can consider a more restricted domain for those agents.
+      (call .exec.entrypoint_file_files (typeattr))
+      (call .exec.execute_file_files (typeattr))
+      (call .exec.list_file_dirs (typeattr))
+
+      (call .file.exec.getattr_all_files (typeattr))
+      (call .file.lib.getattr_all_files (typeattr))
+
+      (call .filesystems.read_procfile_files (typeattr))
+
+      (call .inputrc.conf.read_file_pattern.type (typeattr))
+
+      (call .loadavg.read_procfile_files (typeattr))
+
+      (call .locale.data.map_file_pattern.type (typeattr))
+      (call .locale.read_file_pattern.type (typeattr))
+
+      (call .mail.spool.search_file_pattern.type (typeattr))
+
+      (call .media.list_file_dirs (typeattr))
+
+      (call .meminfo.read_procfile_files (typeattr))
+
+      (call .mime.conf.read_file_pattern.type (typeattr))
+      (call .mime.data.map_file_pattern.type (typeattr))
+      (call .mime.data.read_file_pattern.type (typeattr))
+
+      (call .net.traverse_procfile_pattern.type (typeattr))
+
+      (call .ngroupsmax.read_sysctlfile_pattern.type (typeattr))
+
+      (call .node.read_sysfile_pattern.type (typeattr))
+
+      (call .ns.read_fs_pattern.type (typeattr))
+
+      (call .osrelease.read_sysctlfile_pattern.type (typeattr))
+
+      (call .overcommitmemory.read_sysctlfile_pattern.type (typeattr))
+
+      (call .pidmax.read_sysctlfile_files (typeattr))
+
+      (call .proc.list_fs_dirs (typeattr))
+      (call .proc.getattr_fs_pattern.type (typeattr))
+
+      (call .random.read_nodedev_chr_files (typeattr))
+
+      (call .random.read_sysctlfile_pattern.type (typeattr))
+
+      (call .runuser.search_file_pattern.type (typeattr))
+
+      (call .selinux.linked.type (typeattr))
+      (call .selinux.readwrite_fs_pattern.type (typeattr))
+
+      (call .shell.exec.entrypoint_file_files (typeattr))
+      (call .shell.exec.execute_file_files (typeattr))
+
+      (call .shellrc.list_file_dirs (typeattr))
+      (call .shellrc.read_file_files (typeattr))
+      (call .shellrc.read_file_lnk_files (typeattr))
+
+      (call .silenced.type (typeattr))
+
+      (call .stat.read_procfile_files (typeattr))
+
+      (call .stordev.getattr_all_blk_files (typeattr))
+
+      ;; Make terminals display properly.
+      (call .terminfo.conf.read_file_pattern.type (typeattr))
+      (call .terminfo.data.read_file_pattern.type (typeattr))
+
+      (call .tty.read_procfile_files (typeattr))
+      (call .tty.search_procfile_dirs (typeattr))
+
+      (call .uptime.read_procfile_files (typeattr))
+
+      (call .utmp.run.read_file_files (typeattr))
+
+      (call .xattr.getattr_fs_pattern.type (typeattr))
+
+      (optional user_common_bashcompletiondatafile
+                (call .bashcomp.data.list_file_dirs (typeattr))
+                (call .bashcomp.data.read_file_files (typeattr))
+                (call .bashcomp.data.read_file_lnk_files (typeattr)))
+
+      (optional user_common_dictionaries
+                (call .dictionaries.read_file_pattern.type (typeattr))
+                (call .dictionaries.state.map_file_files (typeattr)))
+
+      (optional user_common_fontcachefile
+                (call .font.cache.map_file_pattern.type (typeattr))
+                (call .font.cache.read_file_pattern.type (typeattr)))
+
+      (optional user_common_fontconffile
+                (call .font.conf.read_file_pattern.type (typeattr)))
+
+      (optional user_common_fontdatafile
+                (call .font.data.map_file_pattern.type (typeattr))
+                (call .font.data.read_file_pattern.type (typeattr)))
+
+      (optional user_common_groffconffile
+                (call .groff.conf.read_file_pattern.type (typeattr)))
+
+      (optional user_common_groffdatafile
+                (call .groff.data.read_file_pattern.type (typeattr)))
+
+      (optional user_common_manconffile
+                (call .man.read_file_pattern.type (typeattr)))
+
+      (optional user_common_mandb
+                (call .man.db.cache.map_file_pattern.type (typeattr))
+                (call .man.db.cache.read_file_pattern.type (typeattr)))
+
+      (optional user_common_perlconffile
+                (call .perl.read_file_pattern.type (typeattr)))
+
+      (optional user_common_systemd
+                ;; for top and w
+                (call .systemd.sessions.run.list_file_dirs (typeattr))
+                (call .systemd.sessions.run.read_file_files (typeattr)))
+
+      (block base_template
+
+        (blockabstract base_template)
+
+        (blockinherit .subj.common.base_template)
+
+        (call .user.common.type (subj)))
+
+      (block template
+
+        (blockabstract template)
+
+        (blockinherit .user.common.base_template)
+        (blockinherit .user.macro_template)))
+
+    (block id_template
+
+      (blockabstract id_template)
+
+      (user id)
+      (userlevel id .sys.low)
+      (userrange id .sys.lowlow))
+
+    (block macro_template
+
+      (blockabstract macro_template)
+
+      (macro create_subj_keyrings ((type ARG1))
+             (allow ARG1 subj (key (create))))
+
+      (macro link_subj_keyrings ((type ARG1))
+             (allow ARG1 subj (key (link))))
+
+      (macro search_subj_keyrings ((type ARG1))
+             (allow ARG1 subj (key (search))))
+
+      (macro write_subj_keyrings ((type ARG1))
+             (allow ARG1 subj (key (write))))
+
+      (blockinherit .subj.macro_template))
+
+    (block role_template
+
+      (blockabstract role_template)
+
+      (role role)
+      (roleallow roleallow.roleattr role)
+
+      (userrole userrole.userattr role)
+
+      (block roleallow
+
+        (macro role ((role ARG1))
+               (roleattributeset roleattr ARG1))
+
+        (roleattribute roleattr))
+
+      (block userrole
+
+        (macro user ((user ARG1))
+               (userattributeset userattr ARG1))
+
+        (userattribute userattr)))
+
+    (block subj_template
+
+      (blockabstract subj_template)
+
+      (macro exec_subj_type_transition ((type ARG1))
+             (allow ARG1 subj (process (transition)))
+
+             (allow subj ARG1 (process (sigchld)))
+             (allow subj ARG1 (fd (use)))
+             (allow subj ARG1 readwriteinherited_fifo_file)
+
+             (call .exec.mapexecute_file_files (ARG1))
+             (call .exec.read_file_files (ARG1))
+             (call .exec.subj_type_transition (ARG1 subj)))
+
+      (macro shell_exec_subj_type_transition ((type ARG1))
+             (allow ARG1 subj (process (transition)))
+
+             (allow subj ARG1 (process (sigchld)))
+             (allow subj ARG1 (fd (use)))
+             (allow subj ARG1 readwriteinherited_fifo_file)
+
+             (call .shell.exec.mapexecute_file_files (ARG1))
+             (call .shell.exec.read_file_files (ARG1))
+             (call .shell.exec.subj_type_transition (ARG1 subj)))
+
+      (macro role ((role ARG1))
+             (roleattributeset roleattr ARG1))
+
+      (blockinherit .user.common.template)
+
+      (roleattribute roleattr)
+
+      (roletype roleattr subj)))
