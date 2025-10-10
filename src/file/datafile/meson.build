@@ -19,6 +19,7 @@ cil_files = [
     'mimedatafile.cil',
     'modfile.cil',
     'motddatafile.cil',
+    'servicesdatafile.cil',
     'srcfile.cil',
     'terminfodatafile.cil',
 ]
