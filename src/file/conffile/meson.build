@@ -14,6 +14,7 @@ cil_files = [
     'localeconffile.cil',
     'mimeconffile.cil',
     'motdconffile.cil',
+    'resolvconffile.cil',
     'selinuxconffile.cil',
     'tcpwrappersconffile.cil',
     'terminfoconffile.cil',
