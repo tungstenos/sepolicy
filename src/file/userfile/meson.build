@@ -3,6 +3,7 @@
 
 cil_files = [
     'userhomefile.cil',
+    'userhugetlbfsfile.cil',
 ]
 
 foreach file : cil_files
