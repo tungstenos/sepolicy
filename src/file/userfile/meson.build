@@ -14,3 +14,5 @@ cil_files = [
 foreach file : cil_files
     policy_sources += files(file)
 endforeach
+
+subdir('userhomefile')
