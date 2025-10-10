@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 cil_files = [
+    'bashcompletionconffile.cil',
     'editorconffile.cil',
     'fontconffile.cil',
     'hostsconffile.cil',
