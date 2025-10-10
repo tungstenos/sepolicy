@@ -4,6 +4,7 @@
 cil_files = [
     'bashcompletionhomedatafile.cil',
     'fonthomedatafile.cil',
+    'libvulkanhomedatafile.cil',
 ]
 
 foreach file : cil_files
