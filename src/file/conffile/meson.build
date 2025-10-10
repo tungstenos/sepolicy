@@ -7,6 +7,7 @@ cil_files = [
     'inputrcconffile.cil',
     'localeconffile.cil',
     'mimeconffile.cil',
+    'selinuxconffile.cil',
 ]
 
 foreach file : cil_files

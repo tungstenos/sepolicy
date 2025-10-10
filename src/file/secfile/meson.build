@@ -2,8 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 cil_files = [
-    'editorstatefile.cil',
-    'selinuxstatefile.cil',
+    'selinuxsecfile.cil',
 ]
 
 foreach file : cil_files

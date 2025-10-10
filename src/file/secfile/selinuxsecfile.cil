@@ -1,0 +1,24 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(in file.unconfined
+
+    (call .selinux.policy.selinux_conf_file_type_transition_file (typeattr)))
+
+(in selinux
+
+    (block policy
+
+      (filecon "/etc/selinux/([^/]*/)?policy" dir file_context)
+      (filecon "/etc/selinux/([^/]*/)?policy/.*" any file_context)
+
+      (macro map_file_files ((type ARG1))
+             (allow ARG1 file (file (map))))
+
+      (macro selinux_conf_file_type_transition_file ((type ARG1))
+             (call conf.file_type_transition
+                   (ARG1 file dir "policy")))
+
+      (blockinherit .file.macro_template_dirs)
+      (blockinherit .file.macro_template_files)
+      (blockinherit .file.sec.base_template)))
