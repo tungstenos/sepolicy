@@ -1,0 +1,26 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(block backgrounds
+
+  (block data
+
+    (filecon "/usr/share/backgrounds" dir file_context)
+    (filecon "/usr/share/backgrounds/.*" any file_context)
+
+    (filecon "/usr/share/wallpapers" dir file_context)
+    (filecon "/usr/share/wallpapers/.*" any file_context)
+
+    (macro data_file_type_transition_file ((type ARG1))
+           (call .data.file_type_transition
+                 (ARG1 file dir "backgrounds"))
+           (call .data.file_type_transition
+                 (ARG1 file dir "wallpapers")))
+
+    (blockinherit .file.data.base_template)
+    (blockinherit .file.macro_template_dirs)
+    (blockinherit .file.macro_template_files)))
+
+(in file.unconfined
+
+    (call .backgrounds.data.data_file_type_transition_file (typeattr)))
