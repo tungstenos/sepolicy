@@ -6,7 +6,6 @@ cil_files = [
     'consoleserialtermdev.cil',
     'loginserialtermdev.cil',
     'msmserialtermdev.cil',
-    'sysserialtermdev.cil',
     'usbserialtermdev.cil',
     'vcsserialtermdev.cil',
     'vportserialtermdev.cil',
