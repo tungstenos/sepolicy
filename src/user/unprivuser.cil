@@ -1,0 +1,486 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(selinuxuserdefault user.id sys.lowlow)
+(userprefix user.id user.role)
+
+(in sys
+
+    (call .user.unpriv.roleallow.role (role)))
+
+(in user
+
+    (macro dontaudit_open_subj_fifo_files ((type ARG1))
+           (dontaudit ARG1 subj (fifo_file (open))))
+
+    (macro open_subj_fifo_files ((type ARG1))
+           (allow ARG1 subj (fifo_file (open))))
+
+    (blockinherit unpriv.template)
+    (blockinherit unpriv.subj_template)
+
+    ;; access to user agents is governed per-unpriv-role with rbac
+    (call agent.client.type (subj))
+
+    (call agent.getrlimit_all_processes (subj))
+    (call agent.getsched_all_processes (subj))
+    (call agent.ps_all_states (subj))
+    (call agent.ptrace_all_processes (subj))
+    (call agent.setrlimit_all_processes (subj))
+    (call agent.setsched_all_processes (subj))
+    (call agent.sigkill_all_processes (subj))
+    (call agent.signal_all_processes (subj))
+    (call agent.signull_all_processes (subj))
+    (call agent.sigstop_all_processes (subj))
+
+    (call home.manage_file_pattern.type (subj))
+    (call home.map_file_files (subj))
+    (call home.relabel_file_pattern.type (subj))
+
+    (call hugetlbfs.hugetlb_fs_type_transition_file (subj "*"))
+    (call hugetlbfs.manage_file_pattern.type (subj))
+    (call hugetlbfs.map_file_files (subj))
+    (call hugetlbfs.relabel_file_pattern.type (subj))
+
+    (call mqueuefs.manage_file_pattern.type (subj))
+    (call mqueuefs.map_file_files (subj))
+    (call mqueuefs.mqueue_fs_type_transition_file (subj "*"))
+    (call mqueuefs.relabel_file_pattern.type (subj))
+
+    (call tmp.manage_file_pattern.type (subj))
+    (call tmp.map_file_files (subj))
+    (call tmp.relabel_file_pattern.type (subj))
+    (call tmp.tmp_file_type_transition_file (subj dir "*"))
+    (call tmp.tmp_file_type_transition_file (subj fifo_file "*"))
+    (call tmp.tmp_file_type_transition_file (subj file "*"))
+    (call tmp.tmp_file_type_transition_file (subj lnk_file "*"))
+    (call tmp.tmp_file_type_transition_file (subj sock_file "*"))
+
+    (call tmpfs.manage_file_pattern.type (subj))
+    (call tmpfs.map_file_files (subj))
+    (call tmpfs.relabel_file_pattern.type (subj))
+    (call tmpfs.tmp_fs_type_transition_file (subj dir "*"))
+    (call tmpfs.tmp_fs_type_transition_file (subj fifo_file "*"))
+    (call tmpfs.tmp_fs_type_transition_file (subj file "*"))
+    (call tmpfs.tmp_fs_type_transition_file (subj lnk_file "*"))
+    (call tmpfs.tmp_fs_type_transition_file (subj sock_file "*"))
+
+    ;; systemd-resolvectl bash-completion lists /sys/class/net
+    (call .class.list_sysfile_pattern.type (subj))
+
+    (call .dos.getattr_fs_pattern.type (subj))
+    (call .dos.manage_fs_pattern.type (subj))
+    (call .dos.map_fs_pattern.type (subj))
+
+    (call .fuse.getattr_fs_pattern.type (subj))
+    (call .fuse.manage_fs_pattern.type (subj))
+    (call .fuse.map_fs_pattern.type (subj))
+
+    (call .checkcontext_selinux_security (subj))
+
+    (call .hugetlb.deletename_fs_dirs (subj))
+
+    (call .loginserialtermdev.all_type_change (subj serialtermdev))
+
+    (call .mqueue.deletename_fs_dirs (subj))
+
+    (call .selinux.default.read_file_pattern.type (subj))
+    (call .selinux.file.read_file_pattern.type (subj))
+
+    (call .sys.termdev.readwriteinherited_all_chr_files (subj))
+
+    (call .tmp.deletename_file_dirs (subj))
+
+    (call .tmp.deletename_fs_dirs (subj))
+    (call .tmp.getattr_fs_pattern.type (subj))
+
+    (optional unprivuser_alsautil
+              (call .alsa.util.role (role)))
+
+    (optional unprivuser_bluez
+              (call .bluez.cli.home.cache.manage_file_files (subj))
+              (call .bluez.cli.home.cache.relabel_file_files (subj))
+              (call .bluez.cli.home.cache.user_home_cache_file_type_transition_file
+                    (subj ".bluetoothctl_history"))
+              (call .bluez.cli.home.cache.user_home_cache_file_type_transition_file
+                    (subj ".btmgmt_history"))
+              (call .bluez.cli.home.cache.user_home_cache_file_type_transition_file
+                    (subj ".obexctl_history"))
+              (call .bluez.cli.role (role)))
+
+    (optional unprivuser_bpftool
+              (call .bpf.tool.role (role))
+              (call .bpf.tool.tmp.manage_file_files (subj))
+              (call .bpf.tool.tmp.relabel_file_files (subj)))
+
+    (optional unprivuser_chfn
+              (call .chfn.role (role)))
+
+    (optional unprivuser_chsh
+              (call .chsh.role (role)))
+
+    (optional unprivuser_cinoseclabelfs
+              (call .ci.getattr_fs_pattern.type (subj))
+              (call .ci.manage_fs_pattern.type (subj))
+              (call .ci.mapexecute_fs_files (subj))
+              (call .ci.watch_fs_dirs (subj)))
+
+    (optional unprivuser_cracklib
+              (call .cracklib.check.role (role))
+              (call .cracklib.tmp.manage_file_files (subj))
+              (call .cracklib.tmp.relabel_file_files (subj)))
+
+    (optional unprivuser_fprintd
+              (call .fprintd.util.role (role)))
+
+    (optional unprivuser_glib
+              (call .glib.home.conf.manage_file_dirs (subj))
+              (call .glib.home.conf.manage_file_files (subj))
+              (call .glib.home.conf.relabel_file_dirs (subj))
+              (call .glib.home.conf.relabel_file_files (subj))
+              (call .glib.home.conf.user_home_conf_file_type_transition_file
+                    (subj)))
+
+    (optional unprivuser_gtkupdateiconcache
+              (call .gtk.updateiconcache.role (role)))
+
+    (optional unprivuser_hostname
+              (call .hostname.role (role)))
+
+    (optional unprivuser_initrcfile
+              ;; bash completion
+              (call .initrc.auditexecuteaccess_file_files (subj))
+              (call .initrc.list_file_dirs (subj)))
+
+    (optional unprivuser_iproute
+              (call .iproute.role (role))
+              (call .iproute.tc.role (role)))
+
+    (optional unprivuser_kbd
+              (call .kbd.role (role)))
+
+    (optional unprivuser_lastlog
+              (call .lastlog.role (role)))
+
+    (optional unprivuser_lastlog2
+              (call .lastlog2.role (role)))
+
+    (optional unprivuser_libuuid
+              (call .libuuid.client.role (role))
+              (call .libuuid.server.role (role)))
+
+    (optional unprivuser_lsbrelease
+              (call .lsbrelease.role (role)))
+
+    (optional unprivuser_mount
+              (call .mount.role (role)))
+
+    (optional unprivuser_mpg123
+              (call .mpg123.role (role))
+              (call .mpg123.tmp.manage_file_fifo_files (subj))
+              (call .mpg123.tmp.relabel_file_fifo_files (subj))
+              (call .mpg123.tmpfs.manage_file_files (subj))
+              (call .mpg123.tmpfs.relabel_file_files (subj)))
+
+    (optional unprivuser_nfsnoseclabelfs
+              (call .nfs.getattr_fs_pattern.type (subj))
+              (call .nfs.manage_fs_pattern.type (subj))
+              (call .nfs.mapexecute_fs_files (subj))
+              (call .nfs.watch_fs_dirs (subj)))
+
+    (optional unprivuser_opensshclient
+              (call .openssh.add.role (role))
+              (call .openssh.add.tmp.manage_file_files (subj))
+              (call .openssh.add.tmp.relabel_file_files (subj))
+              (call .openssh.agent.role (role))
+              (call .openssh.agent.run.manage_file_sock_files (subj))
+              (call .openssh.agent.run.relabel_file_sock_files (subj))
+              (call .openssh.agent.run.user_run_file_type_transition_file
+                    (subj))
+              (call .openssh.agent.tmp.manage_file_dirs (subj))
+              (call .openssh.agent.tmp.manage_file_sock_files (subj))
+              (call .openssh.agent.tmp.relabel_file_dirs (subj))
+              (call .openssh.agent.tmp.relabel_file_sock_files (subj))
+              (call .openssh.client.role (role))
+              (call .openssh.client.subj_type_transition (subj))
+              (call .openssh.client.run.manage_file_sock_files (subj))
+              (call .openssh.client.run.relabel_file_sock_files (subj))
+              (call .openssh.client.tmp.manage_file_sock_files (subj))
+              (call .openssh.client.tmp.relabel_file_sock_files (subj))
+              (call .openssh.home.manage_file_dirs (subj))
+              (call .openssh.home.manage_file_files (subj))
+              (call .openssh.home.manage_file_sock_files (subj))
+              (call .openssh.home.relabel_file_dirs (subj))
+              (call .openssh.home.relabel_file_files (subj))
+              (call .openssh.home.relabel_file_sock_files (subj))
+              (call .openssh.home.user_home_file_type_transition_file (subj))
+              (call .openssh.keygen.role (role))
+              (call .openssh.keysign.role (role)))
+
+    (optional unprivuser_opensshsftpserver
+              (call .openssh.sftpserver.role (role)))
+
+    (optional unprivuser_parttools
+              (call .parttools.exec.execute_file_files (subj)))
+
+    (optional unprivuser_pciutils
+              (call .pci.ls.home.manage_file_files (subj))
+              (call .pci.ls.home.relabel_file_files (subj))
+              (call .pci.ls.home.user_home_file_type_transition_file
+                    (subj ".pciids-cache"))
+              (call .pci.ls.role (role)))
+
+    (optional unprivuser_ping
+              (call .ping.role (role)))
+
+    (optional unprivuser_plocate
+              (call .plocate.role (role)))
+
+    (optional unprivuser_polkit
+              (call .polkit.check.role (role))
+              (call .polkit.ttyagent.role (role)))
+
+    (optional unprivuser_qemu
+              (call .qemu.data.list_file_dirs (subj))
+              (call .qemu.data.read_file_files (subj))
+              (call .qemu.data.read_file_lnk_files (subj))
+
+              (call .qemu.bridgehelper.role (role)))
+
+    (optional unprivuser_qemuutils
+              (call .qemu.img.role (role)))
+
+    (optional unprivuser_rfkill
+              (call .rfkill.role (role)))
+
+    (optional unprivuser_rtkit
+              (call .rtkit.cli.role (role)))
+
+    (optional unprivuser_seutil
+              (call .seutil.getsebool.role (role)))
+
+    (optional unprivuser_systemdanalyze
+              (call .systemd.analyze.noatsecure_subj_processes (subj))
+              (call .systemd.analyze.role (role))
+              (call .systemd.analyze.tmp.manage_file_dirs (subj))
+              (call .systemd.analyze.tmp.manage_file_files (subj))
+              (call .systemd.analyze.tmp.relabel_file_dirs (subj))
+              (call .systemd.analyze.tmp.relabel_file_files (subj))
+              (call .systemd.analyze.tmpfs.manage_file_files (subj))
+              (call .systemd.analyze.tmpfs.relabel_file_files (subj)))
+
+    (optional unprivuser_systemdaskpassword
+              (call .systemd.askpassword.client.role (role))
+              (call .systemd.askpassword.noatsecure_subj_processes (subj))
+              (call .systemd.askpassword.ttyagent.noatsecure_subj_processes (subj)))
+
+    (optional unprivuser_systemdbusctl
+              (call .systemd.busctl.noatsecure_subj_processes (subj))
+              (call .systemd.busctl.role (role)))
+
+    (optional unprivuser_systemdcat
+              (call .systemd.cat.role (role)))
+
+    (optional unprivuser_systemdcg
+              (call .systemd.cg.role (role)))
+
+    (optional unprivuser_systemdcoredumpctl
+              (call .systemd.coredumpctl.role (role))
+              (call .systemd.coredumpctl.tmp.manage_file_files (subj))
+              (call .systemd.coredumpctl.tmp.relabel_file_files (subj)))
+
+    (optional unprivuser_systemdcreds
+              (call .systemd.creds.noatsecure_subj_processes (subj))
+              (call .systemd.creds.role (role)))
+
+    (optional unprivuser_systemdhostnamectl
+              (call .systemd.hostnamectl.role (role)))
+
+    (optional unprivuser_systemdinhibit
+              (call .systemd.inhibit.role (role)))
+
+    (optional unprivuser_systemd
+              (call .systemd.journalctl.role (role))
+              (call .systemd.journalctl.tmp.manage_file_dirs (subj))
+              (call .systemd.journalctl.tmp.manage_file_files (subj))
+              (call .systemd.journalctl.tmp.relabel_file_dirs (subj))
+              (call .systemd.journalctl.tmp.relabel_file_files (subj)))
+
+    (optional unprivuser_systemd
+              (call .systemd.localectl.role (role)))
+
+    (optional unprivuser_systemdloginctl
+              (call .systemd.loginctl.role (role)))
+
+    (optional unprivuser_systemdmachine
+              ;; sd-pam in shell .host
+              (call .sys.dontaudit_signal_subj_processes (subj))
+
+              (call .systemd.machine.ptytermdev_type_change (subj ptytermdev)))
+
+    (optional unprivuser_systemdmount
+              (call .systemd.mount.noatsecure_subj_processes (subj))
+              (call .systemd.mount.role (role)))
+
+    (optional unprivuser_systemdnetworkctl
+              (call .systemd.networkctl.role (role)))
+
+    (optional unprivuser_systemdoomctl
+              (call .systemd.oomctl.role (role)))
+
+    (optional unprivuser_systemdportablectl
+              (call .systemd.portablectl.role (role)))
+
+    (optional unprivuser_systemdrepart
+              (call .systemd.repart.tmp.manage_file_dirs (subj))
+              (call .systemd.repart.tmp.manage_file_files (subj))
+              (call .systemd.repart.tmp.manage_file_lnk_files (subj))
+              (call .systemd.repart.tmp.relabel_file_dirs (subj))
+              (call .systemd.repart.tmp.relabel_file_files (subj))
+              (call .systemd.repart.tmp.relabel_file_lnk_files (subj)))
+
+    (optional unprivuser_systemdresolvectl
+              (call .systemd.resolvectl.role (role)))
+
+    (optional unprivuser_systemdsshproxy
+              (call .systemd.sshproxy.role (role)))
+
+    (optional unprivuser_systemdstdiobridge
+              (call .systemd.stdiobridge.role (role)))
+
+    (optional unprivuser_systemdsystemctl
+              (call .systemd.systemctl.noatsecure_subj_processes (subj))
+              (call .systemd.systemctl.role (role)))
+
+    (optional unprivuser_systemdtimedatectl
+              (call .systemd.timedatectl.role (role)))
+
+    (optional unprivuser_systemdvarlinkctl
+              (call .systemd.varlinkctl.role (role)))
+
+    (optional unprivuser_tracepath
+              (call .tracepath.role (role)))
+
+    (optional unprivuser_upower
+              (call .upower.role (role)))
+
+    (optional unprivuser_usbguard
+              (call .usbguard.client.role (role)))
+
+    (optional unprivuser_usbutils
+              (call .usbutils.role (role)))
+
+    (optional unprivuser_usermailfile
+              (call mail.spool.readwrite_file_files (subj))
+              (call mail.spool.relabel_file_files (subj)))
+
+    (optional unprivuser_userrunuserfile
+              (call run.manage_file_pattern.type (subj))
+              (call run.relabel_file_pattern.type (subj)))
+
+    (optional unprivuser_wpasupplicant
+              (call .wpasupplicant.cli.role (role))
+              (call .wpasupplicant.cli.tmp.manage_file_sock_files (subj))
+              (call .wpasupplicant.cli.tmp.relabel_file_sock_files (subj)))
+
+    (optional unprivuser_wtmpdb
+              (call .wtmpdb.role (role)))
+
+    (block unpriv
+
+      (macro dontaudit_create_all_keyrings ((type ARG1))
+             (dontaudit ARG1 typeattr (key (create))))
+
+      (macro role ((role ARG1))
+             (roleattributeset roleattr ARG1))
+
+      (macro type ((type ARG1))
+             (typeattributeset typeattr ARG1))
+
+      (roleattribute roleattr)
+      (typeattribute typeattr)
+
+      (blockinherit all_macro_template)
+
+      (neverallow typeattr self (capability (all)))
+      (neverallow typeattr self (capability2 (all)))
+
+      (call common.type (typeattr))
+
+      (call .ibac.subjchangetarget.type (typeattr))
+
+      (call .obj.role (roleattr))
+
+      (call .rbac.subjchangetarget.type (typeattr))
+
+      (call .rbacsep.usefdsource.type (typeattr))
+
+      (call .subj.useinteractivefd.type (typeattr))
+
+      (optional unprivuser_unpriv_opensshserver
+                (call .openssh.server.ptytermdev_type_change
+                      (typeattr ptytermdev))
+                (call .openssh.server.readwriteinherited_subj_fifo_files
+                      (typeattr))
+                (call .openssh.server.use_subj_fds (typeattr))
+
+                (call .rbacsep.exemptsource.type (typeattr)))
+
+      (optional unprivuser_unpriv_unixchkpwd
+                (call .unixchkpwd.role (roleattr)))
+
+      (optional unprivuser_unpriv_unixupdate
+                (call .unixupdate.role (roleattr)))
+
+      (block role_template
+
+        (blockabstract role_template)
+
+        (blockinherit .user.role_template)
+
+        (call .user.unpriv.role (role)))
+
+      (block roleallow
+
+        (macro role ((role ARG1))
+               (roleattributeset roleattr ARG1))
+
+        (roleattribute roleattr)
+
+        (roleallow roleattr unpriv.roleattr))
+
+      (block subj_template
+
+        (blockabstract subj_template)
+
+        (blockinherit .user.subj_template)
+
+        (call .user.unpriv.type (subj)))
+
+      (block template
+
+        (blockabstract template)
+
+        (blockinherit .user.id_template)
+        (blockinherit .user.unpriv.role_template)
+
+        (call userrole.user (id))
+
+        (call .user.role (role)))
+
+      (block userrole
+
+        (macro user ((user ARG1))
+               (userattributeset userattr ARG1))
+
+        (userattribute userattr)
+
+        (userrole userattr unpriv.roleattr))))
+
+(in user.agent
+
+    (call termdev.readwriteinherited_all_chr_files (typeattr)))
+
+(in user.common
+
+    (call home.search_file_pattern.type (typeattr)))

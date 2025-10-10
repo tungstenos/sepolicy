@@ -22,7 +22,6 @@ cil_files = [
     'isid.cil',
     'map.cil',
     'mls.cil',
-    'modular.cil',
     'obj.cil',
     'perm.cil',
     'silenced.cil',
