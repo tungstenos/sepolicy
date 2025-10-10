@@ -8,6 +8,7 @@ cil_files = [
     'localeconffile.cil',
     'mimeconffile.cil',
     'selinuxconffile.cil',
+    'terminfoconffile.cil',
 ]
 
 foreach file : cil_files
