@@ -1,0 +1,47 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(block editor
+
+  (block data
+
+    (filecon "/usr/share/nano" dir file_context)
+    (filecon "/usr/share/nano/.*" any file_context)
+
+    (filecon "/usr/share/nvim" dir file_context)
+    (filecon "/usr/share/nvim/.*" any file_context)
+
+    (filecon "/usr/share/vim" dir file_context)
+    (filecon "/usr/share/vim/.*" any file_context)
+
+    (filecon "/usr/share/vis" dir file_context)
+    (filecon "/usr/share/vis/.*" any file_context)
+
+    (macro data_file_type_transition_file ((type ARG1))
+           (call .data.file_type_transition
+                 (ARG1 file dir "nano"))
+           (call .data.file_type_transition
+                 (ARG1 file dir "nvim"))
+           (call .data.file_type_transition
+                 (ARG1 file dir "vim"))
+           (call .data.file_type_transition
+                 (ARG1 file dir "vis")))
+
+    (blockinherit .file.data.template)
+
+    (block read_file_pattern
+
+      (macro type ((type ARG1))
+             (typeattributeset typeattr ARG1))
+
+      (typeattribute typeattr)
+
+      (call list_file_dirs (typeattr))
+      (call read_file_files (typeattr))
+      (call read_file_lnk_files (typeattr))
+
+      (call .data.search_file_pattern.type (typeattr)))))
+
+(in file.unconfined
+
+    (call .editor.data.data_file_type_transition_file (typeattr)))

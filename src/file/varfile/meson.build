@@ -14,3 +14,4 @@ foreach file : cil_files
 endforeach
 
 subdir('spoolfile')
+subdir('statefile')

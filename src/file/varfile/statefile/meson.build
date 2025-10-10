@@ -2,13 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 cil_files = [
-    'editordatafile.cil',
-    'execfile.cil',
-    'firmwaredatafile.cil',
-    'firmwarefile.cil',
-    'libfile.cil',
-    'modfile.cil',
-    'srcfile.cil',
+    'editorstatefile.cil',
 ]
 
 foreach file : cil_files
