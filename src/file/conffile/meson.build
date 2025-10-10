@@ -13,6 +13,7 @@ cil_files = [
     'localeconffile.cil',
     'mimeconffile.cil',
     'selinuxconffile.cil',
+    'tcpwrappersconffile.cil',
     'terminfoconffile.cil',
 ]
 
