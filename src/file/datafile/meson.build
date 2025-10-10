@@ -8,6 +8,7 @@ cil_files = [
     'firmwarefile.cil',
     'libfile.cil',
     'localedatafile.cil',
+    'mesadatafile.cil',
     'mimedatafile.cil',
     'modfile.cil',
     'srcfile.cil',
