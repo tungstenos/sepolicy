@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 cil_files = [
+    'backgroundshomedatafile.cil',
     'bashcompletionhomedatafile.cil',
     'fonthomedatafile.cil',
     'iconshomedatafile.cil',
