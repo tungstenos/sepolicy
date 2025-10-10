@@ -21,6 +21,7 @@ cil_files = [
     'motddatafile.cil',
     'pixmapsdatafile.cil',
     'servicesdatafile.cil',
+    'soundsdatafile.cil',
     'srcfile.cil',
     'terminfodatafile.cil',
 ]
