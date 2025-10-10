@@ -5,6 +5,7 @@ cil_files = [
     'bashcompletionconffile.cil',
     'editorconffile.cil',
     'environconffile.cil',
+    'ethertypesconffile.cil',
     'fontconffile.cil',
     'fstabconffile.cil',
     'hostsconffile.cil',
