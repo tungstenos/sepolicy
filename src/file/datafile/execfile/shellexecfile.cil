@@ -1,0 +1,23 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(block shell
+
+  (block exec
+
+    (filecon "/usr/bin/bash" file file_context)
+    (filecon "/usr/bin/csh" file file_context)
+    (filecon "/usr/bin/dash" file file_context)
+    (filecon "/usr/bin/ksh" file file_context)
+    (filecon "/usr/bin/nologin" file file_context)
+    (filecon "/usr/bin/sh" file file_context)
+    (filecon "/usr/bin/tcsh" file file_context)
+    (filecon "/usr/bin/zsh" file file_context)
+
+    (macro auditexecuteaccess_file_files ((type ARG1))
+           (allow ARG1 file (file (execute getattr))))
+
+    (macro dontaudit_execute_no_trans_file_files ((type ARG1))
+           (dontaudit ARG1 file (file (execute_no_trans))))
+
+    (blockinherit .file.exec.template)))
