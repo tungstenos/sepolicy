@@ -1,5 +1,5 @@
-;; SPDX-FileCopyrightText: © 2025 Dominick Grift <dominick.grift@defensec.nl>
-;; SPDX-License-Identifier: Unlicense
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
 
 (handleunknown allow)
 (mls @MCS_ENABLED@)
@@ -17,3 +17,5 @@
 
 ;;(policycap "netif_wildcard") ;; Linux 6.15/SELinux 3.9
 ;;(policycap "genfs_seclabel_wildcard") ;; Linux 6.16/SELinux 3.9
+
+(tunable sysadmin @SYSADMIN_ENABLED@)

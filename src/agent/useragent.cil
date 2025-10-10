@@ -1,0 +1,85 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(in hybrid.agent
+
+    (call .user.agent.exec.type (exec.typeattr))
+    (call .user.agent.type (typeattr)))
+
+(in user
+
+    (macro anon_agent ((type ARG1)(type ARG2))
+           (call agent.exec.type (ARG1))
+           (call agent.type (ARG2))
+
+           (call .agent.anon_subj_type_transition
+                 (agent.client.typeattr ARG1 ARG2)))
+
+    (block agent
+
+      (macro destroy_all_semaphores ((type ARG1))
+             (allow ARG1 typeattr (sem (destroy))))
+
+      (macro type ((type ARG1))
+             (typeattributeset typeattr ARG1))
+
+      (blockinherit .subj.all_macro_template)
+
+      (typeattribute typeattr)
+
+      (call .agent.type (typeattr))
+
+      (call .auto.getattr_fs_dirs (typeattr))
+
+      (optional useragent_cinoseclabelfs
+                (call .ci.getattr_fs_pattern.type (typeattr))
+                (call .ci.manage_fs_pattern.type (typeattr))
+                (call .ci.mapexecute_fs_files (typeattr))
+                (call .ci.watch_fs_dirs (typeattr)))
+
+      (optional useragent_nfsnoseclabelfs
+                (call .nfs.getattr_fs_pattern.type (typeattr))
+                (call .nfs.manage_fs_pattern.type (typeattr))
+                (call .nfs.mapexecute_fs_files (typeattr))
+                (call .nfs.watch_fs_dirs (typeattr)))
+
+      (block client
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (typeattribute typeattr))
+
+      (block exec
+
+        (macro auditexecuteaccess_all_files ((type ARG1))
+               (allow ARG1 typeattr (file (getattr execute))))
+
+        (macro entrypoint_all_files ((type ARG1))
+               (allow ARG1 typeattr (file (entrypoint))))
+
+        (macro getattr_all_files ((type ARG1))
+               (allow ARG1 typeattr (file (getattr))))
+
+        (macro map_all_files ((type ARG1))
+               (allow ARG1 typeattr (file (map))))
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (blockinherit .file.all_macro_template_files)
+
+        (typeattribute typeattr)
+
+        (call .agent.exec.type (typeattr)))
+
+      (block template
+
+        (blockabstract template)
+
+        (blockinherit .agent.template)
+
+        (call subj_type_transition (.user.agent.client.typeattr))
+
+        (call .user.agent.exec.type (exec.file))
+        (call .user.agent.type (subj)))))

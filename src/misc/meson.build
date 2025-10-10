@@ -2,9 +2,11 @@
 # SPDX-License-Identifier: MIT
 
 mcs_enabled = mcs ? 'true' : 'false'
+sysadmin_enabled = sysadmin ? 'true' : 'false'
 
 cil_conf_data = configuration_data()
 cil_conf_data.set('MCS_ENABLED', mcs_enabled)
+cil_conf_data.set('SYSADMIN_ENABLED', sysadmin_enabled)
 
 conf_cil = configure_file(
     input: 'conf.cil.in',

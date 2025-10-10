@@ -9,6 +9,13 @@ option(
 )
 
 option(
+    'sysadmin',
+    type: 'boolean',
+    value: true,
+    description: 'Build administrative domains (such as sys.user.subj)',
+)
+
+option(
     'polvers',
     type: 'integer',
     min: 33,

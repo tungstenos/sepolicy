@@ -22,6 +22,7 @@ foreach file : cil_files
     policy_sources += files(file)
 endforeach
 
+subdir('agent')
 subdir('anoninode')
 subdir('dev')
 subdir('file')
