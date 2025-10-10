@@ -1,0 +1,30 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(in file.unconfined
+
+    (call .bashcomp.home.data.user_home_data_file_type_transition_file
+          (typeattr)))
+
+(in bashcomp.home
+
+    (block data
+
+      (filecon "HOME_DIR/\.local/share/bash-completion" dir file_context)
+      (filecon "HOME_DIR/\.local/share/bash-completion/.*" any file_context)
+
+      (macro user_home_data_file_type_transition_file ((type ARG1))
+             (call .user.home.data.file_type_transition
+                   (ARG1 file dir "bash-completion")))
+
+      (blockinherit .file.macro_template_dirs)
+      (blockinherit .file.macro_template_files)
+      (blockinherit .file.user.home.data.base_template)))
+
+(in user
+
+    (call .bashcomp.home.data.manage_file_dirs (subj))
+    (call .bashcomp.home.data.manage_file_files (subj))
+    (call .bashcomp.home.data.relabel_file_dirs (subj))
+    (call .bashcomp.home.data.relabel_file_files (subj))
+    (call .bashcomp.home.data.user_home_data_file_type_transition_file (subj)))
