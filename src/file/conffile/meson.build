@@ -21,6 +21,7 @@ cil_files = [
     'servicesconffile.cil',
     'tcpwrappersconffile.cil',
     'terminfoconffile.cil',
+    'xdgconffile.cil',
 ]
 
 foreach file : cil_files
