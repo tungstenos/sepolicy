@@ -1,0 +1,61 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(in file.unconfined
+
+    (call .libglvnd.conf.conf_file_type_transition_file (typeattr)))
+
+(in libglvnd
+
+    (block conf
+
+      (filecon "/etc/glvnd" dir file_context)
+      (filecon "/etc/glvnd/.*" any file_context)
+
+      (macro conf_file_type_transition_file ((type ARG1))
+             (call .conf.file_type_transition
+                   (ARG1 file dir "glvnd")))
+
+      (blockinherit .file.conf.template)
+
+      (block list_file_pattern
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (typeattribute typeattr)
+
+        (call list_file_dirs (typeattr))
+
+        (call .conf.search_file_pattern.type (typeattr)))
+
+      (block read_file_pattern
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (typeattribute typeattr)
+
+        (call read_file_files (typeattr))
+        (call read_file_lnk_files (typeattr))
+        (call list_file_pattern.type (typeattr))))
+
+    (block list_file_pattern
+
+      (macro type ((type ARG1))
+             (typeattributeset typeattr ARG1))
+
+      (typeattribute typeattr)
+
+      (call conf.list_file_pattern.type (typeattr))
+      (call data.list_file_pattern.type (typeattr)))
+
+    (block read_file_pattern
+
+      (macro type ((type ARG1))
+             (typeattributeset typeattr ARG1))
+
+      (typeattribute typeattr)
+
+      (call conf.read_file_pattern.type (typeattr))
+      (call data.read_file_pattern.type (typeattr))))

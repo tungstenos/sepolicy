@@ -9,6 +9,7 @@ cil_files = [
     'firmwarefile.cil',
     'fontdatafile.cil',
     'libfile.cil',
+    'libglvnddatafile.cil',
     'libvulkandatafile.cil',
     'localedatafile.cil',
     'mesadatafile.cil',
