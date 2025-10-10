@@ -3,6 +3,7 @@
 
 cil_files = [
     'editorconffile.cil',
+    'fontconffile.cil',
     'hostsconffile.cil',
     'inputrcconffile.cil',
     'localeconffile.cil',

@@ -6,6 +6,7 @@ cil_files = [
     'execfile.cil',
     'firmwaredatafile.cil',
     'firmwarefile.cil',
+    'fontdatafile.cil',
     'libfile.cil',
     'localedatafile.cil',
     'mesadatafile.cil',
