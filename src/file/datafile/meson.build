@@ -18,6 +18,7 @@ cil_files = [
     'mesadatafile.cil',
     'mimedatafile.cil',
     'modfile.cil',
+    'motddatafile.cil',
     'srcfile.cil',
     'terminfodatafile.cil',
 ]

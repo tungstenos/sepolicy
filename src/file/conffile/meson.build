@@ -13,6 +13,7 @@ cil_files = [
     'libvulkanconffile.cil',
     'localeconffile.cil',
     'mimeconffile.cil',
+    'motdconffile.cil',
     'selinuxconffile.cil',
     'tcpwrappersconffile.cil',
     'terminfoconffile.cil',
