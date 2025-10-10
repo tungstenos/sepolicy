@@ -5,6 +5,7 @@ cil_files = [
     'userhomefile.cil',
     'userhugetlbfsfile.cil',
     'usermailspoolfile.cil',
+    'usermqueuefsfile.cil',
 ]
 
 foreach file : cil_files
