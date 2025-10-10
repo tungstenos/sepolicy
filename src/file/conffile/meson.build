@@ -5,6 +5,7 @@ cil_files = [
     'editorconffile.cil',
     'hostsconffile.cil',
     'inputrcconffile.cil',
+    'localeconffile.cil',
 ]
 
 foreach file : cil_files
