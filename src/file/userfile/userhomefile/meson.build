@@ -5,6 +5,7 @@ cil_files = [
     'inputrchomefile.cil',
     'shellrchomefile.cil',
     'terminfohomefile.cil',
+    'userhomecachefile.cil',
 ]
 
 foreach file : cil_files
