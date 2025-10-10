@@ -2,14 +2,9 @@
 # SPDX-License-Identifier: MIT
 
 cil_files = [
-    'unprivuser.cil',
+    'sysuser.cil',
 ]
 
 foreach file : cil_files
     policy_sources += files(file)
 endforeach
-
-if sysadmin
-    policy_sources += files('privuser.cil')
-    subdir('privuser')
-endif
