@@ -4,6 +4,7 @@
 cil_files = [
     'runlockfile.cil',
     'runuserfile.cil',
+    'utmprunfile.cil',
 ]
 
 foreach file : cil_files
