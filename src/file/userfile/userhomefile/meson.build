@@ -3,6 +3,7 @@
 
 cil_files = [
     'inputrchomefile.cil',
+    'shellrchomefile.cil',
 ]
 
 foreach file : cil_files
