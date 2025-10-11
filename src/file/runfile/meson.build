@@ -3,6 +3,7 @@
 
 cil_files = [
     'environrunfile.cil',
+    'hostrunfile.cil',
     'motdrunfile.cil',
     'runlockfile.cil',
     'runuserfile.cil',
