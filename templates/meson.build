@@ -10,16 +10,5 @@ templates_conf_data.set('MCS_SUFFIX', mcs_suffix)
 templates_conf_data.set('MCS_RANGE_SUFFIX', mcs_range_suffix)
 templates_conf_data.set('SYSADMIN_USER_ENTRY', sysadmin_user_entry)
 
-seusers = configure_file(
-    input: 'seusers.in',
-    output: 'seusers',
-    configuration: templates_conf_data,
-)
-
-install_data(
-    seusers,
-    install_dir: join_paths(get_option('sysconfdir'), 'selinux', selinuxtype),
-)
-
 subdir('contexts')
 subdir('logins')
