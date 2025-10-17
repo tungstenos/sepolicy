@@ -13,6 +13,21 @@ policy_sources = []
 subdir('src')
 subdir('templates')
 
+if get_option('modular')
+    meson.add_install_script(
+        find_program('semodule'),
+        '--priority=100',
+        '-NP',
+        '-vvv',
+        '-s',
+        'sepolicy',
+        '-i',
+        policy_sources,
+    )
+    # end of build; do not install secilc output directly
+    subdir_done()
+endif
+
 policy = custom_target(
     'policy',
     output: ['policy.@0@'.format(polvers), 'file_contexts'],

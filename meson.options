@@ -23,3 +23,9 @@ option(
     value: 34,
     description: 'Policy version',
 )
+option(
+    'modular',
+    type: 'boolean',
+    value: false,
+    description: 'Build a modular policy rather than a monolithic one',
+)
