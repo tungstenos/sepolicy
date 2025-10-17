@@ -14,14 +14,14 @@ subdir('src')
 subdir('templates')
 
 if get_option('modular')
+    # just make sure it exists
+    find_program('semodule')
+
     meson.add_install_script(
-        find_program('semodule'),
-        '--priority=100',
-        '-NP',
-        '-vvv',
-        '-s',
-        'sepolicy',
-        '-i',
+        find_program('sh'),
+        '-c',
+        'mkdir -p "${DESTDIR}/var/lib/selinux"; semodule --priority=100 -NP -vvv -s sepolicy -i "$@" -p "${DESTDIR}"',
+        '__argv0_ignore',
         policy_sources,
     )
     # end of build; do not install secilc output directly
