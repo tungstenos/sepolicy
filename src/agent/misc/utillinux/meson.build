@@ -2,13 +2,9 @@
 # SPDX-License-Identifier: MIT
 
 cil_files = [
-    'nss.cil',
-    'pam.cil',
+    'mount.cil',
 ]
 
 foreach file : cil_files
     policy_sources += files(file)
 endforeach
-
-subdir('pam')
-subdir('utillinux')

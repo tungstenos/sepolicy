@@ -1,0 +1,62 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(block image
+
+  (blockinherit .file.base_template)
+  (blockinherit .file.macro_template_dirs)
+  (blockinherit .file.macro_template_files)
+
+  (call .mount.image.type (file))
+
+  (call .tmp.associate_fs (file))
+
+  (call .xattr.associate_fs_pattern.type (file)))
+
+(block mount
+
+  (blockinherit .hybrid.agent.template)
+
+  (call run.run_file_type_transition_file (subj))
+
+  (call .unconfined.type (subj))
+
+  (block image
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr))
+
+  (block mountpoint
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr))
+
+  (block run
+
+    (filecon "/run/mount" dir file_context)
+    (filecon "/run/mount/.*" any ())
+
+    (macro run_file_type_transition_file ((type ARG1))
+           (call .run.file_type_transition
+                 (ARG1 file dir "mount")))
+
+    (blockinherit .file.macro_template_dirs)
+    (blockinherit .file.macro_template_files)
+    (blockinherit .file.run.base_template)
+
+    (call .rbacsep.exempt.obj.type (file))))
+
+(in file.unconfined
+
+    (call .mount.run.run_file_type_transition_file (typeattr)))
+
+(in after mount.exec
+
+    (filecon "/usr/bin/mount" file file_context)
+    (filecon "/usr/bin/mount\..*" file file_context)
+    (filecon "/usr/bin/umount" file file_context)
+    (filecon "/usr/bin/umount\..*" file file_context))
