@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 cil_files = [
+    'hushloginshomefile.cil',
     'inputrchomefile.cil',
     'shellrchomefile.cil',
     'terminfohomefile.cil',

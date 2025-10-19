@@ -9,6 +9,7 @@ cil_files = [
     'fontconffile.cil',
     'fstabconffile.cil',
     'hostsconffile.cil',
+    'hushloginsconffile.cil',
     'inputrcconffile.cil',
     'libglvndconffile.cil',
     'libvulkanconffile.cil',
