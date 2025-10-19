@@ -2,18 +2,9 @@
 # SPDX-License-Identifier: MIT
 
 cil_files = [
-    'cachefile.cil',
-    'dbfile.cil',
-    'logfile.cil',
-    'spoolfile.cil',
-    'statefile.cil',
+    'utmplogfile.cil',
 ]
 
 foreach file : cil_files
     policy_sources += files(file)
 endforeach
-
-subdir('cachefile')
-subdir('logfile')
-subdir('spoolfile')
-subdir('statefile')
