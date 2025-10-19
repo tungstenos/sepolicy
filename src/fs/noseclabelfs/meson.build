@@ -19,7 +19,6 @@ cil_files = [
     'nfsdnoseclabelfs.cil',
     'nfsnoseclabelfs.cil',
     'nsnoseclabelfs.cil',
-    'pidnoseclabelfs.cil',
     'procnoseclabelfs.cil',
     'removablenoseclabelfs.cil',
     'resctrlnoseclabelfs.cil',

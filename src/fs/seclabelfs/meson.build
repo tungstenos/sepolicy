@@ -10,6 +10,7 @@ cil_files = [
     'hugetlbseclabelfs.cil',
     'mqueueseclabelfs.cil',
     'nfs4seclabelfs.cil',
+    'pidseclabelfs.cil',
     'pipeseclabelfs.cil',
     'pstoreseclabelfs.cil',
     'rootseclabelfs.cil',

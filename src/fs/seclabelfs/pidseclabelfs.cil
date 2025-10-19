@@ -1,0 +1,17 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(block pid
+
+  (fsuse task "pidfs" fs_context)
+
+  (blockinherit .seclabelfs.base_template)
+
+  (block getattr_fs_pattern
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (allow typeattr pid.fs (filesystem (getattr)))))
