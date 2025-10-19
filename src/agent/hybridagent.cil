@@ -45,7 +45,7 @@
       (blockinherit .user.agent.template)
 
       ;; hybridagents may be started by systemd
-      (call subj_type_transition (.sys.subj))
+      (call subj_type_transition (.systemd.subj))
 
       (call .hybrid.agent.exec.type (exec.file))
       (call .hybrid.agent.type (subj)))))

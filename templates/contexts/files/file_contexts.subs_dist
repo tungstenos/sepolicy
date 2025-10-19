@@ -1,4 +1,8 @@
 /bin /usr/bin
+/etc/systemd/system /usr/lib/systemd/system
+/etc/systemd/system.attached /usr/lib/systemd/system
+/etc/systemd/system.control /usr/lib/systemd/system
+/etc/systemd/user /usr/lib/systemd/user
 /lib /usr/lib
 /lib64 /usr/lib
 /sbin /usr/bin
