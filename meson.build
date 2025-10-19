@@ -21,7 +21,7 @@ if get_option('modular')
     meson.add_install_script(
         find_program('sh'),
         '-c',
-        'semodule --priority=100 -NP -vvv -s sepolicy -i "$@" -p "${DESTDIR}"',
+        'semodule --priority=100 -N -vvv -s sepolicy -i "$@" -p "${DESTDIR}"',
         '__argv0_ignore',
         policy_sources,
     )
