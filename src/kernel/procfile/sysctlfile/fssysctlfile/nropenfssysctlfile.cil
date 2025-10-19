@@ -1,0 +1,8 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(block nropen
+
+  (genfscon "proc" "/sys/fs/nr_open" sysctlfile_context)
+
+  (blockinherit .sysctlfile.fs.template))
