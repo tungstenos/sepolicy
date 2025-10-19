@@ -2,12 +2,10 @@
 # SPDX-License-Identifier: MIT
 
 cil_files = [
-    'nss.cil',
-    'pam.cil',
+    'unixchkpwd.cil',
+    'unixupdate.cil',
 ]
 
 foreach file : cil_files
     policy_sources += files(file)
 endforeach
-
-subdir('pam')

@@ -12,9 +12,33 @@
                        (eq t1 subjchange.typeattr))
                    (eq t1 exempt.typeattr))))
 
+(in invalid.silenced
+
+    (dontaudit typeattr .invalid (key (all))))
+
 (in invalid.unconfined
 
     (allow typeattr .invalid (key (all))))
+
+(in kernel
+
+    (macro dontaudit_create_subj_keyrings ((type ARG1))
+           (dontaudit ARG1 subj (key (create))))
+
+    (macro link_subj_keyrings ((type ARG1))
+           (allow ARG1 subj (key (link))))
+
+    (macro read_subj_keyrings ((type ARG1))
+           (allow ARG1 subj (key (read))))
+
+    (macro search_subj_keyrings ((type ARG1))
+           (allow ARG1 subj (key (search))))
+
+    (macro setattr_subj_keyrings ((type ARG1))
+           (allow ARG1 subj (key (setattr))))
+
+    (macro write_subj_keyrings ((type ARG1))
+           (allow ARG1 subj (key (write)))))
 
 (in mcs
 
@@ -41,6 +65,43 @@
                    (and (eq t1 exemptsource.typeattr)
                         (eq t2 exempttarget.typeattr)))))
 
+(in subj
+
+    (macro dontaudit_search_all_keyrings ((type ARG1))
+           (dontaudit ARG1 typeattr (key (search))))
+
+    (macro search_all_keyrings ((type ARG1))
+           (allow ARG1 typeattr (key (search)))))
+
+(in subj.silenced
+
+    (dontaudit typeattr subj.typeattr (key (all))))
+
 (in subj.unconfined
 
     (allow typeattr subj.typeattr (key (all))))
+
+(in sys
+
+    (macro dontaudit_create_subj_keyrings ((type ARG1))
+           (dontaudit ARG1 subj (key (create))))
+
+    (macro link_subj_keyrings ((type ARG1))
+           (allow ARG1 subj (key (link))))
+
+    (macro read_subj_keyrings ((type ARG1))
+           (allow ARG1 subj (key (read))))
+
+    (macro search_subj_keyrings ((type ARG1))
+           (allow ARG1 subj (key (search))))
+
+    (macro setattr_subj_keyrings ((type ARG1))
+           (allow ARG1 subj (key (setattr))))
+
+    (macro write_subj_keyrings ((type ARG1))
+           (allow ARG1 subj (key (write)))))
+
+(in sys.user
+
+    (macro read_subj_keyrings ((type ARG1))
+           (allow ARG1 subj (key (read)))))
