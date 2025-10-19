@@ -13,6 +13,7 @@ cil_files = [
     'libglvndconffile.cil',
     'libvulkanconffile.cil',
     'localeconffile.cil',
+    'logindefsconffile.cil',
     'mimeconffile.cil',
     'motdconffile.cil',
     'networksconffile.cil',
