@@ -8,13 +8,40 @@
 
 (block init
 
-  (roletype .sys.role subj)
+  (macro accept_subj_unix_stream_sockets ((type ARG1))
+         (allow ARG1 subj (unix_stream_socket (accept))))
+
+  (macro readwrite_subj_netlink_kobject_uevent_sockets ((type ARG1))
+         (allow ARG1 subj readwrite_netlink_kobject_uevent_socket))
+
+  (macro readwrite_subj_netlink_audit_sockets ((type ARG1))
+         (allow ARG1 subj readwrite_netlink_audit_socket))
 
   (blockinherit .subj.template)
+
+  (roletype .sys.role subj)
+
+  ;; /run/credentials/@system|@encrypted and /run/log/systemd/tpm2_measure.log
+  (call tmpfs.tmp_fs_type_transition_file (subj dir "*"))
+  (call tmpfs.tmp_fs_type_transition_file (subj fifo_file "*"))
+  (call tmpfs.tmp_fs_type_transition_file (subj file "*"))
+  (call tmpfs.tmp_fs_type_transition_file (subj lnk_file "*"))
+  (call tmpfs.tmp_fs_type_transition_file (subj sock_file "*"))
 
   ;; Confining early boot processes in the initramfs doesn't give us much. cpio
   ;; doesn't support xattrs, so we end up running everything in a single domain
   ;; anyway. Given that initramfs performs numerous privileged tasks, such as
   ;; decrypting and mounting the root partition, and possibly loading policy,
   ;; there isn't much to confine anyway.
-  (call .unconfined.type (subj)))
+  (call .unconfined.type (subj))
+
+  (block tmpfs
+
+    (macro setattr_file_files ((type ARG1))
+           (allow ARG1 file (file (setattr))))
+
+    (macro tmp_fs_type_transition_file ((type ARG1)(class ARG2)(name ARG3))
+           (call .tmp.fs_type_transition
+                 (ARG1 file ARG2 ARG3)))
+
+    (blockinherit .file.tmpfs.template)))

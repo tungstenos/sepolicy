@@ -1,0 +1,299 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(booleanif systemd_volatile_overlay
+           (true
+
+            (call init.tmpfs.search_file_dirs (systemd.journal.subj))))
+
+(in file.unconfined
+
+    (call .systemd.journal.log.log_file_type_transition_file (typeattr))
+    (call .systemd.journal.log.run_file_type_transition_file (typeattr)))
+
+(in systemd.journal
+
+    (macro unix_stream_connect ((type ARG1))
+           (call connectto_subj_unix_stream_sockets (ARG1))
+           (call run.search_file_dirs (ARG1))
+           (call run.write_file_sock_files (ARG1)))
+
+    (blockinherit .sys.agent.template)
+
+    ;; Receive audit messages
+    (allow subj self create_netlink_audit_socket)
+    ;; Open syslog socket: systemd-journald-dev-log.socket
+    ;; /run/systemd/journal/dev-log
+    (allow subj self create_unix_dgram_socket)
+    ;; Open stdout socket: systemd-journald.socket: /run/systemd/journal/stdout
+    (allow subj self create_unix_stream_stream_socket)
+
+    ;; setgid/setuid to fake SCM_CREDENTIALS.
+    ;; sys_ptrace to read /proc/<pid>/exe for the _EXE=/OBJECT_EXE= fields.
+    ;; The other capabilities were taken from the CapabilityBoundingSet field
+    ;; in the systemd-journald.service unit file.
+    (allow subj self
+           (capability (audit_control chown dac_read_search dac_override fowner
+                                      setgid setuid sys_admin sys_ptrace)))
+    (allow subj self (cap_userns (sys_ptrace)))
+    (allow subj self (capability2 (syslog)))
+    (allow subj self (netlink_audit_socket (nlmsg nlmsg_write)))
+    ;; Leaked from systemd in initramfs: userspace_initial_context.
+    (allow subj .init.subj (netlink_audit_socket (nlmsg nlmsg_write)))
+
+    (call conf.list_file_dirs (subj))
+    (call conf.read_file_files (subj))
+
+    (call data.list_file_dirs (subj))
+    (call data.read_file_files (subj))
+
+    (call log.log_file_type_transition_file (subj))
+    (call log.map_file_files (subj))
+    (call log.manage_file_dirs (subj))
+    (call log.manage_file_files (subj))
+    (call log.relabel_file_files (subj))
+    (call log.run_file_type_transition_file (subj))
+
+    (call run.map_file_files (subj))
+    (call run.manage_file_dirs (subj))
+    (call run.manage_file_files (subj))
+    (call run.manage_file_sock_files (subj))
+    (call run.systemd_run_file_type_transition_file (subj dir "*"))
+
+    (call systemd.conf.search_file_pattern.type (subj))
+
+    (call systemd.credentials.type (subj))
+    (call systemd.logconsole.type (subj))
+    (call systemd.logparseenv.type (subj))
+    (call systemd.notify.type (subj))
+    (call systemd.propagate.type (subj))
+
+    (call systemd.run.read_file_files (subj))
+    (call systemd.run.read_file_lnk_files (subj))
+
+    (call systemd.udev.run.read_file_pattern.type (subj))
+
+    ;; _KERNEL_DEVICE: /sys/bus/platform/devices.
+    (call .bus.read_sysfile_lnk_files (subj))
+    (call .bus.search_sysfile_pattern.type (subj))
+
+    (call .caplastcap.read_sysctlfile_pattern.type (subj))
+
+    ;; Read cgroup and associated information of clients.
+    (call .cgroup.getattr_fs_pattern.type (subj))
+    (call .cgroup.list_fs_dirs (subj))
+
+    (call .cgroupfile.list_all_dirs (subj))
+
+    ;; sd-device
+    (call .class.traverse_sysfile_pattern.type (subj))
+
+    (call .crypto.read_sysctlfile_pattern.type (subj))
+
+    ;; sd-device
+    (call .dev.traverse_sysfile_pattern.type (subj))
+
+    ;; sd-device
+    (call .devices.read_sysfile_files (subj))
+    (call .devices.read_sysfile_lnk_files (subj))
+    (call .devices.search_sysfile_pattern.type (subj))
+
+    (call .devpts.search_fs_pattern.type (subj))
+
+    ;; sd-device
+    (call .firmware.search_sysfile_pattern.type (subj))
+
+    ;; _HOSTNAME: /proc/sys/kernel/hostname.
+    (call .hostname.read_sysctlfile_files (subj))
+
+    ;; userspace_initial_context: for when systemd is started in the
+    ;; initramfs, creating journald's sockets.
+    (call .init.accept_subj_unix_stream_sockets (subj))
+    (call .init.readwrite_subj_netlink_audit_sockets (subj))
+    (call .init.readwrite_subj_unix_dgram_sockets (subj))
+    (call .init.readwrite_subj_unix_stream_sockets (subj))
+
+    ;; journald-kmsg: read from /dev/kmsg.
+    (call .kernel.syslogread_system (subj))
+
+    ;; Writing kmsg for ForwardToKMsg=yes is implied by logconsole.
+    (call .kmsg.read_nodedev_chr_files (subj))
+
+    ;; /etc/localtime: localtime_r(3) may be called when getting the timestamp.
+    (call .locale.data.map_file_pattern.type (subj))
+    (call .locale.data.read_file_pattern.type (subj))
+
+    ;; _MACHINE_ID: /etc/machine-id.
+    (call .machineid.read_file_files (subj))
+
+    ;; Calculate maximum cache size based on MemTotal.
+    (call .meminfo.read_procfile_files (subj))
+
+    (call .memory.read_sysfile_files (subj))
+    (call .memory.search_sysfile_dirs (subj))
+
+    (call .memorypressure.readwritesetattr.type (subj))
+
+    (call .module.read_sysfile_files (subj))
+    (call .module.search_sysfile_pattern.type (subj))
+
+    ;; TODO: what is this for? This showed up in systemd 257 for various
+    ;; components, but I'm not exactly sure what for.
+    (call .ns.getattr_fs_files_pattern.type (subj))
+
+    ;; _HOSTNAME fallback.
+    (call .osrelease.read_sysctlfile_pattern.type (subj))
+
+    (call .proc.getattr_fs_pattern.type (subj))
+
+    ;; _STREAM_ID: journald attempts to generate a random stream ID. This is
+    ;; done by getting random bytes from /dev/urandom.
+    ;; See also: sd_id128_randomize(), random_bytes()
+    ;; https://github.com/systemd/systemd/blob/cb1c039fbc5c14994cf70b0a873a70240a79fb16/src/libsystemd/sd-id128/sd-id128.c#L318
+    ;; https://github.com/systemd/systemd/blob/cb1c039fbc5c14994cf70b0a873a70240a79fb16/src/basic/random-util.c#L70
+    (call .random.read_nodedev_chr_files (subj))
+
+    ;; _BOOT_ID: /proc/sys/kernel/random/boot_id.
+    (call .random.read_sysctlfile_pattern.type (subj))
+
+    (call .selinux.linked.type (subj))
+
+    ;; Log client's comm, exe, and cmdline info from /proc.
+    ;; See also: client_context_read_basic
+    ;; https://github.com/systemd/systemd/blob/cb1c039fbc5c14994cf70b0a873a70240a79fb16/src/journal/journald-context.c#L231
+    (call .subj.ps_all_states (subj))
+    ;; pid_is_unwaited(): check if a PID is valid, including a zombie. Used by
+    ;; journald when flushing cache entries for PIDs that have finished.
+    ;; See also: client_context_try_shrink_to()
+    ;; https://github.com/systemd/systemd/blob/cb1c039fbc5c14994cf70b0a873a70240a79fb16/src/journal/journald-context.c#L641
+    (call .subj.signull_all_processes (subj))
+
+    (call .sys.getattr_fs_pattern.type (subj))
+
+    (call .sys.termdev.open_all_chr_files (subj))
+
+    (call .tmp.getattr_fs_pattern.type (subj))
+
+    (call .utmp.run.read_file_files (subj))
+
+    (call .xattr.getattr_fs_pattern.type (subj))
+
+    (block log
+
+      (filecon "/run/log" dir file_context)
+      (filecon "/run/log/.*" dir file_context)
+      (filecon "/run/log/.*/system.*\.journal.*" file file_context)
+      (filecon "/run/log/.*" file ())
+
+      (filecon "/var/log/journal" dir file_context)
+      (filecon "/var/log/journal/.*" dir file_context)
+      (filecon "/var/log/journal/.*" symlink file_context)
+      (filecon "/var/log/journal/.*/system.*\.journal.*" file file_context)
+      (filecon "/var/log/journal/.*/user.*\.journal.*" file file_context)
+      (filecon "/var/log/journal/.*\..*/system.*\.journal.*" file ())
+
+      (macro log_file_type_transition_file ((type ARG1))
+             (call .log.file_type_transition
+                   (ARG1 file dir "journal")))
+
+      (macro map_file_files ((type ARG1))
+             (allow ARG1 file (file (map))))
+
+      (macro run_file_type_transition_file ((type ARG1))
+             (call .run.file_type_transition
+                   (ARG1 file dir "log")))
+
+      (macro watch_file_dirs ((type ARG1))
+             (allow ARG1 file (dir (watch))))
+
+      (blockinherit .file.macro_template_dirs)
+      (blockinherit .file.macro_template_files)
+      (blockinherit .file.macro_template_lnk_files)
+      (blockinherit .file.log.base_template)
+
+      (call .mount.mountpoint.type (file))
+
+      (call .rbacsep.exempt.obj.type (file))
+
+      (call .tmp.associate_fs (file))
+
+      (block map_file_pattern
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (typeattribute typeattr)
+
+        (call map_file_files (typeattr))
+
+        (call .log.search_file_pattern.type (typeattr)))
+
+      (block read_file_pattern
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (typeattribute typeattr)
+
+        (call list_file_dirs (typeattr))
+        (call read_file_files (typeattr))
+        (call read_file_lnk_files (typeattr))
+
+        (call .log.search_file_pattern.type (typeattr))))
+
+    (block relay_msgs
+
+      (macro type ((type ARG1))
+             (typeattributeset typeattr ARG1))
+
+      (typeattribute typeattr)
+
+      (dontaudit typeattr self (capability (net_admin)))
+
+      (call sendto_subj_unix_dgram_sockets (typeattr))
+
+      (call run.search_file_dirs (typeattr))
+      (call run.write_file_sock_files (typeattr))
+
+      (call systemd.run.search_file_pattern.type (typeattr))
+
+      (call .console.dontaudit_writeinherited_serialtermdev_chr_files
+            (typeattr))
+
+      ;; If systemd is running in the initramfs before policy load, the dev-log
+      ;; socket at /run/systemd/journal/dev-log is setup in early boot. As this
+      ;; socket will forever have the context of its creator upon connecting,
+      ;; and given that userspace starts in init.subj, journal clients need to
+      ;; to be able to talk to init.subj as well.
+      (call .init.sendto_subj_unix_dgram_sockets (typeattr)))
+
+    (block unit
+
+      (filecon "/usr/lib/systemd/system/syslog\.socket.*" file file_context)
+      (filecon
+       "/usr/lib/systemd/system/systemd-journal-catalog-update\.service.*"
+       file file_context)
+      (filecon "/usr/lib/systemd/system/systemd-journald-audit\.socket.*"
+               file file_context)
+      (filecon "/usr/lib/systemd/system/systemd-journald-dev-log\.socket.*"
+               file file_context)
+      (filecon "/usr/lib/systemd/system/systemd-journald\.service.*" file
+               file_context)
+      (filecon "/usr/lib/systemd/system/systemd-journald@.*\.service.*" file
+               file_context)
+      (filecon "/usr/lib/systemd/system/systemd-journald\.socket.*" file
+               file_context)
+      (filecon "/usr/lib/systemd/system/systemd-journald@.*\.socket.*" file
+               file_context)
+      (filecon "/usr/lib/systemd/system/systemd-journald-sync@.*\.service.*"
+               file file_context)
+      (filecon "/usr/lib/systemd/system/systemd-journald-varlink@.*\.socket.*"
+               file file_context)
+      (filecon "/usr/lib/systemd/system/systemd-journal-flush\.service.*" file
+               file_context)
+
+      (blockinherit .file.unit.template)))
+
+(in after systemd.journal.exec
+
+    (filecon "/usr/lib/systemd/systemd-journald" file file_context))
