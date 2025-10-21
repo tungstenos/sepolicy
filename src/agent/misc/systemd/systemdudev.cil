@@ -1,0 +1,125 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(in file.unconfined
+
+    (call .systemd.udev.conf.conf_file_type_transition_file (typeattr))
+    (call .systemd.udev.data.lib_file_type_transition_file (typeattr))
+    (call .systemd.udev.run.run_file_type_transition_file (typeattr)))
+
+(in systemd
+
+    (block udev
+
+      (blockinherit .sys.agent.template)
+
+      (call run.run_file_type_transition_file (subj))
+
+      (call tmp.tmp_fs_type_transition_file (subj))
+
+      (call .unconfined.type (subj))
+
+      (block conf
+
+        (filecon "/etc/udev" dir file_context)
+        (filecon "/etc/udev/.*" any file_context)
+
+        (macro conf_file_type_transition_file ((type ARG1))
+               (call .conf.file_type_transition
+                     (ARG1 file dir "udev")))
+
+        (macro map_file_files ((type ARG1))
+               (allow ARG1 file (file (map))))
+
+        (blockinherit .file.conf.template)
+
+        (block read_file_pattern
+
+          (macro type ((type ARG1))
+                 (typeattributeset typeattr ARG1))
+
+          (typeattribute typeattr)
+
+          (call list_file_dirs (typeattr))
+          (call read_file_files (typeattr))
+
+          (call .conf.search_file_pattern.type (typeattr))))
+
+      (block data
+
+        (filecon "/usr/lib/udev" dir file_context)
+        (filecon "/usr/lib/udev/.*" any file_context)
+
+        (macro lib_file_type_transition_file ((type ARG1))
+               (call .lib.file_type_transition
+                     (ARG1 file dir "udev")))
+
+        (macro map_file_files ((type ARG1))
+               (allow ARG1 file (file (map))))
+
+        (blockinherit .file.data.base_template)
+        (blockinherit .file.macro_template_dirs)
+        (blockinherit .file.macro_template_files))
+
+      (block run
+
+        (filecon "/run/udev" dir file_context)
+        (filecon "/run/udev/.*" any file_context)
+
+        (macro run_file_type_transition_file ((type ARG1))
+               (call .run.file_type_transition
+                     (ARG1 file dir "udev")))
+
+        (macro watch_file_dirs ((type ARG1))
+               (allow ARG1 file (dir (watch))))
+
+        (blockinherit .file.macro_template_dirs)
+        (blockinherit .file.macro_template_files)
+        (blockinherit .file.macro_template_lnk_files)
+        (blockinherit .file.macro_template_sock_files)
+        (blockinherit .file.run.base_template)
+
+        (block read_file_pattern
+
+          (macro type ((type ARG1))
+                 (typeattributeset typeattr ARG1))
+
+          (typeattribute typeattr)
+
+          (call list_file_dirs (typeattr))
+          (call read_file_files (typeattr))
+          (call read_file_lnk_files (typeattr))
+
+          (call .run.search_file_pattern.type (typeattr))))
+
+      (block tmp
+
+        (macro tmp_fs_type_transition_file ((type ARG1))
+               (call .tmp.fs_type_transition
+                     (ARG1 file file "*")))
+
+        (blockinherit .file.macro_template_files)
+        (blockinherit .file.tmp.base_template))
+
+      (block unit
+
+        (filecon
+         "/usr/lib/systemd/system/systemd-udev-load-credentials\.service.*" file
+         file_context)
+        (filecon "/usr/lib/systemd/system/systemd-udev-settle\.service.*" file
+                 file_context)
+        (filecon "/usr/lib/systemd/system/systemd-udev-trigger\.service.*"
+                 file file_context)
+
+        (filecon "/usr/lib/systemd/system/systemd-udevd-control\.socket.*" file
+                 file_context)
+        (filecon "/usr/lib/systemd/system/systemd-udevd-kernel\.socket.*" file
+                 file_context)
+        (filecon "/usr/lib/systemd/system/systemd-udevd\.service.*" file
+                 file_context)
+
+        (blockinherit .file.unit.template))))
+
+(in after systemd.udev.exec
+
+    (filecon "/usr/bin/udevadm" file file_context))
