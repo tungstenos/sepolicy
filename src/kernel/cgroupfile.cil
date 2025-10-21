@@ -31,6 +31,11 @@
     (macro addname_cgroupfile_dirs ((type ARG1))
            (allow ARG1 cgroupfile addname_dir))
 
+    (macro cgroupfile_type_transition
+           ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+           (typetransition ARG1 cgroupfile ARG3 ARG4 ARG2)
+           (call addname_cgroupfile_dirs (ARG1)))
+
     (macro create_cgroupfile_dirs ((type ARG1))
            (allow ARG1 cgroupfile create_dir))
 

@@ -1,0 +1,89 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(block machine
+
+  (block slice
+
+      (filecon "/sys/fs/cgroup/machine\.slice" dir cgroupfile_context)
+      (filecon "/sys/fs/cgroup/machine\.slice/.*" any ())
+
+      (genfscon "cgroup2" "/machine.slice" cgroupfile_context)
+
+      (macro dontaudit_setattr_cgroupfile_files ((type ARG1))
+             (dontaudit ARG1 cgroupfile (file (setattr))))
+
+      (macro dontaudit_write_cgroupfile_files ((type ARG1))
+             (dontaudit ARG1 cgroupfile write_file))
+
+      (macro cgroup_fs_type_transition_cgroupfile ((type ARG1))
+             (call .cgroup.fs_type_transition
+                   (ARG1 cgroupfile dir "machine.slice")))
+
+      (macro getattr_cgroupfile_files ((type ARG1))
+             (allow ARG1 cgroupfile (file (getattr))))
+
+      (macro setattr_cgroupfile_dirs ((type ARG1))
+             (allow ARG1 cgroupfile (dir (setattr))))
+
+      (macro setattr_cgroupfile_files ((type ARG1))
+             (allow ARG1 cgroupfile (file (setattr))))
+
+      (macro watch_cgroupfile_files ((type ARG1))
+             (allow ARG1 cgroupfile (file (watch))))
+
+      (blockinherit .cgroupfile.machine.slice.template)
+
+      (block search_cgroupfile_pattern
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (typeattribute typeattr)
+
+        (call search_cgroupfile_dirs (typeattr))
+
+        (call .cgroup.search_fs_pattern.type (typeattr)))))
+
+(in cgroupfile
+
+    (block machine
+
+      (block slice
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (blockinherit file.all_macro_template_dirs)
+        (blockinherit file.all_macro_template_files)
+
+        (typeattribute typeattr)
+
+        (call cgroupfile.type (typeattr))
+
+        (block base_template
+
+          (blockabstract base_template)
+
+          (blockinherit .cgroupfile.base_template))
+
+        (block template
+
+          (blockabstract template)
+
+          (blockinherit .cgroupfile.machine.slice.base_template)
+          (blockinherit .cgroupfile.macro_template_dirs)
+          (blockinherit .cgroupfile.macro_template_files)))))
+
+(in cgroupfile.unconfined
+
+    (call .machine.slice.cgroup_fs_type_transition_cgroupfile (typeattr)))
+
+(in memorypressure.readwritesetattr
+
+    (call .machine.slice.search_cgroupfile_pattern.type (typeattr))
+
+    ;; the hacks
+    (call .machine.slice.dontaudit_setattr_cgroupfile_files (typeattr))
+    (call .machine.slice.dontaudit_write_cgroupfile_files (typeattr))
+    (call .machine.slice.read_cgroupfile_files (typeattr)))

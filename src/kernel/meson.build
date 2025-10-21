@@ -16,5 +16,6 @@ foreach file : cil_files
     policy_sources += files(file)
 endforeach
 
+subdir('cgroupfile')
 subdir('procfile')
 subdir('sysfile')

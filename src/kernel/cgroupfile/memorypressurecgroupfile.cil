@@ -1,0 +1,45 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(block memorypressure
+
+  (filecon "/sys/fs/cgroup/system\.slice/.*/memory\.pressure" file
+           cgroupfile_context)
+
+  (macro cgroup_fs_type_transition_cgroupfile ((type ARG1))
+         (call .cgroup.fs_type_transition
+               (ARG1 cgroupfile file "memory.pressure")))
+
+  (macro setattr_cgroupfile_files ((type ARG1))
+         (allow ARG1 cgroupfile (file (setattr))))
+
+  (macro sys_slice_cgroupfile_type_transition_cgroupfile ((type ARG1))
+         (call .sys.slice.cgroupfile_type_transition
+               (ARG1 cgroupfile file "memory.pressure")))
+
+  (blockinherit .cgroupfile.template)
+
+  (call .rbacsep.exempt.obj.type (cgroupfile))
+
+  ;; systemd 254 MemoryPressure I can't get these files labeled properly
+
+  (block readwritesetattr
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (call readwrite_cgroupfile_files (typeattr))
+    (call setattr_cgroupfile_files (typeattr))
+
+    (call .sys.slice.search_cgroupfile_pattern.type (typeattr))
+
+    (call .sys.slice.dontaudit_setattr_cgroupfile_files (typeattr))
+    (call .sys.slice.dontaudit_write_cgroupfile_files (typeattr))
+    (call .sys.slice.read_cgroupfile_files (typeattr))))
+
+(in cgroupfile.unconfined
+
+    (call .memorypressure.sys_slice_cgroupfile_type_transition_cgroupfile
+          (typeattr)))

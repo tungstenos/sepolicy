@@ -1,0 +1,76 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(in cgroupfile
+
+    (block sys
+
+      (block slice
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (blockinherit file.all_macro_template_dirs)
+        (blockinherit file.all_macro_template_files)
+
+        (typeattribute typeattr)
+
+        (call cgroupfile.type (typeattr))
+
+        (block base_template
+
+          (blockabstract base_template)
+
+          (blockinherit .cgroupfile.base_template)
+
+          (call .cgroupfile.sys.slice.type (cgroupfile)))
+
+        (block template
+
+          (blockabstract template)
+
+          (blockinherit .cgroupfile.macro_template_files)
+          (blockinherit .cgroupfile.sys.slice.base_template)))))
+
+(in cgroupfile.unconfined
+
+    (call .sys.slice.cgroup_fs_type_transition_cgroupfile (typeattr)))
+
+(in sys
+
+    (block slice
+
+      (filecon "/sys/fs/cgroup/system\.slice" dir cgroupfile_context)
+      (filecon "/sys/fs/cgroup/system\.slice/.*" any ())
+
+      (genfscon "cgroup2" "/system.slice" cgroupfile_context)
+
+      (macro dontaudit_setattr_cgroupfile_files ((type ARG1))
+             (dontaudit ARG1 cgroupfile (file (setattr))))
+
+      (macro dontaudit_write_cgroupfile_files ((type ARG1))
+             (dontaudit ARG1 cgroupfile write_file))
+
+      (macro cgroup_fs_type_transition_cgroupfile ((type ARG1))
+             (call .cgroup.fs_type_transition
+                   (ARG1 cgroupfile dir "system.slice")))
+
+      (macro getattr_cgroupfile_files ((type ARG1))
+             (allow ARG1 cgroupfile (file (getattr))))
+
+      (macro watch_cgroupfile_files ((type ARG1))
+             (allow ARG1 cgroupfile (file (watch))))
+
+      (blockinherit .cgroupfile.macro_template_dirs)
+      (blockinherit .cgroupfile.sys.slice.template)
+
+    (block search_cgroupfile_pattern
+
+      (macro type ((type ARG1))
+             (typeattributeset typeattr ARG1))
+
+      (typeattribute typeattr)
+
+      (call search_cgroupfile_dirs (typeattr))
+
+      (call .cgroup.search_fs_pattern.type (typeattr)))))
