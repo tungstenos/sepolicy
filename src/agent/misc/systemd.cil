@@ -267,7 +267,7 @@
     (macro unix_stream_connect ((type ARG1))
            (call run.write_file_sock_files (ARG1))
 
-           (call .sys.connectto_subj_unix_stream_sockets (ARG1))
+           (call .systemd.connectto_subj_unix_stream_sockets (ARG1))
 
            (call .systemd.run.search_file_pattern.type (ARG1)))
 
@@ -280,11 +280,11 @@
     (call run.read_file_files (typeattr))
     (call run.read_file_lnk_files (typeattr))
 
-    (call .run.search_file_pattern.type (typeattr))
-
     ;; BUG: this is the / of a ramfs (mounted on /run/credentials/*.service)
-    (call .sys.tmpfs.list_file_dirs (typeattr))
-    (call .sys.tmpfs.read_file_files (typeattr))
+    (call .init.tmpfs.list_file_dirs (typeattr))
+    (call .init.tmpfs.read_file_files (typeattr))
+
+    (call .run.search_file_pattern.type (typeattr))
 
     (block run
 
@@ -438,7 +438,7 @@
     (call userdb.run.list_file_dirs (typeattr))
     (call userdb.run.write_file_sock_files (typeattr))
 
-    (call .sys.connectto_subj_unix_stream_sockets (typeattr)))
+    (call .systemd.connectto_subj_unix_stream_sockets (typeattr)))
 
   (block ephemeraltrees
 
@@ -478,7 +478,7 @@
 
     (typeattribute typeattr)
 
-    (call .sys.readwrite_subj_unix_stream_sockets (typeattr)))
+    (call .systemd.readwrite_subj_unix_stream_sockets (typeattr)))
 
   (block fsck
 
@@ -877,7 +877,7 @@
     (call .cmdline.read_procfile_pattern.type (typeattr))
 
     ;; /proc/1/environ requires cap_sys_ptrace
-    (call .sys.read_subj_states (typeattr)))
+    (call .systemd.read_subj_states (typeattr)))
 
   (block machine
 
@@ -1106,7 +1106,7 @@
 
     (call run.writeinherited_file_sock_files (typeattr))
 
-    (call .sys.sendto_subj_unix_dgram_sockets (typeattr))
+    (call .init.sendto_subj_unix_dgram_sockets (typeattr))
 
     (block run
 
@@ -1315,9 +1315,9 @@
 
     (call .rbacsep.readstatesource.type (typeattr))
 
-    (call .sys.read_subj_states (typeattr))
-
     (call .sys.termdev.open_all_chr_files (typeattr))
+
+    (call .systemd.read_subj_states (typeattr))
 
     (call .terminfo.read_file_pattern.type (typeattr))
 
@@ -1387,7 +1387,7 @@
 
     (call systemd.run.search_file_pattern.type (typeattr))
 
-    (call .sys.connectto_subj_unix_stream_sockets (typeattr))
+    (call .systemd.connectto_subj_unix_stream_sockets (typeattr))
 
     (block run
 
