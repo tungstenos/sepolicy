@@ -1,0 +1,24 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(in systemd
+
+    (call executor.subj_type_transition (subj))
+
+    (block executor
+
+      (blockinherit .agent.template)
+
+      (call .sys.agent.type (subj))
+
+      ;; TODO: Create a private domain for unknown agents with a defined scope.
+      ;; For now, just run unknown agents unconfined. Giving them a private domain
+      ;; is more complex than it seems: some services run weird shell scripts, e.g.
+      ;; for ExecStart= and ExecStop=.
+      (call .sys.exec_subj_type_transition (subj))
+
+      (call .unconfined.type (subj))))
+
+(in after systemd.executor.exec
+
+    (filecon "/usr/lib/systemd/systemd-executor" file file_context))

@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 cil_files = [
+    'systemdexecutor.cil',
     'systemdjournal.cil',
     'systemdudev.cil',
 ]
