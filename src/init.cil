@@ -28,6 +28,11 @@
   (call tmpfs.tmp_fs_type_transition_file (subj lnk_file "*"))
   (call tmpfs.tmp_fs_type_transition_file (subj sock_file "*"))
 
+  ;; This is a mess. Virtually anything can get setup in initramfs these days
+  ;; due to everything ranging from early boot sockets to sysext and confext
+  ;; overlays.
+  (call .subj.interactivefd.type (subj))
+
   ;; Confining early boot processes in the initramfs doesn't give us much. cpio
   ;; doesn't support xattrs, so we end up running everything in a single domain
   ;; anyway. Given that initramfs performs numerous privileged tasks, such as
