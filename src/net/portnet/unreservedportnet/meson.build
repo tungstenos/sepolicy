@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: MIT
 
 cil_files = [
-    'dhcpreservedport.cil',
-    'dnsreservedport.cil',
+    'llmnrunreservedport.cil',
+    'mdnsunreservedport.cil',
 ]
 
 foreach file : cil_files
