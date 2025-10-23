@@ -1,6 +1,7 @@
 ;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
 ;; SPDX-License-Identifier: MIT
 
+(selinuxuser root sys.id sys.lowhigh)
 (userprefix sys.id sys.role)
 
 (in sys
