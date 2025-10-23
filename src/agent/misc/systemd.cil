@@ -30,6 +30,12 @@
   (blockinherit macro_template_system)
   (blockinherit .agent.template)
 
+  (call .rbacsep.exempttarget.type (subj))
+  (call .rbacsep.readstatetarget.type (subj))
+  (call .rbacsep.usefdtarget.type (subj))
+
+  (call .subj.interactivefd.type (subj))
+
   (call .sys.agent.type (subj))
   ;; This needs to be kept in sync with executor's fallback domain transition.
   (call .sys.exec_subj_type_transition (subj))
