@@ -5,6 +5,9 @@
 
     (genfscon "sysfs" "/kernel" sysfile_context)
 
+    (macro map_sysfile_files ((type ARG1))
+           (allow ARG1 sysfile (file (map))))
+
     (blockinherit .sysfile.kernel.template)
     (blockinherit .sysfile.macro_template_dirs)
     (blockinherit .sysfile.macro_template_lnk_files)

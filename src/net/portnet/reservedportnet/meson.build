@@ -2,13 +2,9 @@
 # SPDX-License-Identifier: MIT
 
 cil_files = [
-    'ephemeralportnet.cil',
-    'reservedportnet.cil',
-    'unreservedportnet.cil',
+    'dhcpreservedport.cil',
 ]
 
 foreach file : cil_files
     policy_sources += files(file)
 endforeach
-
-subdir('reservedportnet')

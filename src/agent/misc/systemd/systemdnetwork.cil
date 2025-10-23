@@ -1,0 +1,195 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(in systemd.network
+
+    (macro relabelfrom_subj_tun_sockets ((type ARG1))
+           (allow ARG1 subj (tun_socket (relabelfrom))))
+
+    (macro unix_stream_connect ((type ARG1))
+           (call connectto_subj_unix_stream_sockets (ARG1))
+           (call netif.run.search_file_dirs (ARG1))
+           (call netif.run.write_file_sock_files (ARG1)))
+
+    (blockinherit .dbus.nameclient.template)
+    (blockinherit .sys.agent.template)
+
+    (allow subj self
+           (capability (net_admin net_bind_service net_broadcast net_raw
+                                  sys_admin)))
+    (allow subj self (capability2 (bpf)))
+    (allow subj self (process (getcap setcap setfscreate)))
+    (allow subj self create_netlink_generic_socket)
+    (allow subj self create_netlink_kobject_uevent_socket)
+    (allow subj self create_netlink_netfilter_socket)
+    (allow subj self create_packet_socket)
+    (allow subj self create_rawip_socket)
+    (allow subj self create_tun_socket)
+    (allow subj self create_unix_dgram_socket)
+    (allow subj self (bpf (map_create map_read map_write prog_load prog_run)))
+    (allow subj self (netlink_route_socket (nlmsg nlmsg_write)))
+    (allow subj self (tun_socket (relabelfrom relabelto)))
+    (allow subj self (unix_stream_socket (accept listen)))
+
+    (call conf.list_file_dirs (subj))
+    (call conf.read_file_files (subj))
+    (call conf.read_file_lnk_files (subj))
+
+    (call data.list_file_dirs (subj))
+    (call data.read_file_files (subj))
+
+    (call netif.run.manage_file_dirs (subj))
+    (call netif.run.manage_file_files (subj))
+    (call netif.run.manage_file_sock_files (subj))
+    (call netif.run.systemd_run_file_type_transition_file (subj))
+    (call netif.run.watch_file_dirs (subj))
+
+    (call run.list_file_dirs (subj))
+    (call run.read_file_files (subj))
+
+    (call state.manage_file_dirs (subj))
+    (call state.manage_file_files (subj))
+    (call state.systemd_state_file_type_transition_file (subj))
+
+    (call systemd.logparseenv.type (subj))
+    (call systemd.notify.type (subj))
+    (call systemd.propagate.type (subj))
+
+    (call systemd.credentials.type (subj))
+
+    (call systemd.hostname.conf.read_file_files (subj))
+    (call systemd.hostname.sendmsg_subj_dbus.type (subj))
+
+    (call systemd.journal.relay_msgs.type (subj))
+
+    (call systemd.udev.run.read_file_pattern.type (subj))
+
+    (call tmpfs.manage_file_files (subj))
+    (call tmpfs.tmp_fs_type_transition_file (subj))
+
+    (call .bus.search_sysfile_pattern.type (subj))
+
+    (call .caplastcap.read_sysctlfile_pattern.type (subj))
+
+    (call .cgroup.getattr_fs_pattern.type (subj))
+    (call .cgroup.list_fs_dirs (subj))
+
+    (call .class.traverse_sysfile_pattern.type (subj))
+
+    (call .cpuinfo.read_procfile_files (subj))
+
+    (call .crypto.read_sysctlfile_pattern.type (subj))
+
+    (call .dbus.monitoravailability.type (subj))
+
+    (call .debug.search_fs_pattern.type (subj))
+
+    (call .devices.read_sysfile_pattern.type (subj))
+
+    (call .dhcp.namebind_port_udp_sockets (subj))
+
+    (call .firmware.data.read_file_files (subj))
+    (call .firmware.data.search_file_dirs (subj))
+
+    (call .firmware.search_sysfile_pattern.type (subj))
+
+    (call .hypervisor.search_sysfile_pattern.type (subj))
+
+    (call .ipv4.readwrite_sysctlfile_files (subj))
+    (call .ipv4.search_sysctlfile_dirs (subj))
+
+    (call .ipv6.readwrite_sysctlfile_files (subj))
+    (call .ipv6.search_sysctlfile_dirs (subj))
+
+    ;; /sys/kernel/btf/vmlinux
+    (call .kernel.map_sysfile_files (subj))
+    (call .kernel.read_sysfile_files (subj))
+
+    (call .kernel.modulerequest_system (subj))
+
+    (call .locale.data.map_file_pattern.type (subj))
+    (call .locale.read_file_pattern.type (subj))
+
+    (call .machineid.read_file_files (subj))
+
+    (call .memorypressure.readwritesetattr.type (subj))
+
+    ;; /sys/module/nfnetlink/uevent
+    (call .module.read_sysfile_files (subj))
+    (call .module.search_sysfile_pattern.type (subj))
+
+    (call .mount.run.read_file_files (subj))
+    (call .mount.run.search_file_dirs (subj))
+
+    (call .net.read_procfile_pattern.type (subj))
+
+    (call .net.search_sysctlfile_pattern.type (subj))
+
+    (call .ngroupsmax.read_sysctlfile_pattern.type (subj))
+
+    (call .ns.read_fs_pattern.type (subj))
+
+    (call .nss.hosts.type (subj))
+    (call .nss.passwdgroup.type (subj))
+
+    (call .osrelease.read_sysctlfile_pattern.type (subj))
+
+    (call .pid.getattr_fs_pattern.type (subj))
+
+    (call .proc.getattr_fs_pattern.type (subj))
+
+    (call .random.read_sysctlfile_pattern.type (subj))
+
+    (call .selinux.file.read_file_pattern.type (subj))
+    (call .selinux.mapread_fs_pattern.type (subj))
+
+    (call .sys.getattr_fs_pattern.type (subj))
+
+    (call .sys.slice.list_cgroupfile_dirs (subj))
+
+    (call .trace.search_fs_pattern.type (subj))
+
+    (call .tuntap.readwrite_nodedev_chr_files (subj))
+
+    (call .xattr.getattr_fs_pattern.type (subj))
+
+    (optional systemdnetwork_polkit
+              (call .polkit.sendmsg_subj_dbus.type (subj)))
+
+    (optional systemdnetwork_systemdresolve
+              (call systemd.resolve.run.read_file_files (subj))
+              (call systemd.resolve.run.search_file_pattern.type (subj)))
+
+    (optional systemdnetwork_systemdtimedate
+              (call systemd.timedate.sendmsg_subj_dbus.type (subj)))
+
+    (block tmpfs
+
+      (macro tmp_fs_type_transition_file ((type ARG1))
+             (call .tmp.fs_type_transition
+                   (ARG1 file file "*")))
+
+      (blockinherit .file.macro_template_files)
+      (blockinherit .file.tmpfs.base_template))
+
+    (block unit
+
+      (filecon "/usr/lib/systemd/system/systemd-networkd\.service.*" file
+               file_context)
+      (filecon "/usr/lib/systemd/system/systemd-networkd\.socket.*" file
+               file_context)
+      (filecon
+       "/usr/lib/systemd/system/systemd-networkd-persistent-storage\.service.*"
+       file file_context)
+      (filecon "/usr/lib/systemd/system/systemd-networkd-wait-online\.service.*"
+               file file_context)
+      (filecon
+       "/usr/lib/systemd/system/systemd-networkd-wait-online@.*\.service.*"
+       file file_context)
+
+      (blockinherit .file.unit.template)))
+
+(in after systemd.network.exec
+
+    (filecon "/usr/lib/systemd/systemd-networkd" file file_context)
+    (filecon "/usr/lib/systemd/systemd-networkd-wait-online" file file_context))
