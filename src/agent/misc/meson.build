@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 cil_files = [
+    'dbus.cil',
     'nss.cil',
     'pam.cil',
     'systemd.cil',
