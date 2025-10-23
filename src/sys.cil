@@ -33,4 +33,13 @@
 
   (call .obj.role (role))
 
-  (call .unconfined.type (subj)))
+  (call .unconfined.type (subj))
+
+  (block userrole
+
+    (macro user ((user ARG1))
+           (userattributeset userattr ARG1))
+
+    (userattribute userattr)
+
+    (userrole userattr role)))

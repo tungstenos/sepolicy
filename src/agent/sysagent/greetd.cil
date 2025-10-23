@@ -1,0 +1,95 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+;; greetd has two components: the daemon, and the greeter session. The session
+;; is started by a worker, forked off from the daemon. The daemon runs as root,
+;; and the session runs as the `greetd` user. We run the greeter session as the
+;; selinux user `greetd` user for PAM: the greeter has its own PAM stack, so to
+;; keep pam_selinux(8) happy, the greeter needs an entry to greetd.session.subj
+;; in the `default_contexts` file.
+(selinuxuser greetd greetd.id sys.lowlow)
+
+(block greetd
+
+  (blockinherit .user.id_template)
+
+  (call .sys.userrole.user (id))
+
+  (blockinherit .sys.agent.template)
+
+  (call run.run_file_type_transition_file (subj file "greetd.run"))
+  (call run.run_file_type_transition_file (subj sock_file "*"))
+
+  (call session.transition_subj_processes (subj))
+
+  (call .unconfined.type (subj))
+
+  (block conf
+
+    (filecon "/etc/greetd" dir file_context)
+    (filecon "/etc/greetd/.*" any file_context)
+
+    (macro conf_file_type_transition_file ((type ARG1))
+           (call .conf.file_type_transition
+                 (ARG1 file dir "greetd")))
+
+    (blockinherit .file.conf.base_template)
+    (blockinherit .file.macro_template_dirs)
+    (blockinherit .file.macro_template_files))
+
+  (block run
+
+    (filecon "/run/greetd\.run" file file_context)
+    (filecon "/run/greetd-.*\.sock" socket file_context)
+
+    (macro run_file_type_transition_file ((type ARG1)(class ARG2)(name ARG3))
+           (call .run.file_type_transition
+                 (ARG1 file ARG2 ARG3)))
+
+    (blockinherit .file.macro_template_files)
+    (blockinherit .file.macro_template_sock_files)
+    (blockinherit .file.run.base_template))
+
+  (block session
+
+    ;; We only have behaviour that is shared across greeters here. Policy for
+    ;; specific greeters should be in a seperate module in the `greetd` sub-
+    ;; directory, wrapping their policy in a `(in greetd.session ... )` block.
+    (blockinherit .subj.common.template)
+
+    (roletype .sys.role subj)
+
+    (call .unconfined.type (subj)))
+
+  (block state
+
+    (filecon "/var/lib/greetd" dir file_context)
+    (filecon "/var/lib/greetd/.*" any file_context)
+
+    (macro map_file_files ((type ARG1))
+           (allow ARG1 file (file (map))))
+
+    (macro state_file_type_transition_file ((type ARG1))
+           (call .state.file_type_transition
+                 (ARG1 file dir "greetd")))
+
+    (blockinherit .file.macro_template_dirs)
+    (blockinherit .file.macro_template_files)
+    (blockinherit .file.state.base_template))
+
+  (block unit
+
+    (filecon "/usr/lib/systemd/system/greetd\.service.*" file file_context)
+
+    (blockinherit .file.unit.template)))
+
+(in file.unconfined
+
+    (call .greetd.conf.conf_file_type_transition_file (typeattr))
+    (call .greetd.run.run_file_type_transition_file
+          (typeattr file "greetd.run"))
+    (call .greetd.state.state_file_type_transition_file (typeattr)))
+
+(in after greetd.exec
+
+    (filecon "/usr/bin/greetd" file file_context))

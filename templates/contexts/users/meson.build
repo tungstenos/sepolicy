@@ -1,13 +1,19 @@
 # SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
 # SPDX-License-Identifier: MIT
 
+greetd_id_user = configure_file(
+    input: 'greetd.id.in',
+    output: 'greetd.id',
+    configuration: templates_conf_data,
+)
+
 user_id_user = configure_file(
     input: 'user.id.in',
     output: 'user.id',
     configuration: templates_conf_data,
 )
 
-user_contexts_install_data = [user_id_user]
+user_contexts_install_data = [greetd_id_user, user_id_user]
 
 if sysadmin
     sys_id_user = configure_file(
