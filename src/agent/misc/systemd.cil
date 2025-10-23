@@ -31,6 +31,8 @@
   (blockinherit .agent.template)
 
   (call .sys.agent.type (subj))
+  ;; This needs to be kept in sync with executor's fallback domain transition.
+  (call .sys.exec_subj_type_transition (subj))
 
   ;; systemd-init is a beast. Some day we'll hopefully be able to confine it,
   ;; but let's just leave it unconfined for now.

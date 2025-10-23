@@ -44,7 +44,15 @@
 
       (blockinherit .user.agent.template)
 
-      ;; hybridagents may be started by systemd
+      ;; Although systemd does not directly execute services itself (this job
+      ;; is delegated to the executor instead), socket contexts are computed
+      ;; by systemd. This means that transitions need to be inplace such that
+      ;; security_compute_create_raw(3) computes the right domain.
+      ;; See also: mac_selinux_get_create_label_from_exe(),
+      ;;           socket_determine_selinux_label()
+      ;; https://github.com/systemd/systemd/blob/c05758663b162c64da4729944023dec8cf684c75/src/shared/selinux-util.c#L499-L532
+      ;; https://github.com/systemd/systemd/blob/c05758663b162c64da4729944023dec8cf684c75/src/core/socket.c#L1479-L1500
+      (call subj_type_transition (.systemd.subj))
       (call subj_type_transition (.systemd.executor.subj))
 
       (call .hybrid.agent.exec.type (exec.file))
