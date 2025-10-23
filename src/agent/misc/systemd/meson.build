@@ -3,6 +3,7 @@
 
 cil_files = [
     'systemdexecutor.cil',
+    'systemdhostname.cil',
     'systemdjournal.cil',
     'systemdudev.cil',
 ]
