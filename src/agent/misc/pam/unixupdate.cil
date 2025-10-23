@@ -41,7 +41,9 @@
 
   (call .shadow.manage_file_files (subj))
   (call .shadow.map_file_files (subj))
-  (call .shadow.read.type (subj)))
+  (call .shadow.read.type (subj))
+
+  (call .systemd.journal.relay_msgs.type (subj)))
 
 (in after unixupdate.exec
 
