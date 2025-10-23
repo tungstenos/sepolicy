@@ -17,8 +17,21 @@
       ;; for ExecStart= and ExecStop=.
       (call .sys.exec_subj_type_transition (subj))
 
-      (call .unconfined.type (subj))))
+      (call .unconfined.type (subj))
+
+      (block forked
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (typeattribute typeattr)
+
+        (call .systemd.executor.readwrite_subj_unix_stream_sockets (typeattr)))))
 
 (in after systemd.executor.exec
 
     (filecon "/usr/lib/systemd/systemd-executor" file file_context))
+
+(in sys.agent
+
+    (call .systemd.executor.forked.type (typeattr)))

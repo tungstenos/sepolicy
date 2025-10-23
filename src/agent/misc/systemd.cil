@@ -473,15 +473,6 @@
       (blockinherit .file.macro_template_sock_files)
       (blockinherit .file.run.systemd.base_template)))
 
-  (block forked
-
-    (macro type ((type ARG1))
-           (typeattributeset typeattr ARG1))
-
-    (typeattribute typeattr)
-
-    (call .systemd.readwrite_subj_unix_stream_sockets (typeattr)))
-
   (block fsck
 
     (block run
@@ -2690,10 +2681,6 @@
 (in silenced
 
     (call .systemd.silenced.type (typeattr)))
-
-(in sys.agent
-
-    (call .systemd.forked.type (typeattr)))
 
 (in sys.user
 
