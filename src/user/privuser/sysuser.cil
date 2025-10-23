@@ -2,6 +2,7 @@
 ;; SPDX-License-Identifier: MIT
 
 (selinuxuser root sys.id sys.lowhigh)
+(selinuxuser %wheel sys.id sys.lowhigh)
 (userprefix sys.id sys.role)
 
 (in sys
