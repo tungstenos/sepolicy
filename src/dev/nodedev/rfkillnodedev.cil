@@ -5,6 +5,15 @@
 
   (filecon "/dev/rfkill" char nodedev_context)
 
+  (macro getattr_nodedev_chr_files ((type ARG1))
+         (allow ARG1 nodedev (chr_file (getattr))))
+
+  (macro mounton_nodedev_chr_files ((type ARG1))
+         (allow ARG1 nodedev mounton_chr_file))
+
+  (macro setattr_nodedev_chr_files ((type ARG1))
+         (allow ARG1 nodedev (chr_file (setattr))))
+
   (blockinherit .nodedev.template)
 
   (call .rbacsep.exempt.obj.type (nodedev)))

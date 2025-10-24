@@ -3,6 +3,17 @@
 
 (block udmabuf
 
+  (macro dontaudit_readwriteinherited_nodedev_chr_files ((type ARG1))
+         (dontaudit ARG1 nodedev readwriteinherited_chr_file))
+
+  (macro getattr_nodedev_chr_files ((type ARG1))
+         (allow ARG1 nodedev (chr_file (getattr))))
+
+  (macro setattr_nodedev_chr_files ((type ARG1))
+         (allow ARG1 nodedev (chr_file (setattr))))
+
   (filecon "/dev/udmabuf" char nodedev_context)
 
-  (blockinherit .nodedev.template))
+  (blockinherit .nodedev.template)
+
+  (call .rbacsep.exempt.obj.type (nodedev)))

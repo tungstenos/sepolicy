@@ -5,9 +5,11 @@ cil_files = [
     'systemdexecutor.cil',
     'systemdhostname.cil',
     'systemdjournal.cil',
+    'systemdlogin.cil',
     'systemdnetwork.cil',
     'systemdresolve.cil',
     'systemdudev.cil',
+    'systemduserruntimedir.cil',
 ]
 
 foreach file : cil_files

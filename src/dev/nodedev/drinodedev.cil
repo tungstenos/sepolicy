@@ -5,6 +5,48 @@
 
   (filecon "/dev/dri/.+" char nodedev_context)
 
+  (macro dev_file_type_transition_nodedev ((type ARG1)(name ARG2))
+         (call .dev.file_type_transition
+               (ARG1 nodedev chr_file ARG2)))
+
+  (macro dontaudit_readwriteinherited_nodedev_chr_files ((type ARG1))
+         (dontaudit ARG1 nodedev readwriteinherited_chr_file))
+
+  (macro map_nodedev_chr_files ((type ARG1))
+         (allow ARG1 nodedev (chr_file (map))))
+
+  (macro setattr_nodedev_chr_files ((type ARG1))
+         (allow ARG1 nodedev (chr_file (setattr))))
+
   (blockinherit .nodedev.template)
 
-  (call .rbacsep.exempt.obj.type (nodedev)))
+  (call .rbacsep.exempt.obj.type (nodedev))
+
+  (block map_nodedev_pattern
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (call map_nodedev_chr_files (typeattr))
+
+    (call .dev.search_file_pattern.type (typeattr)))
+
+  (block readwrite_nodedev_pattern
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (call readwrite_nodedev_chr_files (typeattr))
+
+    (call .dev.search_file_pattern.type (typeattr))))
+
+(in nodedev.unconfined
+
+    (call .dri.dev_file_type_transition_nodedev (typeattr "card0"))
+    (call .dri.dev_file_type_transition_nodedev (typeattr "card1"))
+    (call .dri.dev_file_type_transition_nodedev (typeattr "card2"))
+    (call .dri.dev_file_type_transition_nodedev (typeattr "renderD128")))

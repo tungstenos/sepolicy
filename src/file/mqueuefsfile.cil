@@ -5,6 +5,9 @@
 
     (block mqueuefs
 
+      (macro getattr_all_files ((type ARG1))
+             (allow ARG1 typeattr (file (getattr))))
+
       (macro type ((type ARG1))
              (typeattributeset typeattr ARG1))
 

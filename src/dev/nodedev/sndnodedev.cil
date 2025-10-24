@@ -5,6 +5,25 @@
 
   (filecon "/dev/snd/.+" char nodedev_context)
 
+  (macro dev_file_type_transition_nodedev ((type ARG1)(name ARG2))
+         (call .dev.file_type_transition
+               (ARG1 nodedev chr_file ARG2)))
+
+  (macro getattr_nodedev_chr_files ((type ARG1))
+         (allow ARG1 nodedev (chr_file (getattr))))
+
+  (macro map_nodedev_chr_files ((type ARG1))
+         (allow ARG1 nodedev (chr_file (map))))
+
+  (macro setattr_nodedev_chr_files ((type ARG1))
+         (allow ARG1 nodedev (chr_file (setattr))))
+
   (blockinherit .nodedev.template)
 
   (call .rbacsep.exempt.obj.type (nodedev)))
+
+(in nodedev.unconfined
+
+    (call .snd.dev_file_type_transition_nodedev (typeattr "controlC0"))
+    (call .snd.dev_file_type_transition_nodedev (typeattr "controlC1"))
+    (call .snd.dev_file_type_transition_nodedev (typeattr "controlC2")))

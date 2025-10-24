@@ -3,6 +3,9 @@
 
 (block hidraw
 
+  (macro setattr_nodedev_chr_files ((type ARG1))
+         (allow ARG1 nodedev (chr_file (setattr))))
+
   (filecon "/dev/hidraw[0-9]+" char nodedev_context)
 
   (blockinherit .nodedev.template)

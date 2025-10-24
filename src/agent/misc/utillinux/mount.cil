@@ -30,6 +30,9 @@
 
   (block mountpoint
 
+    (macro search_all_dirs ((type ARG1))
+           (allow ARG1 typeattr search_dir))
+
     (macro type ((type ARG1))
            (typeattributeset typeattr ARG1))
 
