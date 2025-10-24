@@ -1,6 +1,18 @@
 <!DOCTYPE busconfig PUBLIC "-//freedesktop//DTD D-BUS Bus Configuration 1.0//EN"
-	"http://www.freedesktop.org/standards/dbus/1.0/busconfig.dtd">
+ "http://www.freedesktop.org/standards/dbus/1.0/busconfig.dtd">
 <busconfig>
-<selinux>
-</selinux>
+  <selinux>
+    <associate
+      own="org.freedesktop.systemd1"
+      context="sys.id:sys.role:systemd.subj:s0"/>
+    <associate
+      own="org.freedesktop.network1"
+      context="sys.id:sys.role:systemd.network.subj:s0"/>
+    <associate
+      own="org.freedesktop.resolve1"
+      context="sys.id:sys.role:systemd.resolve.subj:s0"/>
+    <associate
+      own="org.freedesktop.login1"
+      context="sys.id:sys.role:systemd.login.subj:s0"/>
+  </selinux>
 </busconfig>
