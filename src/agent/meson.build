@@ -11,5 +11,6 @@ foreach file : cil_files
     policy_sources += files(file)
 endforeach
 
+subdir('hybridagent')
 subdir('misc')
 subdir('sysagent')

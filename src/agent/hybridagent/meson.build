@@ -2,9 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 cil_files = [
-    'llmnrunreservedport.cil',
-    'mdnsunreservedport.cil',
-    'ntpunreservedport.cil',
+    'chrony.cil',
 ]
 
 foreach file : cil_files

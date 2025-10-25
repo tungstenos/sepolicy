@@ -4,6 +4,7 @@
 cil_files = [
     'dhcpreservedport.cil',
     'dnsreservedport.cil',
+    'ntpreservedport.cil',
 ]
 
 foreach file : cil_files
