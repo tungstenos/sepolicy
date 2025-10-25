@@ -8,7 +8,6 @@ cil_files = [
     'environdatafile.cil',
     'execfile.cil',
     'firmwaredatafile.cil',
-    'firmwarefile.cil',
     'fontdatafile.cil',
     'iconsdatafile.cil',
     'libfile.cil',
