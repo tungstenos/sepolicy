@@ -60,6 +60,8 @@
       (call .tmp.list_fs_dirs (subj))
       (call .tmp.getattr_fs_pattern.type (subj))
       (call .tmp.mount_fs (subj))
+      (call .tmp.quotaget_fs (subj))
+      (call .tmp.quotamod_fs (subj))
       (call .tmp.relabelfrom_fs_dirs (subj))
       (call .tmp.unmount_fs (subj))
 
