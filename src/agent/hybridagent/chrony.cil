@@ -208,6 +208,8 @@
 
     (call .systemd.journal.relay_msgs.type (subj))
 
+    (call .systemd.notify.type (subj))
+
     (block tmpfs
 
       (macro map_file_files ((type ARG1))
