@@ -1,0 +1,92 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(block polkit
+
+  (blockinherit .dbus.nameclient.template)
+  (blockinherit .sys.agent.template)
+
+  (call .unconfined.type (subj))
+
+  (block conf
+
+    (filecon "/etc/polkit-1" dir file_context)
+    (filecon "/etc/polkit-1/.*" any file_context)
+
+    (macro conf_file_type_transition_file ((type ARG1))
+           (call .conf.file_type_transition
+                 (ARG1 file dir "polkit-1")))
+
+    (macro watch_file_dirs ((type ARG1))
+           (allow ARG1 file (dir (watch))))
+
+    (blockinherit .file.conf.template))
+
+  (block data
+
+    (filecon "/usr/share/polkit-1" dir file_context)
+    (filecon "/usr/share/polkit-1/.*" any file_context)
+
+    (macro data_file_type_transition_file ((type ARG1))
+           (call .data.file_type_transition
+                 (ARG1 file dir "polkit-1")))
+
+    (macro watch_file_dirs ((type ARG1))
+           (allow ARG1 file (dir (watch))))
+
+    (blockinherit .file.data.template))
+
+  (block run
+
+    (filecon "/run/polkit-1" dir file_context)
+    (filecon "/run/polkit-1/.*" any file_context)
+
+    (macro run_file_type_transition_file ((type ARG1))
+           (call .run.file_type_transition
+                 (ARG1 file dir "polkit-1")))
+
+    (macro watch_file_dirs ((type ARG1))
+           (allow ARG1 file (dir (watch))))
+
+    (blockinherit .file.macro_template_dirs)
+    (blockinherit .file.macro_template_files)
+    (blockinherit .file.run.base_template))
+
+  (block state
+
+    (filecon "/var/lib/polkit-1" dir file_context)
+    (filecon "/var/lib/polkit-1/.*" any file_context)
+
+    (macro state_file_type_transition_file ((type ARG1))
+           (call .state.file_type_transition
+                 (ARG1 file dir "polkit-1")))
+
+    (macro watch_file_dirs ((type ARG1))
+           (allow ARG1 file (dir (watch))))
+
+    (blockinherit .file.macro_template_dirs)
+    (blockinherit .file.macro_template_files)
+    (blockinherit .file.state.base_template))
+
+  (block unit
+
+    (filecon "/usr/lib/systemd/system/polkit\.service.*" file file_context)
+
+    (blockinherit .file.unit.template)
+
+    (call .dbus.activated.unit.type (file))))
+
+(in file.unconfined
+
+    (call .polkit.conf.conf_file_type_transition_file (typeattr))
+    (call .polkit.data.data_file_type_transition_file (typeattr))
+    (call .polkit.run.run_file_type_transition_file (typeattr))
+    (call .polkit.state.state_file_type_transition_file (typeattr)))
+
+(in after polkit.exec
+
+    (filecon "/usr/bin/polkitd" file file_context))
+
+(in after polkit.sendmsg_subj_dbus
+
+    (allow polkit.subj typeattr (dbus (send_msg))))

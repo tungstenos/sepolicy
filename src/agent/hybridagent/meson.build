@@ -3,6 +3,7 @@
 
 cil_files = [
     'chrony.cil',
+    'polkit.cil',
 ]
 
 foreach file : cil_files
