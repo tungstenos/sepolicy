@@ -20,6 +20,7 @@ cil_files = [
     'networksconffile.cil',
     'protocolsconffile.cil',
     'resolvconffile.cil',
+    'rpcconffile.cil',
     'selinuxconffile.cil',
     'servicesconffile.cil',
     'tcpwrappersconffile.cil',
