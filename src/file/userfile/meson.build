@@ -16,3 +16,4 @@ foreach file : cil_files
 endforeach
 
 subdir('userhomefile')
+subdir('userrunuserfile')

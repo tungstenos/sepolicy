@@ -1,0 +1,69 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(in wayland
+
+    (block run
+
+      (filecon "/run/user/%{USERID}/wayland-([0-9]+)?" socket file_context)
+      (filecon "/run/user/%{USERID}/wayland-([0-9]+)?\.lock" file file_context)
+
+      ;; As SELinux Polver 34 doesn't support regex in name-based file-
+      ;; transitions, hardcode in support for up to 9 Wayland displays.
+      (macro user_run_file_type_transition_file ((type ARG1))
+             (call .user.run.file_type_transition
+                   (ARG1 file file "wayland-0.lock"))
+             (call .user.run.file_type_transition
+                   (ARG1 file file "wayland-1.lock"))
+             (call .user.run.file_type_transition
+                   (ARG1 file file "wayland-2.lock"))
+             (call .user.run.file_type_transition
+                   (ARG1 file file "wayland-3.lock"))
+             (call .user.run.file_type_transition
+                   (ARG1 file file "wayland-4.lock"))
+             (call .user.run.file_type_transition
+                   (ARG1 file file "wayland-5.lock"))
+             (call .user.run.file_type_transition
+                   (ARG1 file file "wayland-6.lock"))
+             (call .user.run.file_type_transition
+                   (ARG1 file file "wayland-7.lock"))
+             (call .user.run.file_type_transition
+                   (ARG1 file file "wayland-8.lock"))
+             (call .user.run.file_type_transition
+                   (ARG1 file file "wayland-9.lock"))
+             (call .user.run.file_type_transition
+                   (ARG1 file sock_file "wayland-0"))
+             (call .user.run.file_type_transition
+                   (ARG1 file sock_file "wayland-1"))
+             (call .user.run.file_type_transition
+                   (ARG1 file sock_file "wayland-2"))
+             (call .user.run.file_type_transition
+                   (ARG1 file sock_file "wayland-3"))
+             (call .user.run.file_type_transition
+                   (ARG1 file sock_file "wayland-4"))
+             (call .user.run.file_type_transition
+                   (ARG1 file sock_file "wayland-5"))
+             (call .user.run.file_type_transition
+                   (ARG1 file sock_file "wayland-6"))
+             (call .user.run.file_type_transition
+                   (ARG1 file sock_file "wayland-7"))
+             (call .user.run.file_type_transition
+                   (ARG1 file sock_file "wayland-8"))
+             (call .user.run.file_type_transition
+                   (ARG1 file sock_file "wayland-9")))
+
+      (blockinherit .file.macro_template_files)
+      (blockinherit .file.macro_template_sock_files)
+      (blockinherit .file.user.run.base_template)))
+
+(in file.unconfined
+
+    (call .wayland.run.user_run_file_type_transition_file (typeattr)))
+
+(in user
+
+    (call .wayland.run.manage_file_files (subj))
+    (call .wayland.run.manage_file_sock_files (subj))
+    (call .wayland.run.relabel_file_files (subj))
+    (call .wayland.run.relabel_file_sock_files (subj))
+    (call .wayland.run.user_run_file_type_transition_file (subj)))
