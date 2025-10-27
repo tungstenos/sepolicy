@@ -23,6 +23,7 @@ cil_files = [
     'soundsdatafile.cil',
     'srcfile.cil',
     'terminfodatafile.cil',
+    'waylanddatafile.cil',
 ]
 
 foreach file : cil_files
