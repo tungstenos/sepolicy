@@ -25,6 +25,7 @@ cil_files = [
     'servicesconffile.cil',
     'tcpwrappersconffile.cil',
     'terminfoconffile.cil',
+    'tpmconffile.cil',
     'xdgconffile.cil',
 ]
 
