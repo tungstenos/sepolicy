@@ -18,6 +18,7 @@ foreach file : cil_files
     policy_sources += files(file)
 endforeach
 
+subdir('devsysctlfile')
 subdir('fssysctlfile')
 subdir('kernelsysctlfile')
 subdir('netsysctlfile')
