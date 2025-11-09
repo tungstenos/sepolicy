@@ -3,6 +3,7 @@
 
 cil_files = [
     'chrony.cil',
+    'kbd.cil',
     'polkit.cil',
 ]
 
