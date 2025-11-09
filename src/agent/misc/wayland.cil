@@ -1,0 +1,152 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(block wayland
+
+  (macro type ((type ARG1))
+         (typeattributeset typeattr ARG1))
+
+  (typeattribute typeattr)
+
+  (call .tmp.deletename_fs_dirs (typeattr))
+
+  (block client
+
+    (macro dontaudit_read_all_states ((type ARG1))
+           (dontaudit ARG1 typeattr (state (read))))
+
+    (macro read_all_states ((type ARG1))
+           (allow ARG1 typeattr (state (read))))
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (macro use_all_fds ((type ARG1))
+           (allow ARG1 typeattr (fd (use))))
+
+    (macro writeinherited_all_fifo_files ((type ARG1))
+           (allow ARG1 typeattr writeinherited_fifo_file))
+
+    (typeattribute typeattr)
+
+    (call use_all_fds (typeattr))
+    (call writeinherited_all_fifo_files (typeattr))
+
+    (call compositor.tmpfs.map_all_files (typeattr))
+    (call compositor.tmpfs.readwriteinherited_all_files (typeattr))
+
+    (call compositor.writeinherited_all_fifo_files (typeattr))
+    (call compositor.unix_stream_connect (typeattr))
+    (call compositor.use_all_fds (typeattr))
+
+    (call wayland.type (typeattr))
+
+    (call .user.dontaudit_readwrite_serialtermdev_chr_files (typeattr))
+
+    (call .user.run.search_file_pattern.type (typeattr))
+
+    (optional wayland_client_wlclipboard
+              (call .wlclipboard.paste.use_subj_fds (typeattr))
+              (call .wlclipboard.paste.writeinherited_subj_fifo_files
+                    (typeattr)))
+
+    (block run
+
+      (macro map_all_files ((type ARG1))
+             (allow ARG1 typeattr (file (map))))
+
+      (macro readwriteinherited_all_files ((type ARG1))
+             (allow ARG1 typeattr readwriteinherited_file))
+
+      (macro type ((type ARG1))
+             (typeattributeset typeattr ARG1))
+
+      (typeattribute typeattr))
+
+    (block tmpfs
+
+      (macro map_all_files ((type ARG1))
+             (allow ARG1 typeattr (file (map))))
+
+      (macro readwriteinherited_all_files ((type ARG1))
+             (allow ARG1 typeattr readwriteinherited_file))
+
+      (macro type ((type ARG1))
+             (typeattributeset typeattr ARG1))
+
+      (typeattribute typeattr)))
+
+  (block compositor
+
+    (macro accept_all_unix_stream_sockets ((type ARG1))
+           (allow ARG1 typeattr (unix_stream_socket (accept))))
+
+    (macro connectto_all_unix_stream_sockets ((type ARG1))
+           (allow ARG1 typeattr (unix_stream_socket (connectto))))
+
+    (macro read_all_states ((type ARG1))
+           (allow ARG1 typeattr (state (read))))
+
+    (macro readwrite_all_unix_stream_sockets ((type ARG1))
+           (allow ARG1 typeattr readwrite_unix_stream_socket))
+
+    (macro signull_all_processes ((type ARG1))
+           (allow ARG1 typeattr (process (signull))))
+
+    (macro writeinherited_all_fifo_files ((type ARG1))
+           (allow ARG1 typeattr writeinherited_fifo_file))
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (macro unix_stream_connect ((type ARG1))
+           (call connectto_all_unix_stream_sockets (ARG1))
+           (call .wayland.run.write_file_sock_files (ARG1)))
+
+    (macro use_all_fds ((type ARG1))
+           (allow ARG1 typeattr (fd (use))))
+
+    (typeattribute typeattr)
+
+    (call client.read_all_states (typeattr))
+    (call client.use_all_fds (typeattr))
+    (call client.writeinherited_all_fifo_files (typeattr))
+
+    (call client.run.map_all_files (typeattr))
+    (call client.run.readwriteinherited_all_files (typeattr))
+
+    (call client.tmpfs.map_all_files (typeattr))
+    (call client.tmpfs.readwriteinherited_all_files (typeattr))
+
+    (call wayland.run.manage_file_files (typeattr))
+    (call wayland.run.manage_file_sock_files (typeattr))
+    (call wayland.run.user_run_file_type_transition_file (typeattr))
+
+    (call wayland.type (typeattr))
+
+    (call .runuser.search_file_pattern.type (typeattr))
+
+    (call .user.run.deletename_file_dirs (typeattr))
+
+    (optional wayland_compositor_xwayland
+              (call .xwayland.client.use_all_fds (typeattr))
+              (call .xwayland.client.read_all_states (typeattr))
+              (call .xwayland.run.map_file_files (typeattr))
+              (call .xwayland.run.readwriteinherited_file_files (typeattr))
+              (call .xwayland.subj_type_transition (typeattr))
+              (call .xwayland.tmpfs.map_file_files (typeattr))
+              (call .xwayland.tmpfs.readwriteinherited_file_files (typeattr))
+              (call .xwayland.use_subj_fds (typeattr)))
+
+    (block tmpfs
+
+      (macro map_all_files ((type ARG1))
+             (allow ARG1 typeattr (file (map))))
+
+      (macro readwriteinherited_all_files ((type ARG1))
+             (allow ARG1 typeattr readwriteinherited_file))
+
+      (macro type ((type ARG1))
+             (typeattributeset typeattr ARG1))
+
+      (typeattribute typeattr))))

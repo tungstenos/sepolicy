@@ -6,6 +6,7 @@ cil_files = [
     'nss.cil',
     'pam.cil',
     'systemd.cil',
+    'wayland.cil',
 ]
 
 foreach file : cil_files

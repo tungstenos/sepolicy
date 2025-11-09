@@ -1,20 +1,20 @@
 ;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
 ;; SPDX-License-Identifier: MIT
 
-(block wayland
+(in wayland
 
-  (block data
+    (block data
 
-    (filecon "/usr/share/wayland-sessions" dir file_context)
-    (filecon "/usr/share/wayland-sessions/.*" any file_context)
+      (filecon "/usr/share/wayland-sessions" dir file_context)
+      (filecon "/usr/share/wayland-sessions/.*" any file_context)
 
-    (macro data_file_type_transition_file ((type ARG1))
-           (call .data.file_type_transition
-                 (ARG1 file dir "wayland-sessions")))
+      (macro data_file_type_transition_file ((type ARG1))
+             (call .data.file_type_transition
+                   (ARG1 file dir "wayland-sessions")))
 
-    (blockinherit .file.data.base_template)
-    (blockinherit .file.macro_template_dirs)
-    (blockinherit .file.macro_template_files)))
+      (blockinherit .file.data.base_template)
+      (blockinherit .file.macro_template_dirs)
+      (blockinherit .file.macro_template_files)))
 
 (in file.unconfined
 
