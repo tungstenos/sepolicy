@@ -1,0 +1,7 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(in locale.data
+
+    (filecon "/usr/share/X11/locale" dir file_context)
+    (filecon "/usr/share/X11/locale/.*" any file_context))

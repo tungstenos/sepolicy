@@ -25,6 +25,7 @@ cil_files = [
     'srcfile.cil',
     'terminfodatafile.cil',
     'waylanddatafile.cil',
+    'x11datafile.cil',
 ]
 
 foreach file : cil_files
