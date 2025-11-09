@@ -12,6 +12,7 @@ cil_files = [
     'iconsdatafile.cil',
     'libfile.cil',
     'libglvnddatafile.cil',
+    'libinputdatafile.cil',
     'libvulkandatafile.cil',
     'localedatafile.cil',
     'mesadatafile.cil',
