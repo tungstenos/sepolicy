@@ -18,6 +18,12 @@
         (filecon "HOME_DIR/\.cache/mesa_shader_cache_db" dir file_context)
         (filecon "HOME_DIR/\.cache/mesa_shader_cache_db/.*" any file_context)
 
+        (filecon "HOME_DIR/\.cache/mesa_shader_cache_sf" dir file_context)
+        (filecon "HOME_DIR/\.cache/mesa_shader_cache_sf/.*" any file_context)
+
+        (filecon "HOME_DIR/\.cache/radv_builtin_shaders" dir file_context)
+        (filecon "HOME_DIR/\.cache/radv_builtin_shaders/.*" any file_context)
+
         (macro dontaudit_readwriteinherited_file_files ((type ARG1))
                (dontaudit ARG1 file readwriteinherited_file))
 
@@ -28,7 +34,11 @@
                (call .user.home.cache.file_type_transition
                      (ARG1 file dir "mesa_shader_cache"))
                (call .user.home.cache.file_type_transition
-                     (ARG1 file dir "mesa_shader_cache_db")))
+                     (ARG1 file dir "mesa_shader_cache_db"))
+               (call .user.home.cache.file_type_transition
+                     (ARG1 file dir "mesa_shader_cache_sf"))
+               (call .user.home.cache.file_type_transition
+                     (ARG1 file dir "radv_builtin_shaders")))
 
         (blockinherit .file.user.home.cache.template)
 
