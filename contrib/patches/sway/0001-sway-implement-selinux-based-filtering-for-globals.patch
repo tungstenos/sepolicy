@@ -1,0 +1,376 @@
+From 718995fdb3fd18b3e77745efa030ac1251bd64ed Mon Sep 17 00:00:00 2001
+From: Rahul Sandhu <nvraxn@gmail.com>
+Date: Mon, 24 Feb 2025 18:38:08 +0000
+Subject: [PATCH] sway: implement selinux based filtering for globals
+
+This patch exposes privileged globals to SELinux so access to them can
+be mediated by SELinux.
+
+Signed-off-by: Rahul Sandhu <nvraxn@gmail.com>
+---
+ include/sway/selinux.h |  10 ++
+ meson.build            |   2 +
+ meson_options.txt      |   1 +
+ sway/main.c            |   3 +
+ sway/meson.build       |   2 +
+ sway/selinux.c         | 237 +++++++++++++++++++++++++++++++++++++++++
+ sway/server.c          |   5 +
+ 7 files changed, 260 insertions(+)
+ create mode 100644 include/sway/selinux.h
+ create mode 100644 sway/selinux.c
+
+diff --git a/include/sway/selinux.h b/include/sway/selinux.h
+new file mode 100644
+index 00000000..b1ee9215
+--- /dev/null
++++ b/include/sway/selinux.h
+@@ -0,0 +1,10 @@
++#ifndef _SWAY_SELINUX_H
++#define _SWAY_SELINUX_H
++
++#include <stdbool.h>
++#include <wayland-server-core.h>
++
++void log_init_selinux(void);
++bool check_access_selinux(const struct wl_global *global, const struct wl_client *client);
++
++#endif
+diff --git a/meson.build b/meson.build
+index de5a620c..e4be9db9 100644
+--- a/meson.build
++++ b/meson.build
+@@ -74,6 +74,7 @@ gdk_pixbuf = dependency('gdk-pixbuf-2.0', required: get_option('gdk-pixbuf'))
+ pixman = dependency('pixman-1')
+ libevdev = dependency('libevdev')
+ libinput = wlroots_features['libinput_backend'] ? dependency('libinput', version: '>=1.26.0') : null_dep
++libselinux = dependency('libselinux', required: get_option('selinux'))
+ xcb = wlroots_features['xwayland'] ? dependency('xcb') : null_dep
+ drm = dependency('libdrm')
+ libudev = wlroots_features['libinput_backend'] ? dependency('libudev') : null_dep
+@@ -110,6 +111,7 @@ conf_data.set10('HAVE_LIBSYSTEMD', sdbus.found() and sdbus.name() == 'libsystemd
+ conf_data.set10('HAVE_LIBELOGIND', sdbus.found() and sdbus.name() == 'libelogind')
+ conf_data.set10('HAVE_BASU', sdbus.found() and sdbus.name() == 'basu')
+ conf_data.set10('HAVE_TRAY', have_tray)
++conf_data.set10('HAVE_SELINUX', libselinux.found())
+ foreach sym : ['LIBINPUT_CONFIG_ACCEL_PROFILE_CUSTOM', 'LIBINPUT_CONFIG_DRAG_LOCK_ENABLED_STICKY']
+ 	conf_data.set10('HAVE_' + sym, cc.has_header_symbol('libinput.h', sym, dependencies: libinput))
+ endforeach
+diff --git a/meson_options.txt b/meson_options.txt
+index 506ecc9a..ca217a4e 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -8,3 +8,4 @@ option('tray', type: 'feature', value: 'auto', description: 'Enable support for
+ option('gdk-pixbuf', type: 'feature', value: 'auto', description: 'Enable support for more image formats in swaybar tray')
+ option('man-pages', type: 'feature', value: 'auto', description: 'Generate and install man pages')
+ option('sd-bus-provider', type: 'combo', choices: ['auto', 'libsystemd', 'libelogind', 'basu'], value: 'auto', description: 'Provider of the sd-bus library')
++option('selinux', type: 'boolean', value: false, description: 'Enable support for SELinux access control')
+diff --git a/sway/main.c b/sway/main.c
+index 44d07679..f18884ca 100644
+--- a/sway/main.c
++++ b/sway/main.c
+@@ -21,6 +21,7 @@
+ #include "sway/desktop/transaction.h"
+ #include "sway/tree/root.h"
+ #include "sway/ipc-server.h"
++#include "sway/selinux.h"
+ #include "ipc-client.h"
+ #include "log.h"
+ #include "stringop.h"
+@@ -299,6 +300,8 @@ int main(int argc, char **argv) {
+ 		wlr_log_init(WLR_ERROR, handle_wlr_log);
+ 	}
+ 
++	log_init_selinux();
++
+ 	sway_log(SWAY_INFO, "Sway version " SWAY_VERSION);
+ 	sway_log(SWAY_INFO, "wlroots version " WLR_VERSION_STR);
+ 	log_kernel();
+diff --git a/sway/meson.build b/sway/meson.build
+index cb03a4d2..9a1ae748 100644
+--- a/sway/meson.build
++++ b/sway/meson.build
+@@ -10,6 +10,7 @@ sway_sources = files(
+ 	'realtime.c',
+ 	'scene_descriptor.c',
+ 	'server.c',
++	'selinux.c',
+ 	'sway_text_node.c',
+ 	'swaynag.c',
+ 	'xdg_activation_v1.c',
+@@ -224,6 +225,7 @@ sway_deps = [
+ 	jsonc,
+ 	libevdev,
+ 	libinput,
++	libselinux,
+ 	libudev,
+ 	math,
+ 	pango,
+diff --git a/sway/selinux.c b/sway/selinux.c
+new file mode 100644
+index 00000000..6a7f45fd
+--- /dev/null
++++ b/sway/selinux.c
+@@ -0,0 +1,237 @@
++#ifdef __linux__
++#define _DEFAULT_SOURCE
++#endif
++
++#include <errno.h>
++#include <limits.h>
++#include <stdbool.h>
++#include <stdlib.h>
++#include <string.h>
++#include <sys/socket.h>
++
++#include <wlr/types/wlr_data_control_v1.h>
++#include <wlr/types/wlr_ext_data_control_v1.h>
++#include <wlr/types/wlr_export_dmabuf_v1.h>
++#include <wlr/types/wlr_ext_foreign_toplevel_list_v1.h>
++#include <wlr/types/wlr_foreign_toplevel_management_v1.h>
++#include <wlr/types/wlr_ext_image_copy_capture_v1.h>
++#include <wlr/types/wlr_gamma_control_v1.h>
++#include <wlr/types/wlr_input_method_v2.h>
++#include <wlr/types/wlr_output_management_v1.h>
++#include <wlr/types/wlr_output_power_management_v1.h>
++#include <wlr/types/wlr_screencopy_v1.h>
++#include <wlr/types/wlr_security_context_v1.h>
++#include <wlr/types/wlr_session_lock_v1.h>
++#include <wlr/types/wlr_xdg_output_v1.h>
++
++#include <selinux/selinux.h>
++
++#include "config.h"
++#include "log.h"
++#include "sway/config.h"
++#include "sway/input/input-manager.h"
++#include "sway/server.h"
++
++#if WLR_HAS_DRM_BACKEND
++#include <wlr/types/wlr_drm_lease_v1.h>
++#endif
++
++#if HAVE_SELINUX
++static sway_log_importance_t convert_selinux_log_importance(int type) {
++	switch (type) {
++	case SELINUX_ERROR:
++		return SWAY_ERROR;
++	case SELINUX_WARNING:
++		__attribute__ ((fallthrough));
++	case SELINUX_AVC:
++		__attribute__ ((fallthrough));
++	case SELINUX_INFO:
++		return SWAY_INFO;
++	default:
++		return SWAY_DEBUG;
++	}
++}
++
++static int log_callback_selinux(int type, const char *fmt, ...) {
++	va_list args;
++	va_start(args, fmt);
++
++	const int space_needed = snprintf(NULL, 0, "[selinux] %s", fmt);
++	if (space_needed < 0) {
++		return -1;
++	}
++	char *buffer = calloc(space_needed + 1, sizeof(*buffer));
++	if (buffer == NULL) {
++		return -1;
++	}
++	sprintf(buffer, "[selinux] %s", fmt);
++
++	_sway_vlog(convert_selinux_log_importance(type), buffer, args);
++
++	free(buffer);
++	va_end(args);
++	return 0;
++}
++
++static const char *get_selinux_protocol(const struct wl_global *global) {
++#if WLR_HAS_DRM_BACKEND
++	if (server.drm_lease_manager != NULL) {
++		struct wlr_drm_lease_device_v1 *drm_lease_dev;
++		wl_list_for_each(drm_lease_dev, &server.drm_lease_manager->devices, link) {
++			if (drm_lease_dev->global == global) {
++				return "drm_lease";
++			}
++		}
++	}
++#endif
++
++	if (global == server.output_manager_v1->global) {
++		return "output_manager";
++	}
++	if (global == server.output_power_manager_v1->global) {
++		return "output_power_manager";
++	}
++	if (global == server.input_method->global) {
++		return "input_method";
++	}
++	if (global == server.foreign_toplevel_list->global) {
++		return "foreign_toplevel_list";
++	}
++	if (global == server.foreign_toplevel_manager->global) {
++		return "foreign_toplevel_manager";
++	}
++	if (global == server.wlr_data_control_manager_v1->global) {
++		return "data_control_manager";
++	}
++	if (global == server.ext_data_control_manager_v1->global) {
++		return "data_control_manager";
++	}
++	if (global == server.screencopy_manager_v1->global) {
++		return "screencopy_manager";
++	}
++	if (global == server.ext_image_copy_capture_manager_v1->global) {
++		return "image_copy_capture_manager";
++	}
++	if (global == server.export_dmabuf_manager_v1->global) {
++		return "export_dmabuf_manager";
++	}
++	if (global == server.security_context_manager_v1->global) {
++		return "security_context_manager";
++	}
++	if (global == server.gamma_control_manager_v1->global) {
++		return "gamma_control_manager";
++	}
++	if (global == server.layer_shell->global) {
++		return "layer_shell";
++	}
++	if (global == server.session_lock.manager->global) {
++		return "session_lock_manager";
++	}
++	if (global == server.input->keyboard_shortcuts_inhibit->global) {
++		return "keyboard_shortcuts_inhibit";
++	}
++	if (global == server.input->virtual_keyboard->global) {
++		return "virtual_keyboard";
++	}
++	if (global == server.input->virtual_pointer->global) {
++		return "virtual_pointer";
++	}
++	if (global == server.input->transient_seat_manager->global) {
++		return "transient_seat_manager";
++	}
++	if (global == server.xdg_output_manager_v1->global) {
++		return "xdg_output_manager";
++	}
++
++	return NULL;
++}
++#endif
++
++void log_init_selinux(void) {
++#if HAVE_SELINUX
++	// Initalize libselinux logging.
++	selinux_set_callback(SELINUX_CB_LOG, (union selinux_callback) { .func_log = log_callback_selinux });
++#endif
++}
++
++bool check_access_selinux(const struct wl_global *global,
++		const struct wl_client *client) {
++#if HAVE_SELINUX
++	if (is_selinux_enabled() == 0) {
++		// SELinux not running
++		return true;
++	}
++
++	const char *protocol = get_selinux_protocol(global);
++	if (protocol == NULL) {
++		return true; // Not a privileged protocol, access granted
++	}
++
++	char *client_context = NULL;
++	socklen_t len = NAME_MAX;
++	int r = -1;
++
++	const int sockfd = wl_client_get_fd((struct wl_client *)client);
++
++	do {
++		char *new_context = realloc(client_context, len);
++		if (new_context == NULL) {
++			free(client_context);
++			return false;
++		}
++		client_context = new_context;
++
++		r = getsockopt(sockfd, SOL_SOCKET, SO_PEERSEC, client_context, &len);
++		if (r < 0 && errno != ERANGE) {
++			free(client_context);
++			return false;
++		}
++	} while (r < 0 && errno == ERANGE);
++
++	if (client_context == NULL) {
++		return true; // Getting NULL back for SO_PEERSEC means that an LSM
++		             // that provides security contexts is not running.
++	}
++
++	r = security_getenforce();
++	// If we can't determine if SELinux is enforcing or not, proceed as if enforcing.
++	const bool enforcing = !r;
++
++	char *compositor_context = NULL;
++	if (getcon_raw(&compositor_context) < 0) {
++		_sway_log(SWAY_ERROR, "[selinux] getcon_raw() failed: %s", strerror(errno));
++		free(client_context);
++		// We can't get our own context. Only allow the access if not in enforcing mode.
++		return !enforcing;
++	}
++	if (compositor_context == NULL) {
++		_sway_log(SWAY_ERROR, "[selinux] getcon_raw() returned NULL");
++		free(client_context);
++		// We can't get our own context. Only allow the access if not in enforcing mode.
++		return !enforcing;
++	}
++
++	static const char *const tclass = "wayland";
++	errno = 0;
++	r = selinux_check_access(client_context, compositor_context, tclass, protocol, NULL);
++	_sway_log(SWAY_DEBUG, "[selinux] access check scon=%s tcon=%s tclass=%s perm=%s",
++	         client_context, compositor_context, tclass, protocol);
++	if (r < 0) {
++		// EINVAL for contexts unknown to policy.
++		if (errno != EACCES || errno != EINVAL) {
++			_sway_log(SWAY_INFO, "[selinux] access check failed: %s", strerror(errno));
++			free(client_context);
++			free(compositor_context);
++			// selinux_check_access failed. Only allow the access if not in enforcing mode.
++			return !enforcing;
++		}
++		_sway_log(SWAY_INFO, "[selinux] access check denied: %s", strerror(errno));
++	}
++	free(client_context);
++	free(compositor_context);
++
++	return enforcing ? (r == 0) : true;
++#else
++	return true;
++#endif
++}
+diff --git a/sway/server.c b/sway/server.c
+index 4e606a39..f0096e42 100644
+--- a/sway/server.c
++++ b/sway/server.c
+@@ -62,6 +62,7 @@
+ #include "sway/server.h"
+ #include "sway/input/cursor.h"
+ #include "sway/tree/root.h"
++#include "sway/selinux.h"
+ 
+ #if WLR_HAS_XWAYLAND
+ #include <wlr/xwayland/shell.h>
+@@ -136,6 +137,10 @@ static bool filter_global(const struct wl_client *client,
+ 	}
+ #endif
+ 
++	if (!check_access_selinux(global, client)) {
++		return false;
++	}
++
+ 	// Restrict usage of privileged protocols to unsandboxed clients
+ 	// TODO: add a way for users to configure an allow-list
+ 	const struct wlr_security_context_v1_state *security_context =
+-- 
+2.51.0
+
