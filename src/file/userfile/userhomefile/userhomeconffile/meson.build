@@ -4,6 +4,7 @@
 cil_files = [
     'bashcompletionhomeconffile.cil',
     'fonthomeconffile.cil',
+    'mimehomeconffile.cil',
 ]
 
 foreach file : cil_files

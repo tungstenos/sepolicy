@@ -8,6 +8,7 @@ cil_files = [
     'fonthomedatafile.cil',
     'iconshomedatafile.cil',
     'libvulkanhomedatafile.cil',
+    'mimehomedatafile.cil',
     'themeshomedatafile.cil',
 ]
 
