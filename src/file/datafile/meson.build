@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 cil_files = [
+    'applicationsdatafile.cil',
     'backgroundsdatafile.cil',
     'bashcompletiondatafile.cil',
     'editordatafile.cil',

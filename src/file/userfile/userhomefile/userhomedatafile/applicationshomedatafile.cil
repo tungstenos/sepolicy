@@ -1,0 +1,60 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(in file.unconfined
+
+    (call .applications.home.data.user_home_data_file_type_transition_file
+          (typeattr)))
+
+(in applications
+
+    (block home
+
+      (block data
+
+        (filecon "HOME_DIR/\.local/share/applications" dir file_context)
+        (filecon "HOME_DIR/\.local/share/applications/.*" any file_context)
+
+        (macro user_home_data_file_type_transition_file ((type ARG1))
+               (call .user.home.data.file_type_transition
+                     (ARG1 file dir "applications")))
+
+        (blockinherit .file.user.home.data.template)
+
+        (block manage_file_pattern
+
+          (macro type ((type ARG1))
+                 (typeattributeset typeattr ARG1))
+
+          (typeattribute typeattr)
+
+          (call manage_file_dirs (typeattr))
+          (call manage_file_files (typeattr))
+          (call manage_file_lnk_files (typeattr))
+          (call user_home_data_file_type_transition_file (typeattr))
+
+          (call .user.home.data.create_file_dir_pattern.type (typeattr)))
+
+        (block read_file_pattern
+
+          (macro type ((type ARG1))
+                 (typeattributeset typeattr ARG1))
+
+          (typeattribute typeattr)
+
+          (call list_file_dirs (typeattr))
+          (call read_file_files (typeattr))
+          (call read_file_lnk_files (typeattr))
+
+          (call .user.home.data.search_file_pattern.type (typeattr))))))
+
+(in user
+
+    (call .applications.home.data.manage_file_dirs (subj))
+    (call .applications.home.data.manage_file_files (subj))
+    (call .applications.home.data.manage_file_lnk_files (subj))
+    (call .applications.home.data.relabel_file_dirs (subj))
+    (call .applications.home.data.relabel_file_files (subj))
+    (call .applications.home.data.relabel_file_lnk_files (subj))
+    (call .applications.home.data.user_home_data_file_type_transition_file
+          (subj)))
