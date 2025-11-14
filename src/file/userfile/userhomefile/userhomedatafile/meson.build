@@ -7,6 +7,7 @@ cil_files = [
     'fonthomedatafile.cil',
     'iconshomedatafile.cil',
     'libvulkanhomedatafile.cil',
+    'themeshomedatafile.cil',
 ]
 
 foreach file : cil_files

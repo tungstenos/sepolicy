@@ -24,6 +24,7 @@ cil_files = [
     'soundsdatafile.cil',
     'srcfile.cil',
     'terminfodatafile.cil',
+    'themesdatafile.cil',
     'waylanddatafile.cil',
     'x11datafile.cil',
 ]
