@@ -3,6 +3,8 @@
 
 cil_files = [
     'dbus.cil',
+    'glib.cil',
+    'gtk.cil',
     'nss.cil',
     'pam.cil',
     'systemd.cil',

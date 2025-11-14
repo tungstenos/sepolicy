@@ -1,0 +1,167 @@
+;; SPDX-FileCopyrightText: 2025 Rahul Sandhu <nvraxn@gmail.com>
+;; SPDX-License-Identifier: MIT
+
+(block gtk
+
+  (block common
+
+    (macro type ((type ARG1))
+           (typeattributeset typeattr ARG1))
+
+    (typeattribute typeattr)
+
+    (optional gtk_common_wayland
+              (call .wayland.client.type (typeattr))))
+
+  (block conf
+
+    (filecon "/etc/gtk-2\.0" dir file_context)
+    (filecon "/etc/gtk-2\.0/.*" any file_context)
+
+    (filecon "/etc/gtk-3\.0" dir file_context)
+    (filecon "/etc/gtk-3\.0/.*" any file_context)
+
+    (filecon "/etc/gtk-4\.0" dir file_context)
+    (filecon "/etc/gtk-4\.0/.*" any file_context)
+
+    (macro conf_file_type_transition_file ((type ARG1))
+           (call .conf.file_type_transition
+                 (ARG1 file dir "gtk-2.0"))
+           (call .conf.file_type_transition
+                 (ARG1 file dir "gtk-3.0"))
+           (call .conf.file_type_transition
+                 (ARG1 file dir "gtk-4.0")))
+
+    (blockinherit .file.conf.template))
+
+  (block data
+
+    (filecon "/usr/share/gtk-2\.0" dir file_context)
+    (filecon "/usr/share/gtk-2\.0/.*" any file_context)
+
+    (filecon "/usr/share/gtk-3\.0" dir file_context)
+    (filecon "/usr/share/gtk-3\.0/.*" any file_context)
+
+    (filecon "/usr/share/gtk-4\.0" dir file_context)
+    (filecon "/usr/share/gtk-4\.0/.*" any file_context)
+
+    (macro data_file_type_transition_file ((type ARG1))
+           (call .data.file_type_transition
+                 (ARG1 file dir "gtk-2.0"))
+           (call .data.file_type_transition
+                 (ARG1 file dir "gtk-3.0"))
+           (call .data.file_type_transition
+                 (ARG1 file dir "gtk-4.0")))
+
+    (blockinherit .file.data.base_template)
+    (blockinherit .file.macro_template_dirs)
+    (blockinherit .file.macro_template_files))
+
+  (block home
+
+    (block conf
+
+      (filecon "HOME_DIR/\.config/gtk-2\.0" dir file_context)
+      (filecon "HOME_DIR/\.config/gtk-2\.0/.*" any file_context)
+
+      (filecon "HOME_DIR/\.config/gtk-3\.0" dir file_context)
+      (filecon "HOME_DIR/\.config/gtk-3\.0/.*" any file_context)
+
+      (filecon "HOME_DIR/\.config/gtk-4\.0" dir file_context)
+      (filecon "HOME_DIR/\.config/gtk-4\.0/.*" any file_context)
+
+      (macro map_file_files ((type ARG1))
+             (allow ARG1 file (file (map))))
+
+      (macro user_home_conf_file_type_transition_file ((type ARG1))
+             (call .user.home.conf.file_type_transition
+                   (ARG1 file dir "gtk-2.0"))
+             (call .user.home.conf.file_type_transition
+                   (ARG1 file dir "gtk-3.0"))
+             (call .user.home.conf.file_type_transition
+                   (ARG1 file dir "gtk-4.0")))
+
+      (macro watch_file_dirs ((type ARG1))
+             (allow ARG1 file (dir (watch))))
+
+      (blockinherit .file.user.home.conf.template)
+
+      (block manage_file_pattern
+
+        (macro type ((type ARG1))
+               (typeattributeset typeattr ARG1))
+
+        (typeattribute typeattr)
+
+        (call manage_file_dirs (typeattr))
+        (call manage_file_files (typeattr))
+        (call user_home_conf_file_type_transition_file (typeattr))
+
+        (call .user.home.conf.create_file_dir_pattern.type (typeattr)))))
+
+  (block lib
+
+    (filecon "/usr/lib/([^/]+/)?gtk-2\.0" dir file_context)
+    (filecon "/usr/lib/([^/]+/)?gtk-2\.0/.*" any file_context)
+
+    (filecon "/usr/lib/([^/]+/)?gtk-3\.0" dir file_context)
+    (filecon "/usr/lib/([^/]+/)?gtk-3\.0/.*" any file_context)
+
+    (filecon "/usr/lib/([^/]+/)?gtk-4\.0" dir file_context)
+    (filecon "/usr/lib/([^/]+/)?gtk-4\.0/.*" any file_context)
+
+    (macro lib_file_type_transition_file ((type ARG1))
+           (call .lib.file_type_transition
+                 (ARG1 file dir "gtk-2.0"))
+           (call .lib.file_type_transition
+                 (ARG1 file dir "gtk-3.0"))
+           (call .lib.file_type_transition
+                 (ARG1 file dir "gtk-4.0")))
+
+    (blockinherit .file.lib.template)
+    (blockinherit .file.macro_template_dirs))
+
+  (block template
+
+    (blockabstract template)
+
+    (blockinherit .dbus.client.macro_template)
+    (blockinherit .user.agent.template)
+
+    (call .gtk.common.type (subj))
+
+    (call tmpfs.manage_file_files (subj))
+    (call tmpfs.map_file_files (subj))
+    (call tmpfs.tmp_fs_type_transition_file (subj))
+
+    (block tmpfs
+
+      (macro map_file_files ((type ARG1))
+             (allow ARG1 file (file (map))))
+
+      (macro tmp_fs_type_transition_file ((type ARG1))
+             (call .tmp.fs_type_transition
+                   (ARG1 file file "*")))
+
+      (blockinherit .file.macro_template_files)
+      (blockinherit .file.user.tmpfs.base_template)
+
+      (call .gtk.common.tmpfs.type (file))
+
+      (optional gtk_template_tmpfs_wayland
+                (call .wayland.client.tmpfs.type (file))))))
+
+(in file.unconfined
+
+    (call .gtk.conf.conf_file_type_transition_file (typeattr))
+    (call .gtk.data.data_file_type_transition_file (typeattr))
+    (call .gtk.home.conf.user_home_conf_file_type_transition_file (typeattr))
+    (call .gtk.lib.lib_file_type_transition_file (typeattr)))
+
+(in user
+
+    (call .gtk.home.conf.manage_file_dirs (subj))
+    (call .gtk.home.conf.manage_file_files (subj))
+    (call .gtk.home.conf.relabel_file_dirs (subj))
+    (call .gtk.home.conf.relabel_file_files (subj))
+    (call .gtk.home.conf.user_home_conf_file_type_transition_file (subj)))
