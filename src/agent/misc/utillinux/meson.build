@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 cil_files = [
+    'getty.cil',
     'mount.cil',
 ]
 
